@@ -1,0 +1,13 @@
+name: PrisonGangs
+main: com.mydeblob.ClansMain
+version: 1.0
+author: mydeblob
+commands:
+   kdr:
+      description: Shows you the KDR of yourself, or a specified player
+      usage: /<command> or /<command> playerName
+      permission: gangs.kdr
+   gang:
+      description: Base command for gangs
+      usage: /<command> help
+      aliases: [g]

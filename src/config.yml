@@ -1,0 +1,6 @@
+# Welcome to the config of PrisonGangs!
+# Appears when a player requests information about a gangExample would be 
+# Leader • mydeblob - Online
+seperator: •
+# This is the max amount of characters allowed in a clan name
+char-limit: 15
