@@ -18,11 +18,11 @@ public class CommandHandler implements CommandExecutor, Listener{
 	ArrayList<String> inAllyChat = new ArrayList<String>();
 	HashMap<Clan, Clan> ally = new HashMap<Clan, Clan>();
 	HashMap<String, Clan> invited = new HashMap<String, Clan>();
-	private ClansMain plugin;
-    public static final ClanManager t = ClanManager.getInstance();
+	private PrisonGangs plugin;
+    public static final GangManager t = GangManager.getInstance();
     public static final SettingsManager s = SettingsManager.getInstance();
    
-	public CommandHandler(ClansMain plugin){
+	public CommandHandler(PrisonGangs plugin){
 		this.plugin = plugin;
 	}
 	String prefix = ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + "PrisonGangs" + ChatColor.GRAY + "] ";
@@ -36,19 +36,19 @@ public class CommandHandler implements CommandExecutor, Listener{
 			if(p.hasPermission("gangs.kdr")){
 				if(args.length < 1){
 					p.sendMessage(ChatColor.DARK_RED + "=--" + ChatColor.DARK_GREEN + "PrisonGangs" + ChatColor.DARK_RED + "--=");
-					p.sendMessage(ChatColor.GREEN + "Your KDR: " + ChatColor.BLUE + plugin.getCustomConfig().getDouble("players." + p.getName() + ".kdr"));
-					p.sendMessage(ChatColor.GREEN + "Your kills: " + ChatColor.BLUE + plugin.getCustomConfig().getInt("players." + p.getName() + ".kills"));
-					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + plugin.getCustomConfig().getInt("players." + p.getName() + ".deaths"));
+					p.sendMessage(ChatColor.GREEN + "Your KDR: " + ChatColor.BLUE + plugin.getGangConfig().getDouble("players." + p.getName() + ".kdr"));
+					p.sendMessage(ChatColor.GREEN + "Your kills: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + p.getName() + ".kills"));
+					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + p.getName() + ".deaths"));
 					return true;
 				}else if(args.length == 1){
-					if(!plugin.getCustomConfig().contains("players." + args[0])){
+					if(!plugin.getGangConfig().contains("players." + args[0])){
 						p.sendMessage(prefix + ChatColor.DARK_RED + "Error! The specified player wasn't found! Are you sure you spelled his name correctly?");
 						return true;
 					}
 					p.sendMessage(ChatColor.DARK_RED + "=--" + ChatColor.DARK_GREEN + "PrisonGangs" + ChatColor.DARK_RED + "--=");
-					p.sendMessage(ChatColor.GREEN + args[0] + "'s KDR: " + ChatColor.BLUE + plugin.getCustomConfig().getDouble("players." + args[0] + ".kdr"));
-					p.sendMessage(ChatColor.GREEN + args[0] + "'s kills: " + ChatColor.BLUE + plugin.getCustomConfig().getInt("players." + args[0] + ".kills"));
-					p.sendMessage(ChatColor.GREEN + args[0] + "'s deaths: " + ChatColor.BLUE + plugin.getCustomConfig().getInt("players." + args[0] + ".deaths"));
+					p.sendMessage(ChatColor.GREEN + args[0] + "'s KDR: " + ChatColor.BLUE + plugin.getGangConfig().getDouble("players." + args[0] + ".kdr"));
+					p.sendMessage(ChatColor.GREEN + args[0] + "'s kills: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + args[0] + ".kills"));
+					p.sendMessage(ChatColor.GREEN + args[0] + "'s deaths: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + args[0] + ".deaths"));
 					return true;
 				}
 				return false;
@@ -564,20 +564,20 @@ public class CommandHandler implements CommandExecutor, Listener{
 		int totalDeaths = 0;
 		double KDR = 0;
 		for(String s : c.getMembers()){
-			membersKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
-			membersDeaths += plugin.getCustomConfig().getInt("players." + s + ".deaths");
+			membersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
+			membersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
 		}
 		for(String s : c.getTrusted()){
-			trustedKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
-			trustedDeaths += plugin.getCustomConfig().getInt("players." + s + ".deaths");
+			trustedKills += plugin.getGangConfig().getInt("players." + s + ".kills");
+			trustedDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
 		}
 		for(String s : c.getOfficers()){
-			officersKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
-			officersDeaths += plugin.getCustomConfig().getInt("players." + s + ".deaths");
+			officersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
+			officersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
 		}
 		for(String s : c.getLeaders()){
-			leadersKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
-			leadersDeaths += plugin.getCustomConfig().getInt("players." + s + ".deaths");
+			leadersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
+			leadersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
 		}
 		if(totalDeaths == 0){
 			KDR = totalKills;
@@ -596,16 +596,16 @@ public class CommandHandler implements CommandExecutor, Listener{
 		int leadersKills = 0;
 		int totalKills = 0;
 		for(String s : c.getMembers()){
-			membersKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
+			membersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
 		}
 		for(String s : c.getTrusted()){
-			trustedKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
+			trustedKills += plugin.getGangConfig().getInt("players." + s + ".kills");
 		}
 		for(String s : c.getOfficers()){
-			officersKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
+			officersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
 		}
 		for(String s : c.getLeaders()){
-			leadersKills += plugin.getCustomConfig().getInt("players." + s + ".kills");
+			leadersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
 		}
 		totalKills = membersKills + trustedKills + officersKills + leadersKills;
 		return totalKills;
@@ -617,16 +617,16 @@ public class CommandHandler implements CommandExecutor, Listener{
 		int leadersDeaths = 0;
 		int totalDeaths = 0;
 		for(String s : c.getMembers()){
-			membersDeaths += plugin.getCustomConfig().getInt("players." + s + ".deaths");
+			membersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
 		}
 		for(String s : c.getTrusted()){
-			trustedDeaths += plugin.getCustomConfig().getInt("players." + s + ".death");
+			trustedDeaths += plugin.getGangConfig().getInt("players." + s + ".death");
 		}
 		for(String s : c.getOfficers()){
-			officersDeaths += plugin.getCustomConfig().getInt("players." + s + ".death");
+			officersDeaths += plugin.getGangConfig().getInt("players." + s + ".death");
 		}
 		for(String s : c.getLeaders()){
-			leadersDeaths += plugin.getCustomConfig().getInt("players." + s + ".death");
+			leadersDeaths += plugin.getGangConfig().getInt("players." + s + ".death");
 		}
 		totalDeaths = membersDeaths + trustedDeaths + officersDeaths + leadersDeaths;
 		return totalDeaths;

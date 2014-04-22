@@ -4,14 +4,14 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import org.bukkit.entity.Player;
 
-public class ClanManager {
-	  private static ClanManager instance = new ClanManager();
+public class GangManager {
+	  private static GangManager instance = new GangManager();
 
 	  private SettingsManager settings = SettingsManager.getInstance();
 
 	  private ArrayList<Clan> clans = new ArrayList<Clan>();
 
-	  public static ClanManager getInstance()
+	  public static GangManager getInstance()
 	  {
 	    return instance;
 	  }

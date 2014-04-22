@@ -87,7 +87,7 @@ public class Clan {
 		  save();
 	  }
 	  public void msg(Clan c, String message){
-		  if(ClanManager.getInstance().getClan(c.getName()) == null) return;
+		  if(GangManager.getInstance().getClan(c.getName()) == null) return;
 		  for(String p : c.getMembers()){
 			 Player player = Bukkit.getServer().getPlayer(p);
 			 if(!(player == null)){

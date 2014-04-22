@@ -12,17 +12,17 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 public class Events implements Listener{
-    public static final ClanManager t = ClanManager.getInstance();
-	private ClansMain plugin;
+    public static final GangManager t = GangManager.getInstance();
+	private PrisonGangs plugin;
 	private CommandHandler ch;
-	public Events(ClansMain plugin, CommandHandler ch){
+	public Events(PrisonGangs plugin, CommandHandler ch){
 		this.plugin = plugin;
 		this.ch = ch;
 	}
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onChat(AsyncPlayerChatEvent event){
 		if(t.getPlayerClan(event.getPlayer()) != null && !ch.inAllyChat.contains(event.getPlayer().getName()) && !ch.inClanChat.contains(event.getPlayer().getName())){
-			String pClan = ChatColor.WHITE + "[" + ChatColor.DARK_GRAY + ClanManager.getInstance().getPlayerClan(event.getPlayer()).getName() + ChatColor.WHITE +  "]";
+			String pClan = ChatColor.WHITE + "[" + ChatColor.DARK_GRAY + GangManager.getInstance().getPlayerClan(event.getPlayer()).getName() + ChatColor.WHITE +  "]";
 			String f = event.getFormat().replaceAll("\\{clan_name\\}", pClan);
 			event.setFormat(f);
 		}else{
@@ -45,42 +45,42 @@ public class Events implements Listener{
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event){
 		Player p = (Player) event.getPlayer();
-		if(!p.hasPlayedBefore() || !plugin.getCustomConfig().contains("players." + p.getName())){
-			plugin.getCustomConfig().set("players." + p.getName() + ".kills", 0);
-			plugin.getCustomConfig().set("players." + p.getName() + ".deaths", 0);
-			plugin.getCustomConfig().set("players." + p.getName() + ".kdr", 0);
+		if(!p.hasPlayedBefore() || !plugin.getGangConfig().contains("players." + p.getName())){
+			plugin.getGangConfig().set("players." + p.getName() + ".kills", 0);
+			plugin.getGangConfig().set("players." + p.getName() + ".deaths", 0);
+			plugin.getGangConfig().set("players." + p.getName() + ".kdr", 0);
 		}
 	} 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent event){
-		int deaths = plugin.getCustomConfig().getInt("players." + event.getEntity().getName() + ".deaths");
+		int deaths = plugin.getGangConfig().getInt("players." + event.getEntity().getName() + ".deaths");
 		deaths++;
-		plugin.getCustomConfig().set("players." + event.getEntity().getName() + ".deaths", deaths);
-		double edeaths = (double) plugin.getCustomConfig().getInt("players." + event.getEntity().getName() + ".deaths");
-		double ekills = (double) plugin.getCustomConfig().getInt("players." + event.getEntity().getName() + ".kills");
-		if(plugin.getCustomConfig().getInt("players." + event.getEntity().getName() + ".kills") == 0 || plugin.getCustomConfig().getDouble("players." + event.getEntity().getName() + ".kdr") < 0.000){
-			plugin.getCustomConfig().set("players." + event.getEntity().getName() + ".kdr", 0.0);
+		plugin.getGangConfig().set("players." + event.getEntity().getName() + ".deaths", deaths);
+		double edeaths = (double) plugin.getGangConfig().getInt("players." + event.getEntity().getName() + ".deaths");
+		double ekills = (double) plugin.getGangConfig().getInt("players." + event.getEntity().getName() + ".kills");
+		if(plugin.getGangConfig().getInt("players." + event.getEntity().getName() + ".kills") == 0 || plugin.getGangConfig().getDouble("players." + event.getEntity().getName() + ".kdr") < 0.000){
+			plugin.getGangConfig().set("players." + event.getEntity().getName() + ".kdr", 0.0);
 		}else{
-			plugin.getCustomConfig().set("players." + event.getEntity().getName() + ".kdr", ekills/edeaths);
+			plugin.getGangConfig().set("players." + event.getEntity().getName() + ".kdr", ekills/edeaths);
 		}
 		if(event.getEntity().getKiller() instanceof Player){
 			Player killer = (Player) event.getEntity().getKiller();
-			int kills = plugin.getCustomConfig().getInt("players." + killer.getName() + ".kills");
+			int kills = plugin.getGangConfig().getInt("players." + killer.getName() + ".kills");
 			kills++;
-			plugin.getCustomConfig().set("players." + killer.getName() + ".kills", kills);
-			double ddeaths = (double) plugin.getCustomConfig().getInt("players." + event.getEntity().getKiller().getName() + ".deaths");
-			double dkills = (double) plugin.getCustomConfig().getInt("players." + event.getEntity().getKiller().getName() + ".kills");
-			if(plugin.getCustomConfig().getInt("players." + killer.getName() + ".deaths") == 0){
+			plugin.getGangConfig().set("players." + killer.getName() + ".kills", kills);
+			double ddeaths = (double) plugin.getGangConfig().getInt("players." + event.getEntity().getKiller().getName() + ".deaths");
+			double dkills = (double) plugin.getGangConfig().getInt("players." + event.getEntity().getKiller().getName() + ".kills");
+			if(plugin.getGangConfig().getInt("players." + killer.getName() + ".deaths") == 0){
 				double k = (double) kills;
-				plugin.getCustomConfig().set("players." + killer.getName() + ".kdr", k);
+				plugin.getGangConfig().set("players." + killer.getName() + ".kdr", k);
 			}else{
-				plugin.getCustomConfig().set("players." + killer.getName() + ".kdr", dkills/ddeaths);
+				plugin.getGangConfig().set("players." + killer.getName() + ".kdr", dkills/ddeaths);
 			}
 		}
 	}
 	@EventHandler
 	public void playerJoin(PlayerJoinEvent event){
-		ClanManager.getInstance().setupClans();
+		GangManager.getInstance().setupClans();
 	}
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event){
@@ -95,11 +95,11 @@ public class Events implements Listener{
 					damager = (Player) proj.getShooter();
 				}
 			}
-			if(ClanManager.getInstance().getPlayerClan(target) == null){
+			if(GangManager.getInstance().getPlayerClan(target) == null){
 				return;
-			}if(ClanManager.getInstance().getPlayerClan(damager) == null){
+			}if(GangManager.getInstance().getPlayerClan(damager) == null){
 				return;
-			}if(ClanManager.getInstance().getPlayerClan(target).equals(ClanManager.getInstance().getPlayerClan(damager))){
+			}if(GangManager.getInstance().getPlayerClan(target).equals(GangManager.getInstance().getPlayerClan(damager))){
 				event.setCancelled(true);
 			}
 		}
