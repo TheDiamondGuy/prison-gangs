@@ -45,10 +45,10 @@ public class Events implements Listener{
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event){
 		Player p = (Player) event.getPlayer();
-		if(!p.hasPlayedBefore() || !plugin.getGangConfig().contains("players." + p.getName())){
-			plugin.getGangConfig().set("players." + p.getName() + ".kills", 0);
-			plugin.getGangConfig().set("players." + p.getName() + ".deaths", 0);
-			plugin.getGangConfig().set("players." + p.getName() + ".kdr", 0);
+		if(!p.hasPlayedBefore() || !plugin.getGangConfig().contains("players." + p.getUniqueId().toString())){
+			plugin.getGangConfig().set("players." + p.getUniqueId().toString() + ".kills", 0);
+			plugin.getGangConfig().set("players." + p.getUniqueId().toString() + ".deaths", 0);
+			plugin.getGangConfig().set("players." + p.getUniqueId().toString() + ".kdr", 0);
 		}
 	} 
 	@EventHandler
