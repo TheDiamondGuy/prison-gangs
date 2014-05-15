@@ -13,10 +13,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PrisonGangs extends JavaPlugin{
-	private FileConfiguration gangConfig = null;
-    private File gangFile = null;
+	private FileConfiguration kdrConfig = null;
+    private File kdrFile = null;
 	public void onEnable(){
-		CommandHandler ch = new CommandHandler(this);
 		File config = new File(getDataFolder(), "config.yml");
 		if(!config.exists()){
 			getLogger().info("[PrisonGangs] No config.yml found! Generating a new one!");
@@ -27,7 +26,7 @@ public class PrisonGangs extends JavaPlugin{
 		Bukkit.getServer().getPluginManager().registerEvents(new CommandHandler(this), this);
 		getCommand("gang").setExecutor(new CommandHandler(this));
 		getCommand("kdr").setExecutor(new CommandHandler(this));
-		getServer().getPluginManager().registerEvents(new Events(this, ch),  this);
+		getServer().getPluginManager().registerEvents(new Events(this),  this);
 		SettingsManager.getInstance().setup(this);
 		GangManager.getInstance().setupClans();
 		FileConfiguration pluginyml = YamlConfiguration.loadConfiguration(getResource("plugin.yml"));
@@ -65,8 +64,6 @@ public class PrisonGangs extends JavaPlugin{
         gangFile = new File(getDataFolder(), "kdr.yml");
         }
         gangConfig = YamlConfiguration.loadConfiguration(gangFile);
- 
-        // Look for defaults in the jar
         InputStream defConfigStream = this.getResource("kdr.yml");
         if (defConfigStream != null) {
             YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
@@ -74,7 +71,6 @@ public class PrisonGangs extends JavaPlugin{
         }
     }
  
-    //Method from http://wiki.bukkit.org/Configuration_API_Reference
     public FileConfiguration getGangConfig() {
         if (gangConfig == null) {
             this.reloadGangConfig();
@@ -82,7 +78,6 @@ public class PrisonGangs extends JavaPlugin{
         return gangConfig;
     }
  
-    //Method from http://wiki.bukkit.org/Configuration_API_Reference
     public void saveGangConfig() {
         if (gangConfig == null || gangFile == null) {
         return;

@@ -16,8 +16,8 @@ import org.bukkit.event.Listener;
 public class CommandHandler implements CommandExecutor, Listener{
 	public ArrayList<String> inClanChat = new ArrayList<String>();
 	ArrayList<String> inAllyChat = new ArrayList<String>();
-	HashMap<Clan, Clan> ally = new HashMap<Clan, Clan>();
-	HashMap<String, Clan> invited = new HashMap<String, Clan>();
+	HashMap<Gang, Gang> ally = new HashMap<Gang, Gang>();
+	HashMap<String, Gang> invited = new HashMap<String, Gang>();
 	private PrisonGangs plugin;
     public static final GangManager t = GangManager.getInstance();
     public static final SettingsManager s = SettingsManager.getInstance();
@@ -97,7 +97,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(prefix + ChatColor.RED + "You are already in a gang!");
 						return true;
 					}
-					if(t.getClan(args[1]) != null && s.getClans().getStringList("gangnames").contains(args[1])){
+					if(t.getClan(args[1]) == null && s.getClans().getStringList("gang-names").contains(args[1])){
 						p.sendMessage(prefix + ChatColor.RED + "That gang already exists!");
 						return true;
 					}
@@ -105,15 +105,15 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(prefix + ChatColor.RED + "Error: That clan name is to long!");
 						return true;
 					}
-					s.getClans().set("clans." + args[1] + ".members", new ArrayList());
-					s.getClans().set("clans." + args[1] + ".trusted", new ArrayList());
-					s.getClans().set("clans." + args[1] + ".officers", new ArrayList());
-					s.getClans().set("clans." + args[1] + ".leaders", new ArrayList());
-					s.getClans().set("clans." + args[1] + ".description", null);
-					List leaders = s.getClans().getStringList("clans." + args[1] + ".leaders");
+					s.getClans().set("gangs." + args[1] + ".members", new ArrayList<String>());
+					s.getClans().set("gangs." + args[1] + ".trusted", new ArrayList<String>());
+					s.getClans().set("gangs." + args[1] + ".officers", new ArrayList<String>());
+					s.getClans().set("gangs." + args[1] + ".leaders", new ArrayList<String>());
+					s.getClans().set("gangs." + args[1] + ".description", null);
+					List<String> leaders = s.getClans().getStringList("gangs." + args[1] + ".leaders");
 					leaders.add(p.getName());
 					s.getClans().set("clans." + args[1] + ".leaders", leaders);
-					List gangnames = s.getClans().getStringList("clannames");
+					List<String> gangnames = s.getClans().getStringList("gang-names");
 					gangnames.add(args[1]);
 					s.getClans().set("clannames", gangnames);
 					s.saveClans();
@@ -307,7 +307,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						return true;
 					}if(t.getPlayerClan(p).getLeaders().contains(p.getName())){
 						t.getPlayerClan(p).msg(t.getPlayerClan(p), ChatColor.RED + p.getName() + " has just left the gang!");
-						Clan gang = t.getPlayerClan(p);
+						Gang gang = t.getPlayerClan(p);
 						t.getPlayerClan(p).removeLeader(p);
 						if(gang.getLeaders().isEmpty()){
 							gang.msg(gang, ChatColor.RED + "The gang has been disbanded due to absence of leaders!!");
@@ -551,7 +551,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 		}
 		return false;
 	}
-	public double clanKDR(Clan c){
+	public double clanKDR(Gang c){
 		int membersKills = 0;
 		int membersDeaths = 0;
 		int trustedKills = 0;
@@ -589,7 +589,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			return KDR;
 		}
 	}
-	public int totalKills(Clan c){
+	public int totalKills(Gang c){
 		int membersKills = 0;
 		int trustedKills = 0;
 		int officersKills = 0;
@@ -610,7 +610,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 		totalKills = membersKills + trustedKills + officersKills + leadersKills;
 		return totalKills;
 	}
-	public int totalDeaths(Clan c){
+	public int totalDeaths(Gang c){
 		int membersDeaths = 0;
 		int trustedDeaths = 0;
 		int officersDeaths = 0;
@@ -631,7 +631,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 		totalDeaths = membersDeaths + trustedDeaths + officersDeaths + leadersDeaths;
 		return totalDeaths;
 	}
-	public ArrayList<String> getMemberStats(Clan c){
+	public ArrayList<String> getMemberStats(Gang c){
 		ArrayList<String> memberData = new ArrayList<String>();
 		for(String s : c.getMembers()){
 			Player p = Bukkit.getServer().getPlayer(s);

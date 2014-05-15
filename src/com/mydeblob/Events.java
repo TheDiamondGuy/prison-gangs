@@ -14,32 +14,18 @@ import org.bukkit.event.player.PlayerJoinEvent;
 public class Events implements Listener{
     public static final GangManager t = GangManager.getInstance();
 	private PrisonGangs plugin;
-	private CommandHandler ch;
-	public Events(PrisonGangs plugin, CommandHandler ch){
+	public Events(PrisonGangs plugin){
 		this.plugin = plugin;
-		this.ch = ch;
 	}
 	@EventHandler(priority = EventPriority.HIGH)
 	public void onChat(AsyncPlayerChatEvent event){
-		if(t.getPlayerClan(event.getPlayer()) != null && !ch.inAllyChat.contains(event.getPlayer().getName()) && !ch.inClanChat.contains(event.getPlayer().getName())){
-			String pClan = ChatColor.WHITE + "[" + ChatColor.DARK_GRAY + GangManager.getInstance().getPlayerClan(event.getPlayer()).getName() + ChatColor.WHITE +  "]";
+		if(t.getPlayerClan(event.getPlayer()) != null){
+			String pClan = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("format")).replaceAll("%g%", GangManager.getInstance().getPlayerClan(event.getPlayer()).getName());
 			String f = event.getFormat().replaceAll("\\{clan_name\\}", pClan);
 			event.setFormat(f);
 		}else{
-			if(ch.inAllyChat.contains(event.getPlayer().getName())){
-				String f = ChatColor.GRAY + event.getPlayer().getName() + ":" + ChatColor.LIGHT_PURPLE + event.getMessage();
-				event.getPlayer().sendMessage("Ally chat with format " + f);
-				event.setCancelled(true);
-				t.getPlayerClan(event.getPlayer()).msg(t.getPlayerClan(event.getPlayer()), f);
-			}if(ch.inClanChat.contains(event.getPlayer().getName())){
-				event.setCancelled(true);
-				String f = ChatColor.DARK_GRAY + event.getPlayer().getName() + ":" + ChatColor.BLUE + event.getMessage();
-				event.getPlayer().sendMessage("Clan chat with format " + f);
-				t.getPlayerClan(event.getPlayer()).msg(t.getPlayerClan(event.getPlayer()), f);
-			}if(!ch.inClanChat.contains(event.getPlayer().getName()) && !ch.inAllyChat.contains(event.getPlayer().getName())){
-				String f = event.getFormat().replaceAll("\\{clan_name\\}", "");
+				String f = event.getFormat().replaceAll("\\{clan_name\\}", null);
 				event.setFormat(f);
-			}
 		}
 	}
 	@EventHandler

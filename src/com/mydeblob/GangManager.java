@@ -9,7 +9,7 @@ public class GangManager {
 
 	  private SettingsManager settings = SettingsManager.getInstance();
 
-	  private ArrayList<Clan> clans = new ArrayList<Clan>();
+	  private ArrayList<Gang> clans = new ArrayList<Gang>();
 
 	  public static GangManager getInstance()
 	  {
@@ -21,18 +21,18 @@ public class GangManager {
 	  {
 	    this.clans.clear();
 	    String name;
-	    for (Iterator localIterator = this.settings.getClans().getStringList("clannames").iterator(); localIterator.hasNext(); this.clans.add(new Clan(name))){
+	    for (Iterator localIterator = this.settings.getClans().getStringList("gang-names").iterator(); localIterator.hasNext(); this.clans.add(new Gang(name))){
 	    	 name = (String)localIterator.next(); 
 	    }
 	  }
 
-	  public ArrayList<Clan> getClans()
+	  public ArrayList<Gang> getClans()
 	  {
 	    return this.clans;
 	  }
 
-	  public Clan getClan(String name) {
-	    for (Clan c : getClans()) {
+	  public Gang getClan(String name) {
+	    for (Gang c : getClans()) {
 	      if (c.getName().equalsIgnoreCase(name)){
 	    	  return c;
 	      }
@@ -40,8 +40,8 @@ public class GangManager {
 	    return null;
 	  }
 
-	  public Clan getPlayerClan(Player p) {
-	    for (Clan c : getClans()) {
+	  public Gang getPlayerClan(Player p) {
+	    for (Gang c : getClans()) {
 	      if(c.getMembers().contains(p.getName())){
 	    	  return c;
 	      }if(c.getTrusted().contains(p.getName())){

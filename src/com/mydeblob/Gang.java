@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
-public class Clan {
+public class Gang {
 	private SettingsManager settings = SettingsManager.getInstance();
 
 	  private ArrayList<String> members = new ArrayList<String>(); 
@@ -17,20 +17,20 @@ public class Clan {
 	  private String name;
 
 	  @SuppressWarnings("rawtypes") //For "Iterator is a raw type. References to generic type Iterator<E> should be parameterized"
-	public Clan(String name)
+	public Gang(String name)
 	  {
 	    this.name = name;
 	    String str;
-	    for (Iterator localIterator = this.settings.getClans().getStringList("clans." + name + ".members").iterator(); localIterator.hasNext(); this.members.add(str)){
+	    for (Iterator localIterator = this.settings.getClans().getStringList("gangs." + name + ".members").iterator(); localIterator.hasNext(); this.members.add(str)){
 	    	 str = (String)localIterator.next();
 	    }
-	    for (Iterator localIterator = this.settings.getClans().getStringList("clans." + name + ".trusted").iterator(); localIterator.hasNext(); this.trusted.add(str)){
+	    for (Iterator localIterator = this.settings.getClans().getStringList("gangs." + name + ".trusted").iterator(); localIterator.hasNext(); this.trusted.add(str)){
 	    	 str = (String)localIterator.next();
 	    }
-	    for (Iterator localIterator = this.settings.getClans().getStringList("clans." + name + ".officers").iterator(); localIterator.hasNext(); this.officers.add(str)){
+	    for (Iterator localIterator = this.settings.getClans().getStringList("gangs." + name + ".officers").iterator(); localIterator.hasNext(); this.officers.add(str)){
 	    	 str = (String)localIterator.next();
 	    }
-	    for (Iterator localIterator = this.settings.getClans().getStringList("clans." + name + ".leaders").iterator(); localIterator.hasNext(); this.leaders.add(str)){
+	    for (Iterator localIterator = this.settings.getClans().getStringList("gangs." + name + ".leaders").iterator(); localIterator.hasNext(); this.leaders.add(str)){
 	    	 str = (String)localIterator.next();
 	    }
 	  }
@@ -86,7 +86,8 @@ public class Clan {
 		  this.leaders.remove(p.getName());
 		  save();
 	  }
-	  public void msg(Clan c, String message){
+	  @SuppressWarnings("deprecation")
+	public void msg(Gang c, String message){
 		  if(GangManager.getInstance().getClan(c.getName()) == null) return;
 		  for(String p : c.getMembers()){
 			 Player player = Bukkit.getServer().getPlayer(p);
@@ -114,7 +115,7 @@ public class Clan {
 			  }
 	  }
 	  private void save() {
-	    ConfigurationSection conf = this.settings.getClans().getConfigurationSection("clans." + this.name);
+	    ConfigurationSection conf = this.settings.getClans().getConfigurationSection("gangs." + this.name);
 	    conf.set("members", this.members);
 	    conf.set("trusted", this.trusted);
 	    conf.set("officers", this.officers);

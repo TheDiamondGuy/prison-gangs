@@ -1,6 +1,12 @@
 # Welcome to the config of PrisonGangs!
-# Appears when a player requests information about a gangExample would be 
+# Appears when a player requests information about a gang Example would be 
 # Leader • mydeblob - Online
 seperator: •
-# This is the max amount of characters allowed in a clan name
+# This is the max amount of characters allowed in a gang name
 char-limit: 15
+# This is the format that the players gang name will appear in chat
+# *********************For this to work you must add {GANG}*********************
+# *********************in the chat format of your primary***********************
+# *********************chat plugin! (Ex. EssentialsChat)************************
+# %g% is replaced with the gang name
+format: '&f[&8%g%&f]'

@@ -1,5 +1,5 @@
 name: PrisonGangs
-main: com.mydeblob.ClansMain
+main: com.mydeblob.PrisonGangs
 version: 1.0
 author: mydeblob
 commands:

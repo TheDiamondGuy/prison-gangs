@@ -26,7 +26,7 @@ public class SettingsManager {
 
 	    if (!p.getDataFolder().exists()) p.getDataFolder().mkdir();
 
-	    this.clanfile = new File(p.getDataFolder(), "clans.yml");
+	    this.clanfile = new File(p.getDataFolder(), "gangs.yml");
 	    this.clans = YamlConfiguration.loadConfiguration(this.clanfile);
 
 	    if (!this.clanfile.exists())
@@ -34,7 +34,7 @@ public class SettingsManager {
 	        this.clanfile.createNewFile();
 	      }
 	      catch (IOException e) {
-	        Bukkit.getServer().getLogger().info("Could not create clans file!");
+	        Bukkit.getServer().getLogger().info("Could not create the gangs file!");
 	      }
 	  }
 
@@ -48,7 +48,7 @@ public class SettingsManager {
 	      this.clans.save(this.clanfile);
 	    }
 	    catch (IOException e) {
-	      Bukkit.getServer().getLogger().info("Could not save clans file!");
+	      Bukkit.getServer().getLogger().info("Could not save gangs file!");
 	    }
 	  }
 
