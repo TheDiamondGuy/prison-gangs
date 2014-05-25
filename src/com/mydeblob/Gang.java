@@ -8,7 +8,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 public class Gang {
-	private SettingsManager settings = SettingsManager.getInstance();
+	private FileManager settings = FileManager.getInstance();
 
 	  private ArrayList<String> members = new ArrayList<String>(); 
 	  private ArrayList<String> trusted = new ArrayList<String>(); 

@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 public class GangManager {
 	  private static GangManager instance = new GangManager();
 
-	  private SettingsManager settings = SettingsManager.getInstance();
+	  private FileManager settings = FileManager.getInstance();
 
 	  private ArrayList<Gang> clans = new ArrayList<Gang>();
 

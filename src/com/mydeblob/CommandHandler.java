@@ -20,7 +20,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 	HashMap<String, Gang> invited = new HashMap<String, Gang>();
 	private PrisonGangs plugin;
     public static final GangManager t = GangManager.getInstance();
-    public static final SettingsManager s = SettingsManager.getInstance();
+    public static final FileManager s = FileManager.getInstance();
    
 	public CommandHandler(PrisonGangs plugin){
 		this.plugin = plugin;
@@ -61,9 +61,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 					return true;
 				}
 				p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + t.getPlayerClan(p).getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
-				p.sendMessage(ChatColor.GREEN + "gang KDR: " + ChatColor.BLUE + clanKDR(t.getPlayerClan(p)));
-				p.sendMessage(ChatColor.GREEN + "gang Kills: " + ChatColor.BLUE + totalKills(t.getPlayerClan(p)));
-				p.sendMessage(ChatColor.GREEN + "gang Deaths: " + ChatColor.BLUE + totalDeaths(t.getPlayerClan(p)));
+				p.sendMessage(ChatColor.GREEN + "Gang KDR: " + ChatColor.BLUE + clanKDR(t.getPlayerClan(p)));
+				p.sendMessage(ChatColor.GREEN + "Gang Kills: " + ChatColor.BLUE + totalKills(t.getPlayerClan(p)));
+				p.sendMessage(ChatColor.GREEN + "Gang Deaths: " + ChatColor.BLUE + totalDeaths(t.getPlayerClan(p)));
 				p.sendMessage(ChatColor.GREEN + "Members: " + ChatColor.BLUE + getMemberStats(t.getPlayerClan(p)));
 				return true;
 			}
