@@ -6,22 +6,16 @@ import org.bukkit.entity.Player;
 
 public class GangManager {
 	  private static GangManager instance = new GangManager();
-
-	  private FileManager settings = FileManager.getInstance();
-
-	  private ArrayList<Gang> clans = new ArrayList<Gang>();
-
-	  public static GangManager getInstance()
-	  {
+	  private FileManager f = FileManager.getFileManager();
+	  private ArrayList<Gang> gangs = new ArrayList<Gang>();
+	  public static GangManager getGangManager(){
 	    return instance;
 	  }
 
-	@SuppressWarnings("rawtypes") //For "Iterator is a raw type. References to generic type Iterator<E> should be parameterized"
-	public void setupClans()
-	  {
-	    this.clans.clear();
+	public void loadGangs(){
+	    this.gangs.clear();
 	    String name;
-	    for (Iterator localIterator = this.settings.getClans().getStringList("gang-names").iterator(); localIterator.hasNext(); this.clans.add(new Gang(name))){
+	    for (Iterator<String> localIterator = this.settings.getClans().getStringList("gang-names").iterator(); localIterator.hasNext(); this.clans.add(new Gang(name))){
 	    	 name = (String)localIterator.next(); 
 	    }
 	  }

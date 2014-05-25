@@ -12,12 +12,12 @@ import org.bukkit.plugin.Plugin;
 public class FileManager {
 	  Plugin p;
 	  static FileManager instance = new FileManager();
-	  private FileConfiguration gangConfig;
-	  private File gangFile;
-	  private FileConfiguration kdrConfig = null;
-	  private File kdrFile = null;
-	  private FileConfiguration langConfig = null;
-	  private File langFile = null;
+	  private static FileConfiguration gangConfig;
+	  private static File gangFile;
+	  private static FileConfiguration kdrConfig = null;
+	  private static File kdrFile = null;
+	  private static FileConfiguration langConfig = null;
+	  private static File langFile = null;
 	  public static FileManager getFileManager(){
 	    return instance;
 	  }
