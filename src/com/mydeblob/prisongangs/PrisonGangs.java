@@ -34,7 +34,7 @@ public class PrisonGangs extends JavaPlugin{
 		getServer().getPluginManager().registerEvents(new Events(this),  this);
 		GangManager.getGangManager().loadGangs();
 		if(getConfig().getBoolean("auto-updater")){
-			Updater updater = new Updater(this, 66080, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false); // Start Updater but just do a version check
+			Updater updater = new Updater(this, 66577, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false); // Start Updater but just do a version check
 			update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE; // Determine if there is an update ready for us
 			name = updater.getLatestName(); // Get the latest name
 			version = updater.getLatestGameVersion(); // Get the latest game version
@@ -49,4 +49,7 @@ public class PrisonGangs extends JavaPlugin{
 		f.saveGangConfig();
 	}
 	
+	public File getPluginFile(){
+		return this.getFile();
+	}
 }
