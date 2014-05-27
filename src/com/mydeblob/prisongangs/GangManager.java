@@ -1,6 +1,7 @@
 package com.mydeblob.prisongangs;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,25 +9,12 @@ import org.bukkit.entity.Player;
 public class GangManager {
 	  private static GangManager instance = new GangManager();
 	  private FileManager f = FileManager.getFileManager();
-	  private ArrayList<Gang> gangs = new ArrayList<Gang>();
 	  public static GangManager getGangManager(){
 	    return instance;
 	  }
 
-	public void loadGangs(){
-	    this.gangs.clear();
-	    for(String s:f.getGangConfig().getStringList("gang-names")){
-	    	this.gangs.add(new Gang(s));
-	    }
-	  }
-
-	  public ArrayList<Gang> getGangs()
-	  {
-	    return this.gangs;
-	  }
-
 	  public Gang getGangByName(String name){
-	    for (Gang g: getGangs()){
+	    for (Gang g: Gang.getGangs()){
 	      if (g.getName().equalsIgnoreCase(name)){
 	    	  return g;
 	      }
@@ -35,7 +23,7 @@ public class GangManager {
 	  }
 
 	  public Gang getGangWithPlayer(Player p){
-	    for (Gang g:getGangs()){
+	    for (Gang g: Gang.getGangs()){
 	      if(g.getAllPlayers().contains(p.getName())){
 	    	  return g;
 	      }
@@ -108,14 +96,13 @@ public class GangManager {
 					gang.setOwner(target);
 					gang.addLeader(Bukkit.getPlayerExact(oldOwner));
 					gang.removeOfficer(target);
-					sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "leader"));
-					target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "leader"));
-					messageGang(g, Lang.SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "leader"));
+					sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "owner"));
+					target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "owner"));
+					messageGang(g, Lang.SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "owner"));
 					return;
 				}
 		  }
 	  }
-	  //it isn't reaaadyyy
 	  
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void messageGang(Gang g, String message){
@@ -138,10 +125,30 @@ public class GangManager {
 	  }
 	  
 	  public void createGang(Player owner, String name){
-		  
+		    f.getGangConfig().set("gangs." + name + ".members", new ArrayList<String>());
+			f.getGangConfig().set("gangs." + name + ".trusted", new ArrayList<String>());
+			f.getGangConfig().set("gangs." + name + ".officers", new ArrayList<String>());
+			f.getGangConfig().set("gangs." + name + ".leaders", new ArrayList<String>());
+			f.getGangConfig().set("gangs." + name + ".owner", owner.getName());
+			List<String> gangs = f.getGangConfig().getStringList("gang-names");
+			gangs.add(name);
+			f.getGangConfig().set("gang-names", gangs);
+			f.saveGangConfig();
+			@SuppressWarnings("unused")
+			Gang g = new Gang(name);
+			owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESFULLY_CREATED_GANG.toString().replaceAll("%s%", owner.getName()).replaceAll("%g%", name));
 	  }
 	  
-	  public void disbandGang(String name){
-		  
+	  public void disbandGang(Player p, String name){
+		  	Gang g = getGangByName(name);
+		  	String gname = g.getName();
+			f.getGangConfig().set("gangs." + g.getName(), null);
+		    List<String> gangs = f.getGangConfig().getStringList("gang-names");
+		    gangs.remove(g.getName());
+		    f.getGangConfig().set("gang-names", gangs);
+		    f.saveGangConfig();
+		    Gang.removeGang(g);
+		  	messageGang(g, Lang.SUCCESS_DISBAND.toString().replaceAll("%s%", p.getName()).replaceAll("%g%", gname));
+		    p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DISBAND.toString().replaceAll("%s%", p.getName()).replaceAll("%g%", gname));
 	  }
 }

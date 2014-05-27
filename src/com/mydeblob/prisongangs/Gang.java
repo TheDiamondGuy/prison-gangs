@@ -5,12 +5,13 @@ import java.util.ArrayList;
 import org.bukkit.entity.Player;
 
 public class Gang {
-	private FileManager f = FileManager.getFileManager();
+	private static FileManager f = FileManager.getFileManager();
 
 	  private ArrayList<String> members = new ArrayList<String>(); 
 	  private ArrayList<String> trusted = new ArrayList<String>(); 
 	  private ArrayList<String> officers = new ArrayList<String>(); 
 	  private ArrayList<String> leaders = new ArrayList<String>();
+	  private static ArrayList<Gang> gangs = new ArrayList<Gang>();
 	  private String owner = null;
 	  private String name;
 
@@ -29,6 +30,7 @@ public class Gang {
 	    	leaders.add(s);
 	    }
 	    owner = f.getGangConfig().getString("gangs." + name + ".owner");
+	    gangs.add(this);
 	  }
 	  public String getName(){
 	    return this.name;
@@ -111,31 +113,19 @@ public class Gang {
 		  allPlayers.add(getOwner());
 		  return allPlayers;
 	  }
-//	public void msg(Gang c, String message){
-//		  if(GangManager.getInstance().getClan(c.getName()) == null) return;
-//		  for(String p : c.getMembers()){
-//			 Player player = Bukkit.getServer().getPlayer(p);
-//			 if(!(player == null)){
-//				 player.sendMessage(message);
-//			 }
-//		  }
-//		  for(String p : c.getTrusted()){
-//				 Player player = Bukkit.getServer().getPlayer(p);
-//				 if(!(player == null)){
-//					 player.sendMessage(message);
-//				 }
-//			  }
-//		  for(String p : c.getOfficers()){
-//				 Player player = Bukkit.getServer().getPlayer(p);
-//				 if(!(player == null)){
-//					 player.sendMessage(message);
-//				 }
-//			  }
-//		  for(String p : c.getLeaders()){
-//				 Player player = Bukkit.getServer().getPlayer(p);
-//				 if(!(player == null)){
-//					 player.sendMessage(message);
-//				 }
-//			  }
-//	  }
+		public static void loadGangs(){
+		    Gang.gangs.clear();
+		    for(String s:f.getGangConfig().getStringList("gang-names")){
+		    	Gang.gangs.add(new Gang(s));
+		    }
+		  }
+
+		  public static ArrayList<Gang> getGangs(){
+		    return Gang.gangs;
+		  }
+	  public static void removeGang(Gang g){
+		  if(Gang.gangs.contains(g)){
+			  Gang.gangs.remove(g);
+		  }
+	  }
 }
