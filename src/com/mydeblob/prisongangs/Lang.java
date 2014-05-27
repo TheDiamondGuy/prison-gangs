@@ -29,7 +29,7 @@ public enum Lang {
 	SUCCESS_KICK("success-kick", "&c%p% &9has just been kicked from the gang!"),
 	SUCCESS_PROMOTE("success-kick", "&c%p% &9has just been promoted to %r%!"),
 	SUCCESS_DEMOTE("success-kick", "&c%p% &9has just been demoted to %p%!"),
-	TARGET_SUCCESS_LEFT("target-success-left", "&aYou have succesfully left the gang %g%!"),
+	SENDER_SUCCESS_LEFT("sender-success-left", "&aYou have succesfully left the gang %g%!"),
 	SUCCESS_LEFT("success-left", "&c%p% &9has just left the gang!"),
 	DISBAND_ABSENCE("disband-of-absence", "&cThe gang had been disbanded due to absence of an owner!"),
 	NO_PERMS_INVITE("no-perms-invite", "You do not have permission to invite people! (You must be Trusted+)"),

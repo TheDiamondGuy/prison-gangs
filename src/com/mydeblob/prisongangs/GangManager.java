@@ -121,7 +121,32 @@ public class GangManager {
 	  }
 	  
 	  public void leave(Player p, Gang g){
-		  
+		  if(g.getMembers().contains(p.getName())){
+			  	messageGang(g, Lang.SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "member").replaceAll("%g%", g.getName()));
+			  	p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "member").replaceAll("%g%", g.getName()));
+				g.removeMember(p);
+				return;
+			}if(g.getTrusted().contains(p.getName())){
+			  	messageGang(g, Lang.SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "trusted").replaceAll("%g%", g.getName()));
+			  	p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "trusted").replaceAll("%g%", g.getName()));
+				g.removeTrusted(p);
+				return;
+			}if(g.getOfficers().contains(p.getName())){
+			  	messageGang(g, Lang.SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "officer").replaceAll("%g%", g.getName()));
+			  	p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "officer").replaceAll("%g%", g.getName()));
+				g.removeTrusted(p);
+				return;
+			}if(g.getLeaders().contains(p.getName())){
+			  	messageGang(g, Lang.SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "leader").replaceAll("%g%", g.getName()));
+			  	p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "leader").replaceAll("%g%", g.getName()));
+				g.removeTrusted(p);
+				return;
+			}if(g.getOwner().equalsIgnoreCase(p.getName())){
+				messageGang(g, Lang.DISBAND_ABSENCE.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "owner").replaceAll("%g%", g.getName()));
+				removeGang(g.getName());
+			  	p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "owner").replaceAll("%g%", g.getName()));
+				return;
+			}
 	  }
 	  
 	  public void createGang(Player owner, String name){
@@ -137,6 +162,16 @@ public class GangManager {
 			@SuppressWarnings("unused")
 			Gang g = new Gang(name);
 			owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESFULLY_CREATED_GANG.toString().replaceAll("%s%", owner.getName()).replaceAll("%g%", name));
+	  }
+	  
+	  public void removeGang(String name){
+		  	Gang g = getGangByName(name);
+			f.getGangConfig().set("gangs." + g.getName(), null);
+		    List<String> gangs = f.getGangConfig().getStringList("gang-names");
+		    gangs.remove(g.getName());
+		    f.getGangConfig().set("gang-names", gangs);
+		    f.saveGangConfig();
+		    Gang.removeGang(g);
 	  }
 	  
 	  public void disbandGang(Player p, String name){
