@@ -1,4 +1,4 @@
-package com.mydeblob;
+package com.mydeblob.prisongangs;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -20,7 +20,9 @@ public enum Lang {
 	NO_PERMS_DEMOTE("no-perms-demote", "&cYou do not have permission to demote people! (You must be a Officer+"),
 	NO_PERMS_KICK("no-perms-kick", "&cYou do not have permission to kick people! (You must be a Officer+)"),
 	CANT_DEMOTE("cant-demote", "&cYou can't demote a higher ranked player than you!"),
-	CANT_PROMOTE("cant-promote", "&cThis person can't be promoted any higher!"),
+	CANT_PROMOTE_OFFICER("cant-promote-officer", "&cYou can't promote people past trusted!"),
+	CANT_PROMOTE_LEADER("cant-promote-leader", "&cYou can't promote people past officer!"),
+	CANT_PROMOTE_OWNER("cant-promote-owner", "&cYou can't promote people past leader! To pass over gang ownership type /gang setowner <Player Name>!"),
 	CANT_KICK("cant-kick", "&cYou can't kick players higher or equal to you in rank!"),
 	SENDER_SUCCESS_KICK("sender-success-kick", "&aSuccesfully kicked %p% from the gang!"),
 	TARGET_SUCCESS_KICK("target-success-kick", "&cYou have been kicked from the gang %g% by %p%"), //%g% is replaced with gang name
@@ -45,7 +47,6 @@ public enum Lang {
 	SENDER_SUCCESS_DISBAND("sender-success-disband", "&aSuccesfully disbanded the gang!"),
 	CANT_DISBAND("cant-disband", "&cOnly gang owners can disband the gang!");
 	
-
 
 	private String path;
 	private String def;

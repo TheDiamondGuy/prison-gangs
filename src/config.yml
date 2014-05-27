@@ -10,3 +10,5 @@ char-limit: 15
 # *********************chat plugin! (Ex. EssentialsChat)************************
 # %g% is replaced with the gang name
 format: '&f[&8%g%&f]'
+# If this is set to true the plugin will auto update
+auto-updater: true

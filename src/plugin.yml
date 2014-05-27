@@ -1,5 +1,5 @@
 name: PrisonGangs
-main: com.mydeblob.PrisonGangs
+main: com.mydeblob.prisongangs.PrisonGangs
 version: 1.0
 author: mydeblob
 commands:
@@ -11,3 +11,6 @@ commands:
       description: Base command for gangs
       usage: /<command> help
       aliases: [g]
+   pgupdate:
+      description: Updates the plugin
+      usage: /<command>

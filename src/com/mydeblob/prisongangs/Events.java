@@ -1,4 +1,4 @@
-package com.mydeblob;
+package com.mydeblob.prisongangs;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package com.mydeblob;
+package com.mydeblob.prisongangs;
 
 
 import java.util.ArrayList;
@@ -12,6 +12,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
+
+import com.mydeblob.guard.Updater;
 
 public class CommandHandler implements CommandExecutor, Listener{
 	public ArrayList<String> inClanChat = new ArrayList<String>();
@@ -547,6 +549,20 @@ public class CommandHandler implements CommandExecutor, Listener{
 				p.sendMessage(ChatColor.GREEN + "/gang c a");
 				p.sendMessage(ChatColor.YELLOW + "Switches between ally chat and public chat");
 				return true;
+			}
+		}else if(cmd.getName().equalsIgnoreCase("pgupdate")){
+			if(sender.hasPermission("gangs.admin") || sender.hasPermission("gangs.update")){
+				if(plugin.getConfig().getBoolean("auto-updater")){
+					@SuppressWarnings("unused")
+					Updater updater = new Updater(plugin, 66080, plugin.getF(), Updater.UpdateType.NO_VERSION_CHECK, true); // Go straight to downloading, and announce progress to console.
+					sender.sendMessage(Lang.PREFIX.toString() + ChatColor.GREEN + "Starting the download of the latest version of GuardOverseer. Check console for progress on the download. Reload after is has downloaded!");
+					return true;
+				}else{
+					sender.sendMessage(ChatColor.RED + "Please enable auto updating in the PrisonGangs config.yml to use this feature");
+					return true;
+				}
+			}else{
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
 			}
 		}
 		return false;

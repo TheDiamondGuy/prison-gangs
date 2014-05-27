@@ -1,4 +1,4 @@
-package com.mydeblob;
+package com.mydeblob.prisongangs;
 
 import java.util.ArrayList;
 
@@ -94,6 +94,23 @@ public class Gang {
 		  f.saveGangConfig();
 	  }
 	  
+	  public ArrayList<String> getAllPlayers(){
+		  ArrayList<String> allPlayers = new ArrayList<String>();
+		  for(String s:getMembers()){
+			  allPlayers.add(s);
+		  }
+		  for(String s:getTrusted()){
+			  allPlayers.add(s);
+		  }
+		  for(String s:getOfficers()){
+			  allPlayers.add(s);
+		  }
+		  for(String s:getLeaders()){
+			  allPlayers.add(s);
+		  }
+		  allPlayers.add(getOwner());
+		  return allPlayers;
+	  }
 //	public void msg(Gang c, String message){
 //		  if(GangManager.getInstance().getClan(c.getName()) == null) return;
 //		  for(String p : c.getMembers()){
