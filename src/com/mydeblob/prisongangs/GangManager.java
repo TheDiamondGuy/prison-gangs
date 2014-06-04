@@ -21,7 +21,14 @@ public class GangManager {
 	    }
 	    return null;
 	  }
-
+	  
+	  public boolean isInGang(Player p){
+		  if(getGangWithPlayer(p) == null){
+			  return false;
+		  }else{
+			  return true;
+		  }
+	  }
 	  public Gang getGangWithPlayer(Player p){
 	    for (Gang g: Gang.getGangs()){
 	      if(g.getAllPlayers().contains(p.getName())){
@@ -42,7 +49,7 @@ public class GangManager {
 				  messageGang(g, Lang.SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "trusted"));
 				  return;
 			  }else{
-				  sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE_OFFICER.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "trusted"));
+				  sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "trusted"));
 				  return;
 			  }
 		  }if(gang.getLeaders().contains(sender.getName())){
@@ -54,7 +61,7 @@ public class GangManager {
 					messageGang(g, Lang.SUCCESS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "officer"));
 					return;
 				}else{
-					sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE_LEADER.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "officer"));
+					sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "officer"));
 					return;
 				}
 		  }if(gang.getOwner().equalsIgnoreCase(sender.getName())){
@@ -102,6 +109,13 @@ public class GangManager {
 					return;
 				}
 		  }
+		  if(g.getMembers().contains(sender.getName())){
+			  sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "member"));
+			  return;
+		  }else{
+			  sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_PROMOTE.toString().replaceAll("%s%", sender.getName()).replaceAll("%p%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", "trusted"));
+			  return;
+		  }
 	  }
 	  
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
@@ -116,8 +130,34 @@ public class GangManager {
 		  
 	  }
 	  
-	  public void kickPlayer(Player p, Gang g){
-		  
+	  public void kickPlayer(Player p, Player sender, Gang g){
+		  if(g.getMembers().contains(p.getName())){
+			  g.removeMember(p);
+			  p.sendMessage(Lang.TARGET_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "member").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "member").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  messageGang(g, Lang.SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "member").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  return;
+		  }else if(g.getTrusted().contains(p.getName())){
+			  g.removeTrusted(p);
+			  p.sendMessage(Lang.TARGET_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "trusted").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "trusted").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  messageGang(g, Lang.SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "trusted").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  return;
+		  }else if(g.getOfficers().contains(p.getName())){
+			  g.removeOfficer(p);
+			  p.sendMessage(Lang.TARGET_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "officer").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "officer").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  messageGang(g, Lang.SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "officer").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  return;
+		  }else if(g.getLeaders().contains(p.getName())){
+			  g.removeLeader(p);
+			  p.sendMessage(Lang.TARGET_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "leader").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "leader").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  messageGang(g, Lang.SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "leader").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));
+			  return;
+		  }else if(g.getOwner().equalsIgnoreCase(p.getName())){
+			  return Ranks.OWNER;
+		  }
 	  }
 	  
 	  public void leave(Player p, Gang g){

@@ -13,85 +13,82 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
-import com.mydeblob.guard.Updater;
-
 public class CommandHandler implements CommandExecutor, Listener{
 	public ArrayList<String> inClanChat = new ArrayList<String>();
 	ArrayList<String> inAllyChat = new ArrayList<String>();
 	HashMap<Gang, Gang> ally = new HashMap<Gang, Gang>();
 	HashMap<String, Gang> invited = new HashMap<String, Gang>();
 	private PrisonGangs plugin;
-    public static final GangManager t = GangManager.getInstance();
-    public static final FileManager s = FileManager.getInstance();
-   
+    public static final GangManager gm = GangManager.getGangManager();
+    public static final FileManager f = FileManager.getFileManager();
 	public CommandHandler(PrisonGangs plugin){
 		this.plugin = plugin;
 	}
-	String prefix = ChatColor.GRAY + "[" + ChatColor.DARK_GREEN + "PrisonGangs" + ChatColor.GRAY + "] ";
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
-		if(!(sender instanceof Player)){
-			sender.sendMessage("This command may only be executed in game!");
-			return true;
-		}
-		Player p = (Player) sender;
 		if(cmd.getName().equalsIgnoreCase("kdr")){
+			if(!(sender instanceof Player)){
+				sender.sendMessage("This command may only be executed in game!");
+				return true;
+			}
+			Player p = (Player) sender;
 			if(p.hasPermission("gangs.kdr")){
 				if(args.length < 1){
-					p.sendMessage(ChatColor.DARK_RED + "=--" + ChatColor.DARK_GREEN + "PrisonGangs" + ChatColor.DARK_RED + "--=");
-					p.sendMessage(ChatColor.GREEN + "Your KDR: " + ChatColor.BLUE + plugin.getGangConfig().getDouble("players." + p.getName() + ".kdr"));
-					p.sendMessage(ChatColor.GREEN + "Your kills: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + p.getName() + ".kills"));
-					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + p.getName() + ".deaths"));
+					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX   + ChatColor.DARK_RED + "--=");
+					p.sendMessage(ChatColor.GREEN + "Your KDR: " + ChatColor.BLUE + f.getGangConfig().getDouble("players." + p.getUniqueId().toString() + ".kdr"));
+					p.sendMessage(ChatColor.GREEN + "Your kills: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".kills"));
+					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".deaths"));
 					return true;
 				}else if(args.length == 1){
-					if(!plugin.getGangConfig().contains("players." + args[0])){
-						p.sendMessage(prefix + ChatColor.DARK_RED + "Error! The specified player wasn't found! Are you sure you spelled his name correctly?");
+					Player t = Bukkit.getPlayerExact(args[0]);
+					if(!f.getGangConfig().contains("players." + t.getUniqueId().toString())){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_FOUND.toString());
 						return true;
 					}
-					p.sendMessage(ChatColor.DARK_RED + "=--" + ChatColor.DARK_GREEN + "PrisonGangs" + ChatColor.DARK_RED + "--=");
-					p.sendMessage(ChatColor.GREEN + args[0] + "'s KDR: " + ChatColor.BLUE + plugin.getGangConfig().getDouble("players." + args[0] + ".kdr"));
-					p.sendMessage(ChatColor.GREEN + args[0] + "'s kills: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + args[0] + ".kills"));
-					p.sendMessage(ChatColor.GREEN + args[0] + "'s deaths: " + ChatColor.BLUE + plugin.getGangConfig().getInt("players." + args[0] + ".deaths"));
+					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX + ChatColor.DARK_RED + "--=");
+					p.sendMessage(ChatColor.GREEN + t.getName() + "'s KDR: " + ChatColor.BLUE + f.getGangConfig().getDouble("players." + t.getUniqueId().toString() + ".kdr"));
+					p.sendMessage(ChatColor.GREEN + t.getName() + "'s kills: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + t.getUniqueId().toString() + ".kills"));
+					p.sendMessage(ChatColor.GREEN + t.getName() + "'s deaths: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + t.getUniqueId().toString() + ".deaths"));
 					return true;
 				}
-				return false;
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString());
+				return true;
+			}else{
+				p.sendMessage(Lang.NO_PERMS.toString());
 			}
 		}
 		if(cmd.getName().equalsIgnoreCase("gang")){
+			if(!(sender instanceof Player)){
+				sender.sendMessage("This command may only be executed in game!");
+				return true;
+			}
+			Player p = (Player) sender;
 			if(args.length < 1){
-				if(t.getPlayerClan(p) == null){
-					p.sendMessage(prefix + ChatColor.RED + "You are not in a gang! To get information from another gang type /gang info <gangName>");
+				if(gm.isInGang(p)){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString());
 					return true;
 				}
-				p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + t.getPlayerClan(p).getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
-				p.sendMessage(ChatColor.GREEN + "Gang KDR: " + ChatColor.BLUE + clanKDR(t.getPlayerClan(p)));
-				p.sendMessage(ChatColor.GREEN + "Gang Kills: " + ChatColor.BLUE + totalKills(t.getPlayerClan(p)));
-				p.sendMessage(ChatColor.GREEN + "Gang Deaths: " + ChatColor.BLUE + totalDeaths(t.getPlayerClan(p)));
-				p.sendMessage(ChatColor.GREEN + "Members: " + ChatColor.BLUE + getMemberStats(t.getPlayerClan(p)));
+				Gang g = gm.getGangWithPlayer(p);
+				p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
+				p.sendMessage(ChatColor.GREEN + "Gang KDR: " + ChatColor.BLUE + clanKDR(g));
+				p.sendMessage(ChatColor.GREEN + "Gang Kills: " + ChatColor.BLUE + totalKills(g));
+				p.sendMessage(ChatColor.GREEN + "Gang Deaths: " + ChatColor.BLUE + totalDeaths(g));
+				p.sendMessage(ChatColor.GREEN + "Members: " + ChatColor.BLUE + getMemberStats(g));
 				return true;
 			}
 			if(args[0].equalsIgnoreCase("info")){
 				if(args.length == 2){
-					if(t.getClan(args[1]) == null && !(s.getClans().getStringList("clannames").contains(args[1]))){
-						p.sendMessage(prefix + ChatColor.RED + "Gang not found! Are you sure you typed the gang name correctly?");
+					if(gm.getGangByName(args[1]) == null && !(f.getGangConfig().getStringList("gang-names").contains(args[1]))){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString());
 						return true;
 					}
-					p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + t.getClan(args[1]).getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
-					p.sendMessage(ChatColor.GREEN + t.getClan(args[1]).getName() + "'s KDR: " + ChatColor.BLUE + clanKDR(t.getClan(args[1])));
-					p.sendMessage(ChatColor.GREEN + t.getClan(args[1]).getName() + "'s Kills: " + ChatColor.BLUE + totalKills(t.getClan(args[1])));
-					p.sendMessage(ChatColor.GREEN + t.getClan(args[1]).getName() + "'s Deaths: " + ChatColor.BLUE + totalDeaths(t.getClan(args[1])));
-					p.sendMessage(ChatColor.GREEN + t.getClan(args[1]).getName() + "'s Members: " + ChatColor.BLUE + getMemberStats(t.getClan(args[1])));
+					Gang g = gm.getGangByName(args[1]);
+					p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + clanKDR(g));
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + totalKills(g));
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + totalDeaths(g));
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + getMemberStats(g));
 					return true;
 				}
-				if(t.getPlayerClan(p) == null){
-					p.sendMessage(prefix + ChatColor.RED + "You are not in a gang! To get information from another gang type /gang info <gangName>");
-					return true;
-				}
-				p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + t.getPlayerClan(p).getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
-				p.sendMessage(ChatColor.GREEN + "Gang KDR: " + ChatColor.BLUE + clanKDR(t.getPlayerClan(p))); 
-				p.sendMessage(ChatColor.GREEN + "Gang Kills: " + ChatColor.BLUE + totalKills(t.getPlayerClan(p)));
-				p.sendMessage(ChatColor.GREEN + "Gang Deaths: " + ChatColor.BLUE + totalDeaths(t.getPlayerClan(p)));
-				p.sendMessage(ChatColor.GREEN + "Members: " + ChatColor.BLUE + getMemberStats(t.getPlayerClan(p)));
-				return true;
 			}
 			if(args[0].equalsIgnoreCase("create") && args.length == 2){
 				if(p.hasPermission("gangs.create")){

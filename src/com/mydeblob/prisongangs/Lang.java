@@ -5,8 +5,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 public enum Lang {
 	PREFIX("prefix", "&7[&2PrisonGangs&7]"),
+	TRUNCATED_PREFIX("prefix", "&7[&2PrisonGangs&7]"),
+	WRONG_COMMAND("wrong-command", "&cIncorrect command syntax! Type /gang help for help with commands!"),
 	NO_PERMS("no-permission", "&cYou do not have permission to use this command!"),
 	IN_GANG("in-gang", "&cYou are already in a gang! You must leave your current gang with /gang leave!"),
+	PLAYER_NOT_FOUND("player-not-found", "&cError! The specified player wasn't found! Are you sure you spelled his name correctly?"),
 	GANG_NOT_FOUND("gang-not-found", "&cGang not found! Are you sure you typed the gang name correctly?"),
 	CHAR_LIMIT("char-limit", "&cError: The gang name is to long!"),
 	NOT_IN_GANG("not-in-gang", "&cYou are not in a gang! To get information from another gang type /gang info <gangName>"),
@@ -20,8 +23,7 @@ public enum Lang {
 	NO_PERMS_DEMOTE("no-perms-demote", "&cYou do not have permission to demote people! (You must be a Officer+"),
 	NO_PERMS_KICK("no-perms-kick", "&cYou do not have permission to kick people! (You must be a Officer+)"),
 	CANT_DEMOTE("cant-demote", "&cYou can't demote a higher ranked player than you!"),
-	CANT_PROMOTE_OFFICER("cant-promote-officer", "&cYou can't promote people past trusted!"),
-	CANT_PROMOTE_LEADER("cant-promote-leader", "&cYou can't promote people past officer!"),
+	CANT_PROMOTE("cant-promote", "&cYou can't promote players higher or equal to you in rank!"),
 	CANT_PROMOTE_OWNER("cant-promote-owner", "&cYou can't promote people past leader! To pass over gang ownership type /gang setowner <Player Name>!"),
 	CANT_KICK("cant-kick", "&cYou can't kick players higher or equal to you in rank!"),
 	SENDER_SUCCESS_KICK("sender-success-kick", "&aSuccesfully kicked %p% from the gang!"),
