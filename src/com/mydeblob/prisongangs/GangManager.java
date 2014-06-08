@@ -130,7 +130,7 @@ public class GangManager {
 		  
 	  }
 	  
-	  public void kickPlayer(Player p, Player sender, Gang g){
+	  public void kickPlayer(Player p, Player sender, Gang g){ KICK DOESN'T WORK
 		  if(g.getMembers().contains(p.getName())){
 			  g.removeMember(p);
 			  p.sendMessage(Lang.TARGET_SUCCESS_KICK.toString().replaceAll("%s%", p.getName()).replaceAll("%r%", "member").replaceAll("%g%", g.getName()).replaceAll("%p%", p.getName()));

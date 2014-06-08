@@ -92,111 +92,70 @@ public class CommandHandler implements CommandExecutor, Listener{
 			}
 			if(args[0].equalsIgnoreCase("create") && args.length == 2){
 				if(p.hasPermission("gangs.create")){
-					if(t.getPlayerClan(p) != null){
-						p.sendMessage(prefix + ChatColor.RED + "You are already in a gang!");
+					if(gm.getGangWithPlayer(p) != null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString());
 						return true;
 					}
-					if(t.getClan(args[1]) == null && s.getClans().getStringList("gang-names").contains(args[1])){
-						p.sendMessage(prefix + ChatColor.RED + "That gang already exists!");
+					if(gm.getGangByName(args[1]) == null && f.getGangConfig().getStringList("gang-names").contains(args[1])){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_EXISTS.toString());
 						return true;
 					}
-					if(args[1].length() > plugin.getConfig().getInt("char-length")){
-						p.sendMessage(prefix + ChatColor.RED + "Error: That clan name is to long!");
+					if(args[1].length()+1 > plugin.getConfig().getInt("char-length")){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.CHAR_LIMIT.toString());
 						return true;
 					}
-					s.getClans().set("gangs." + args[1] + ".members", new ArrayList<String>());
-					s.getClans().set("gangs." + args[1] + ".trusted", new ArrayList<String>());
-					s.getClans().set("gangs." + args[1] + ".officers", new ArrayList<String>());
-					s.getClans().set("gangs." + args[1] + ".leaders", new ArrayList<String>());
-					s.getClans().set("gangs." + args[1] + ".description", null);
-					List<String> leaders = s.getClans().getStringList("gangs." + args[1] + ".leaders");
-					leaders.add(p.getName());
-					s.getClans().set("clans." + args[1] + ".leaders", leaders);
-					List<String> gangnames = s.getClans().getStringList("gang-names");
-					gangnames.add(args[1]);
-					s.getClans().set("clannames", gangnames);
-					s.saveClans();
-					t.setupClans();
-					p.sendMessage(prefix + ChatColor.GREEN + "Succesfully created a gang!");
+					gm.createGang(p, args[1]);
 					return true;
 				}else{
-					p.sendMessage(ChatColor.DARK_RED + "You do not have permission to use this command!");
+					p.sendMessage(Lang.NO_PERMS.toString());
 					return true;
 				}
-				
 			}if(args[0].equalsIgnoreCase("create") && args.length != 2){
-				p.sendMessage(prefix + ChatColor.RED + "Incorrect usage! Proper usage: /gang create <gangName>");
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString());
 				return true;
 			}if(args[0].equalsIgnoreCase("promote") && args.length == 2){
 				if(p.hasPermission("gangs.promote")){
-					if(t.getPlayerClan(p) == null){
-						p.sendMessage(prefix + ChatColor.RED + "You are not in a gang!");
+					if(gm.getGangWithPlayer(p) != null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString());
 						return true;
 					}
-					Player target = (Player) Bukkit.getPlayer(args[1]);
+					Player target = Bukkit.getPlayer(args[1]);
 					if(target == null){
-						p.sendMessage(prefix + ChatColor.RED + "The specified player isn't online!"); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}
-					if(t.getPlayerClan(target) == null){
-						p.sendMessage(prefix + ChatColor.RED + target.getName() + " is not in a gang!"); 
+					if(gm.getGangWithPlayer(target) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG); 
 						return true;
-					}if(t.getPlayerClan(target) != t.getPlayerClan(p)){
-						p.sendMessage(prefix + ChatColor.RED + target.getName() + " is not in your gang!");
-						return true;
-					}if(t.getPlayerClan(p).getOfficers().contains(p.getName()) || t.getPlayerClan(p).getLeaders().contains(p.getName()) || p.isOp()){
-						if(t.getPlayerClan(p).getMembers().contains(target.getName())){
-							t.getPlayerClan(p).addTrusted(target);
-							t.getPlayerClan(p).removeMember(target);
-							p.sendMessage(prefix + ChatColor.GREEN + "Succesfully promoted " + target.getName() + " to trusted!");
-							target.sendMessage(prefix + ChatColor.GREEN + "You have been promoted to trusted!");
-							t.getPlayerClan(p).msg(t.getPlayerClan(p), ChatColor.BLUE + target.getName() + " has just been promoted to trusted!");
-							return true;
-						}if(t.getPlayerClan(p).getTrusted().contains(target.getName())){
-							t.getPlayerClan(p).addOfficer(target);
-							t.getPlayerClan(p).removeTrusted(target);
-							p.sendMessage(prefix + ChatColor.GREEN + "Succesfully promoted " + target.getName() + " to a officer!");
-							target.sendMessage(prefix + ChatColor.GREEN + "You have been promoted to a officer!");
-							t.getPlayerClan(p).msg(t.getPlayerClan(p), ChatColor.BLUE + target.getName() + " has just been promoted to a officer!");
-							return true;
-						}if(t.getPlayerClan(p).getOfficers().contains(target.getName())){
-							t.getPlayerClan(p).addLeader(target);
-							t.getPlayerClan(p).removeOfficer(target);
-							p.sendMessage(prefix + ChatColor.GREEN + "Succesfully promoted " + target.getName() + " to a leader!");
-							target.sendMessage(prefix + ChatColor.GREEN + "You have been promoted to a leader!");
-							t.getPlayerClan(p).msg(t.getPlayerClan(p), ChatColor.BLUE + target.getName() + " has just been promoted to a leader!");
-							return true;
-						}if(t.getPlayerClan(p).getLeaders().contains(target.getName())){
-							p.sendMessage(prefix + ChatColor.RED + "That player is already a leader!");
-							return true;
-						}
-					}else{
-						p.sendMessage(prefix + ChatColor.RED + "You do not have permission to do this!");
+					}if(gm.getGangWithPlayer(target).getName() != gm.getGangWithPlayer(p).getName()){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_YOUR_GANG.toString());
 						return true;
 					}
-				}else{
-					p.sendMessage(ChatColor.DARK_RED + "You do not have permission to use this command!");
+					gm.promotePlayer(p, target, gm.getGangWithPlayer(p));
 					return true;
-				}
+					}else{
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
+						return true;
+					}
 			}else if(args[0].equalsIgnoreCase("promote") && args.length != 2){
-				p.sendMessage(prefix + ChatColor.RED + "Incorrect usage! Proper usage: /gang promote <PlayerName>");
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString());
 				return true;
 			}if(args[0].equalsIgnoreCase("demote") && args.length == 2){
 				if(p.hasPermission("gangs.demote")){
-					if(t.getPlayerClan(p) == null){
-						p.sendMessage(prefix + ChatColor.RED + "You are not in a gang!");
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString());
 						return true;
 					}
 					Player target = (Player) Bukkit.getPlayer(args[1]);
 					if(target == null){
-						p.sendMessage(prefix + ChatColor.RED + "The specified player isn't online!"); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}
-					if(t.getPlayerClan(target) == null){
-						p.sendMessage(prefix + ChatColor.RED + target.getName() + " is not in a gang!"); 
+					if(gm.getGangWithPlayer(target) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG); 
 						return true;
-					}if(t.getPlayerClan(target) != t.getPlayerClan(p)){
-						p.sendMessage(prefix + ChatColor.RED + target.getName() + " is not in your gang!");
+					}if(gm.getGangWithPlayer(target).getName() != gm.getGangWithPlayer(p).getName()){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_YOUR_GANG);
 						return true;
 					}if(t.getPlayerClan(p).getOfficers().contains(p.getName()) || t.getPlayerClan(p).getLeaders().contains(p.getName())){
 						if(t.getPlayerClan(p).getMembers().contains(target.getName())){
