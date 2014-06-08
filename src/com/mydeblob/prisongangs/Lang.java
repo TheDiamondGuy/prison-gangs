@@ -6,6 +6,10 @@ import org.bukkit.entity.Player;
 
 public enum Lang {
 	PREFIX("prefix", "&7[&2PrisonGangs&7]"),
+	CANT_KICK_YOURSELF("cant-kick-yourself", "&cYou can't kick yourself! Type /leave to leave the gang!"),
+	CANT_DEMOTE_YOURSELF("cant-demote-yourself", "&cYou can't demote yourself!"),
+	CANT_PROMOTE_YOURSELF("cant-promote-yourself", "&cYou can't promote yourself!"),
+	CANT_INVITE_YOURSELF("cant-invite-yourself", "&cYou can't invite yourself!"),
 	TRUNCATED_PREFIX("prefix", "&7[&2PrisonGangs&7]"),
 	WRONG_COMMAND("wrong-command", "&cIncorrect command syntax! Type /gang help for help with commands!"),
 	NO_PERMS("no-permission", "&cYou do not have permission to use this command!"),

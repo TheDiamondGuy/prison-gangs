@@ -129,7 +129,7 @@ public class Gang {
 		  }
 	  }
 	  
-	  public Enum<Ranks> getPlayerRank(String playerName, Gang g){
+	public static Ranks getPlayerRank(String playerName, Gang g){
 		  if(g.getMembers().contains(playerName)){
 			  return Ranks.MEMBER;
 		  }else if(g.getTrusted().contains(playerName)){
