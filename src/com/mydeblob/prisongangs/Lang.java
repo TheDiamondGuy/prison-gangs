@@ -2,6 +2,7 @@ package com.mydeblob.prisongangs;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.Player;
 
 public enum Lang {
 	PREFIX("prefix", "&7[&2PrisonGangs&7]"),
@@ -63,15 +64,34 @@ public enum Lang {
 	public static void setFile(YamlConfiguration langConfig) {
 		lang = langConfig;
 	}
-
-	public String translate() {
+	public String toString() {
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def));
 		}
 	}
-
+	public String toString(Player sender, Player target){
+		if (this == PREFIX){
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
+		}else{
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName());
+		}
+	}
+	public String toString(Player sender, Player target, Gang g){
+		if (this == PREFIX){
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
+		}else{
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName()).replaceAll("%g%", g.getName());
+		}
+	}
+	public String toString(Player sender, Player target, Gang g, Ranks r){
+		if (this == PREFIX){
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
+		}else{
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toString());
+		}
+	}
 
 }
 
