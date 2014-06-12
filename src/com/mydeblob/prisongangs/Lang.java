@@ -17,7 +17,7 @@ public enum Lang {
 	PLAYER_NOT_FOUND("player-not-found", "&cError! The specified player wasn't found! Are you sure you spelled his name correctly?"),
 	GANG_NOT_FOUND("gang-not-found", "&cGang not found! Are you sure you typed the gang name correctly?"),
 	CHAR_LIMIT("char-limit", "&cError: The gang name is to long!"),
-	NOT_IN_GANG("not-in-gang", "&cYou are not in a gang! To get information from another gang type /gang info <gangName>"),
+	NOT_IN_GANG("not-in-gang", "&cYou are not in a gang! To get information from another gang type /gang info <gangName>. To get help with gangs, type /gang help"),
 	TARGET_NOT_IN_GANG("target-not-in-gang", "&c%p% is not in a gang!"),
 	TARGET_NOT_IN_YOUR_GANG("target-not-in-your-gang", "&c%p% is not in your gang!"),
 	GANG_EXISTS("gang-exists", "&cThat gang already exists!"),
@@ -78,11 +78,32 @@ public enum Lang {
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def));
 		}
 	}
+	public String toString(Player sender) {
+		if (this == PREFIX){
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
+		}else{
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName());
+		}
+	}
 	public String toString(Player sender, Player target){
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName());
+		}
+	}
+	public String toString(Player sender, Ranks r, Gang g) {
+		if (this == PREFIX){
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
+		}else{
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toString());
+		}
+	}
+	public String toString(Player sender, Gang g) {
+		if (this == PREFIX){
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
+		}else{
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", g.getName());
 		}
 	}
 	public String toString(Player sender, Player target, Gang g){

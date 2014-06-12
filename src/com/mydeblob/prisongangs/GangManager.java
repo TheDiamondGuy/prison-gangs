@@ -407,9 +407,8 @@ public class GangManager {
 		gangs.add(name);
 		f.getGangConfig().set("gang-names", gangs);
 		f.saveGangConfig();
-		@SuppressWarnings("unused")
 		Gang g = new Gang(name);
-		owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESFULLY_CREATED_GANG.toString().replaceAll("%s%", owner.getName()).replaceAll("%g%", name));
+		owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESFULLY_CREATED_GANG.toString(owner, Ranks.OWNER, g));
 	}
 
 	public void removeGang(String name){

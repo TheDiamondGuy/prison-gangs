@@ -14,10 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 
 public class CommandHandler implements CommandExecutor, Listener{
-	public ArrayList<String> inClanChat = new ArrayList<String>();
-	ArrayList<String> inAllyChat = new ArrayList<String>();
-	HashMap<Gang, Gang> ally = new HashMap<Gang, Gang>();
-	HashMap<String, Gang> invited = new HashMap<String, Gang>();
+	private HashMap<String, Gang> invited = new HashMap<String, Gang>();
 	private PrisonGangs plugin;
     public static final GangManager gm = GangManager.getGangManager();
     public static final FileManager f = FileManager.getFileManager();
@@ -33,7 +30,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			Player p = (Player) sender;
 			if(p.hasPermission("gangs.kdr")){
 				if(args.length < 1){
-					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX   + ChatColor.DARK_RED + "--=");
+					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX.toString()   + ChatColor.DARK_RED + "--=");
 					p.sendMessage(ChatColor.GREEN + "Your KDR: " + ChatColor.BLUE + f.getGangConfig().getDouble("players." + p.getUniqueId().toString() + ".kdr"));
 					p.sendMessage(ChatColor.GREEN + "Your kills: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".kills"));
 					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".deaths"));
@@ -41,19 +38,19 @@ public class CommandHandler implements CommandExecutor, Listener{
 				}else if(args.length == 1){
 					Player t = Bukkit.getPlayerExact(args[0]);
 					if(!f.getGangConfig().contains("players." + t.getUniqueId().toString())){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_FOUND.toString());
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_FOUND.toString(p, t));
 						return true;
 					}
-					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX + ChatColor.DARK_RED + "--=");
+					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX.toString() + ChatColor.DARK_RED + "--=");
 					p.sendMessage(ChatColor.GREEN + t.getName() + "'s KDR: " + ChatColor.BLUE + f.getGangConfig().getDouble("players." + t.getUniqueId().toString() + ".kdr"));
 					p.sendMessage(ChatColor.GREEN + t.getName() + "'s kills: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + t.getUniqueId().toString() + ".kills"));
 					p.sendMessage(ChatColor.GREEN + t.getName() + "'s deaths: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + t.getUniqueId().toString() + ".deaths"));
 					return true;
 				}
-				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString());
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 				return true;
 			}else{
-				p.sendMessage(Lang.NO_PERMS.toString());
+				p.sendMessage(Lang.NO_PERMS.toString(p));
 			}
 		}
 		if(cmd.getName().equalsIgnoreCase("gang")){
@@ -63,22 +60,21 @@ public class CommandHandler implements CommandExecutor, Listener{
 			}
 			Player p = (Player) sender;
 			if(args.length < 1){
-				if(gm.isInGang(p)){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString());
+				if(!gm.isInGang(p)){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 					return true;
 				}
 				Gang g = gm.getGangWithPlayer(p);
-				p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
-				p.sendMessage(ChatColor.GREEN + "Gang KDR: " + ChatColor.BLUE + clanKDR(g));
-				p.sendMessage(ChatColor.GREEN + "Gang Kills: " + ChatColor.BLUE + totalKills(g));
-				p.sendMessage(ChatColor.GREEN + "Gang Deaths: " + ChatColor.BLUE + totalDeaths(g));
-				p.sendMessage(ChatColor.GREEN + "Members: " + ChatColor.BLUE + getMemberStats(g));
+				p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + "'s Info" + ChatColor.DARK_RED + "***");
+				p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + clanKDR(g));
+				p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + totalKills(g));
+				p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + totalDeaths(g));
+				p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + getMemberStats(g));
 				return true;
-			}
-			if(args[0].equalsIgnoreCase("info")){
+			}else if(args[0].equalsIgnoreCase("info")){
 				if(args.length == 2){
 					if(gm.getGangByName(args[1]) == null && !(f.getGangConfig().getStringList("gang-names").contains(args[1]))){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString());
+						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
 						return true;
 					}
 					Gang g = gm.getGangByName(args[1]);
@@ -89,11 +85,10 @@ public class CommandHandler implements CommandExecutor, Listener{
 					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + getMemberStats(g));
 					return true;
 				}
-			}
-			if(args[0].equalsIgnoreCase("create") && args.length == 2){
+			}else if(args[0].equalsIgnoreCase("create") && args.length == 2){
 				if(p.hasPermission("gangs.create")){
 					if(gm.getGangWithPlayer(p) != null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString());
+						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 						return true;
 					}
 					if(gm.getGangByName(args[1]) == null && f.getGangConfig().getStringList("gang-names").contains(args[1])){
