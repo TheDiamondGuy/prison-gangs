@@ -651,14 +651,5 @@ public class CommandHandler implements CommandExecutor, Listener{
 		}
 		return memberData;
 	}
-//    @EventHandler (priority=EventPriority.HIGH)
-//    public void onChat(AsyncPlayerChatEvent e) {
-//    	e.getPlayer().sendMessage("[Debugger 2000] You chatted!");
-//        if(ingangChat.contains(e.getPlayer().getName())) {
-//        	e.getPlayer().sendMessage("Your in gang chat");
-//            e.setCancelled(true);
-//            gangManager.getInstance().getPlayergang(e.getPlayer()).msg(gangManager.getInstance().getPlayergang(e.getPlayer()), e.getMessage());
-//        }
-//    }
 
 }

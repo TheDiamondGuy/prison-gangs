@@ -126,11 +126,123 @@ public class GangManager {
 		}
 	}
 
-	public void demotePlayer(Player p, Gang g){
-
+	@SuppressWarnings("deprecation")
+	public void demotePlayer(Player sender, Player target, Gang gang){
+		if(gang.getOfficers().contains(sender.getName()) || sender.hasPermission("gangs.admin") || sender.isOp()){
+			if(gang.getMembers().contains(target.getName())){
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE_ANYLOWER.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else if(gang.getTrusted().contains(target.getName())){
+				gang.removeTrusted(target);
+				gang.addMember(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else{
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				return;
+			}
+		}if(gang.getLeaders().contains(sender.getName())){
+			if(gang.getOfficers().contains(target.getName())){
+				gang.removeOfficer(target);
+				gang.addTrusted(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				return;
+			}else if(gang.getTrusted().contains(target.getName())){
+				gang.removeTrusted(target);
+				gang.addMember(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else if(gang.getMembers().contains(target.getName())){
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE_ANYLOWER.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else{
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
+				return;
+			}
+		}if(gang.getOwner().equals(sender.getName())){
+			if(gang.getOfficers().contains(target.getName())){
+				gang.removeLeader(target);
+				gang.addOfficer(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				return;
+			}else if(gang.getOfficers().contains(target.getName())){
+				gang.removeOfficer(target);
+				gang.addTrusted(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				return;
+			}else if(gang.getTrusted().contains(target.getName())){
+				gang.removeTrusted(target);
+				gang.addMember(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else if(gang.getMembers().contains(target.getName())){
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE_ANYLOWER.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else{
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
+				return;
+			}
+		}if(sender.hasPermission("gang.admin") || sender.isOp()){
+			if(gang.getOwner().equals(target.getName())){
+				String oldOwner = gang.getOwner();
+				gang.setOwner(sender);
+				gang.addLeader(Bukkit.getPlayerExact(oldOwner));
+				target.sendMessage(ChatColor.GREEN + "You are now the new owner of the gang.");
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
+				return;
+			}else if(gang.getOfficers().contains(target.getName())){
+				gang.removeLeader(target);
+				gang.addOfficer(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				return;
+			}else if(gang.getOfficers().contains(target.getName())){
+				gang.removeOfficer(target);
+				gang.addTrusted(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				return;
+			}else if(gang.getTrusted().contains(target.getName())){
+				gang.removeTrusted(target);
+				gang.addMember(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				messageGang(gang, Lang.SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else if(gang.getMembers().contains(target.getName())){
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE_ANYLOWER.toString(sender, target, gang, Ranks.MEMBER));
+				return;
+			}else{
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
+				return;
+			}
+		}
+		if(gang.getMembers().contains(sender.getName())){
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_DEMOTE.toString(sender, target, gang, Ranks.MEMBER));
+			return;
+		}else{
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_DEMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+			return;
+		}
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void kickPlayer(Player sender, Player target, Gang gang){ 
 		if(gang.getOfficers().contains(sender.getName())){
 			if(gang.getMembers().contains(target.getName()) || gang.getTrusted().contains(target.getName())){
@@ -178,7 +290,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_KICK.toString(sender, target, gang, Gang.getPlayerRank(target.getName(), gang)));
 				return;
 			}
-		}if(gang.getOwner().equals(sender.getName())){
+		}if(gang.getOwner() == sender.getName()){
 			Ranks r = Gang.getPlayerRank(target.getName(), gang);
 			if(r == Ranks.MEMBER){
 				gang.removeMember(target);
