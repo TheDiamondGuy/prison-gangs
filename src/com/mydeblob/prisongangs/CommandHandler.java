@@ -20,6 +20,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 	public CommandHandler(PrisonGangs plugin){
 		this.plugin = plugin;
 	}
+	@SuppressWarnings("deprecation")
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 		if(cmd.getName().equalsIgnoreCase("kdr")){
 			if(!(sender instanceof Player)){
@@ -127,7 +128,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 						return true;
 					}
-					Player target = Bukkit.getPlayer(args[1]);
+					Player target = Bukkit.getPlayerExact(args[1]);
 					if(target == null){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
 						return true;
@@ -154,7 +155,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
-					Player target = (Player) Bukkit.getPlayer(args[1]);
+					Player target = (Player) Bukkit.getPlayerExact(args[1]);
 					if(target == null){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
 						return true;
@@ -180,7 +181,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 					return true;
 				}
-				Player target = (Player) Bukkit.getPlayer(args[1]);
+				Player target = (Player) Bukkit.getPlayerExact(args[1]);
 				if(target == null){
 					p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
 					return true;
@@ -200,7 +201,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 		}else if(args[0].equalsIgnoreCase("kick") && args.length != 2){
 			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 			return true;
-		}if(args[0].equalsIgnoreCase("leave") && args.length == 1){
+		}else if(args[0].equalsIgnoreCase("leave") && args.length == 1){
 			if(p.hasPermission("gangs.leave") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 				if(gm.getGangWithPlayer(p) == null){
 					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
@@ -212,16 +213,16 @@ public class CommandHandler implements CommandExecutor, Listener{
 				p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString(p));
 				return true;
 			}
-		}if(args[0].equalsIgnoreCase("leave") && args.length != 1){
+		}else if(args[0].equalsIgnoreCase("leave") && args.length != 1){
 			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 			return true;
-		}if(args[0].equalsIgnoreCase("invite") && args.length == 2){
+		}else if(args[0].equalsIgnoreCase("invite") && args.length == 2){
 			if(p.hasPermission("gangs.invite") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 				if(gm.getGangWithPlayer(p) == null){
 					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 					return true;
 				}
-				Player target = (Player) Bukkit.getPlayer(args[1]);
+				Player target = (Player) Bukkit.getPlayerExact(args[1]);
 				if(target == null){
 					p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
 					return true;
@@ -232,10 +233,10 @@ public class CommandHandler implements CommandExecutor, Listener{
 				p.sendMessage(Lang.NO_PERMS.toString(p));
 				return true;
 			}
-		}if(args[0].equalsIgnoreCase("invite") && args.length != 2){
+		}else if(args[0].equalsIgnoreCase("invite") && args.length != 2){
 			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 			return true;
-		}if(args[0].equalsIgnoreCase("join") && args.length == 2){
+		}else if(args[0].equalsIgnoreCase("join") && args.length == 2){
 			if(p.hasPermission("gangs.join") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 				if(gm.getGangWithPlayer(p) != null){
 					p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
@@ -260,153 +261,45 @@ public class CommandHandler implements CommandExecutor, Listener{
 					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_INVITED.toString(p));
 					return true;
 				}
-				if(invited.containsKey(p.getName()) && invited.get(p.getName()).equals(t.getClan(args[1])) || p.isOp() || p.hasPermission("gangs.admin")){
-					invited.remove(p.getName());
-					t.getClan(args[1]).addMember(p);
-					p.sendMessage(prefix + ChatColor.GREEN + "Welcome to the gang!");
-					t.getPlayerClan(p).msg(t.getPlayerClan(p), ChatColor.BLUE + p.getName() + " has just joined the gang!");
-					return true;
-				}else{
-					p.sendMessage(prefix + ChatColor.RED + "You have not been invited to this gang!");
-					return true;
-				}
 			}else{
-				p.sendMessage(ChatColor.DARK_RED + "You do not have permission to use this command!");
+				p.sendMessage(Lang.NO_PERMS.toString(p));
 				return true;
 			}
-		}if(args[0].equalsIgnoreCase("join") && args.length != 2){
-			p.sendMessage(prefix + ChatColor.RED + "Incorrect usage! Proper usage: /gang join <gangName>");
+		}else if(args[0].equalsIgnoreCase("join") && args.length != 2){
+			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 			return true;
-		}if(args[0].equalsIgnoreCase("uninvite") && args.length == 2){
-			if(p.hasPermission("gangs.uninvite")){
-				if(t.getPlayerClan(p) == null){
-					p.sendMessage(prefix + ChatColor.RED + "You are not in a gang!");
+		}else if(args[0].equalsIgnoreCase("uninvite") && args.length == 2){
+			if(p.hasPermission("gangs.uninvite") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+				if(gm.getGangWithPlayer(p) == null){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 					return true;
 				}
-				if(t.getPlayerClan(p).getMembers().contains(p.getName())){
-					p.sendMessage(prefix + ChatColor.RED + "You do not have permission!");
-					return true;
-				}
-				Player target = (Player) Bukkit.getPlayer(args[1]);
-				if(!invited.containsKey(target.getName())){
-					p.sendMessage(prefix + ChatColor.RED + "That player was never invited to your gang!");
-					return true;
-				}
-				invited.remove(target.getName());
-				p.sendMessage(prefix + ChatColor.GREEN + "Succesfully un-invited " + target.getName() + " from your gang!");
-				return true;
-			}
-		}if(args[0].equalsIgnoreCase("uninvite") && args.length != 2){
-			p.sendMessage(prefix + ChatColor.RED + "Incorrect usage! Proper usage: /gang uninvite <PlayerName>");
-			return true;
-		}if(args[0].equalsIgnoreCase("disband") && args.length == 1){
-			if(p.hasPermission("gangs.disband")){
-				if(t.getPlayerClan(p) == null){
-					p.sendMessage(prefix + ChatColor.RED + "You are not in a gang!");
-					return true;
-				}
-				if(t.getPlayerClan(p).getLeaders().contains(p.getName())){
-					t.getPlayerClan(p).msg(t.getPlayerClan(p), ChatColor.RED + "The gang has been disbanded!");
-					s.getClans().set("clans." + t.getPlayerClan(p).getName(), null);
-					List gangs = s.getClans().getStringList("clannames");
-					gangs.remove(t.getPlayerClan(p).getName());
-					s.getClans().set("clannames", gangs);
-					s.saveClans();
-					t.setupClans();
-					p.sendMessage(prefix + ChatColor.GREEN + "Succesfully disbanded the gang!");
-					return true;
-				}else{
-					p.sendMessage(prefix + ChatColor.RED + "Only leaders can disband gangs!");
-					return true;
-				}
-			}
-		}if(args[0].equalsIgnoreCase("disband") && args.length != 1){
-			p.sendMessage(prefix + ChatColor.RED + "Incorrect usage! Proper usage: /gang disband");
-			return true;
-		}if(args[0].equalsIgnoreCase("c") && args.length == 1){
-			if(p.hasPermission("gangs.chat")){
-				if(t.getPlayerClan(p) == null){
-					p.sendMessage(prefix + ChatColor.RED + "You are not in a gang!");
-					return true;
-				}
-				if(inClanChat.contains(p.getName())){
-					inClanChat.remove(p.getName());
-					inAllyChat.add(p.getName());
-					p.sendMessage(prefix + ChatColor.GREEN + "Now in the ally chat channel");
-					return true;
-				}if(inAllyChat.contains(p.getName())){
-					inAllyChat.remove(p.getName());
-					p.sendMessage(prefix + ChatColor.GREEN + "Now in the public chat channel");
-					return true;
-				}
-				inClanChat.add(p.getName());
-				p.sendMessage(prefix + ChatColor.GREEN + "Now in the gang chat channel!");
+				Player target = (Player) Bukkit.getPlayerExact(args[1]);
+				gm.uninvitePlayer(p, target, gm.getGangWithPlayer(p));
 				return true;
 			}else{
-				p.sendMessage(ChatColor.DARK_RED + "You do not have permission to use this command!");
+				p.sendMessage(Lang.NO_PERMS.toString(p));
+				return true;
 			}
-		}if(args.length == 2 && args[0].equalsIgnoreCase("c") && args[1].equalsIgnoreCase("a")){
-			if(p.hasPermission("gangs.chat")){
-				if(t.getPlayerClan(p) == null){
-					p.sendMessage(prefix + ChatColor.RED + "You are not in a gang!");
+		}else if(args[0].equalsIgnoreCase("uninvite") && args.length != 2){
+			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+			return true;
+		}else if(args[0].equalsIgnoreCase("disband") && args.length == 1){
+			if(p.hasPermission("gangs.disband") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+				if(gm.getGangWithPlayer(p) == null){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 					return true;
 				}
-				inAllyChat.add(p.getName());
-				p.sendMessage(prefix + ChatColor.GREEN + "Now in the ally chat channel!");
+				gm.disbandGang(p, gm.getGangWithPlayer(p).getName());
 				return true;
 			}else{
-				p.sendMessage(ChatColor.DARK_RED + "You do not have permission to use this command!");
+				p.sendMessage(Lang.NO_PERMS.toString(p));
 				return true;
 			}
-		}if(args[0].equalsIgnoreCase("c") && args.length != 1){
-			p.sendMessage(prefix + ChatColor.RED + "Unkown chat channel! Proper chat channels: /gang c (gang chat) and /gang c a (ally chat) and /gang c p (public chat)");
+		}else if(args[0].equalsIgnoreCase("disband") && args.length != 1){
+			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 			return true;
-		}if(args[0].equalsIgnoreCase("ally") && args.length == 2){
-			if(p.hasPermission("gangs.ally")){
-				if(t.getPlayerClan(p) == null){
-					p.sendMessage(prefix + ChatColor.RED + "You are not in a gang!");
-					return true;
-				}
-				if(t.getClan(args[1]) == null && !(s.getClans().getStringList("clannames").contains(args[1]))){
-					p.sendMessage(prefix + ChatColor.RED + "gang not found! Are you sure you typed the gang name correctly?");
-					return true;
-				}
-				if(t.getPlayerClan(p).getMembers().contains(p.getName())){
-					p.sendMessage(prefix + ChatColor.RED + "You do not have permission!");
-					return true;
-				}
-				if(t.getPlayerClan(p).getTrusted().contains(p.getName())){
-					p.sendMessage(prefix + ChatColor.RED + "You do not have permission!");
-					return true;
-				}
-				if(ally.containsKey(t.getPlayerClan(p)) && ally.get(t.getPlayerClan(p)).getName().equalsIgnoreCase(args[1])){
-					List ally = s.getClans().getStringList("clans." + t.getPlayerClan(p).getName() + ".allies");
-					ally.add(args[1]);
-					s.getClans().set("clans." + t.getPlayerClan(p).getName() + ".allies", ally);
-					s.saveClans();
-					t.getPlayerClan(p).msg(t.getPlayerClan(p), ChatColor.GREEN + "Your gang is now allies with " + ChatColor.BLUE + args[1] + ChatColor.GREEN + "!");
-					t.getClan(args[1]).msg(t.getClan(args[1]), ChatColor.GREEN + "Your gang is now allies with " + ChatColor.BLUE + t.getPlayerClan(p).getName() + ChatColor.GREEN + "!");
-					return true;
-				}
-				ally.put(t.getPlayerClan(p), t.getClan(args[1]));
-				for(String s: t.getClan(args[1]).getLeaders()){
-					Player plr = Bukkit.getPlayer(s);
-					plr.sendMessage(prefix + ChatColor.BLUE + t.getPlayerClan(p).getName() + ChatColor.GREEN + " has requested to become an ally with your gang! To accept type /gang ally " + t.getPlayerClan(p).getName());
-				}
-				for(String s: t.getClan(args[1]).getOfficers()){
-					Player plr = Bukkit.getPlayer(s);
-					plr.sendMessage(prefix + ChatColor.BLUE + t.getPlayerClan(p).getName() + ChatColor.GREEN + " has requested to become an ally with your gang! To accept type /gang ally " + t.getPlayerClan(p).getName());
-				}
-				p.sendMessage(prefix + ChatColor.GREEN + "Succesfully asked " + ChatColor.BLUE + args[1] + ChatColor.GREEN + " to become an ally with your gang!");
-				return true;
-			}else{
-				p.sendMessage(ChatColor.DARK_RED + "You do not have permission to use this command!");
-				return true;
-			}
-		}if(args[0].equalsIgnoreCase("ally") && args.length != 2){
-			p.sendMessage(prefix + ChatColor.RED + "Incorrect usage! Proper usage: /gang ally <gangName>");
-			return true;
-		}if(args[0].equalsIgnoreCase("help") && args.length == 1){
+		}else if(args[0].equalsIgnoreCase("help") && args.length == 1){
 			p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "PrisonGangs " + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
 			p.sendMessage(ChatColor.RED + "g is in alias for gang!");
 			p.sendMessage(ChatColor.GREEN + "/gang create <gangName>");
@@ -419,9 +312,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 			p.sendMessage(ChatColor.YELLOW + "    Joins a gang if invited");
 			p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 2 " + ChatColor.BLUE + "to read the second page!");
 			return true;
-		}if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("2") && args.length == 2){
+		}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("2") && args.length == 2){
 			p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
-			p.sendMessage(ChatColor.RED + "c is in alias for gang!");
+			p.sendMessage(ChatColor.RED + "g is in alias for gang!");
 			p.sendMessage(ChatColor.GREEN + "/gang invite <PlayerName>");
 			p.sendMessage(ChatColor.YELLOW + "    Invites a player to the gang");
 			p.sendMessage(ChatColor.GREEN + "/gang uninvite <PlayerName>");
@@ -431,18 +324,15 @@ public class CommandHandler implements CommandExecutor, Listener{
 			p.sendMessage(ChatColor.GREEN + "/gang promote <PlayerName>");
 			p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 3 " + ChatColor.BLUE + "to read the second page!");
 			return true;
-		}if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("3")  && args.length == 2){
+		}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("3")  && args.length == 2){
 			p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
-			p.sendMessage(ChatColor.RED + "c is in alias for gang!");
+			p.sendMessage(ChatColor.RED + "g is in alias for gang!");
 			p.sendMessage(ChatColor.YELLOW + "    Promotes a player in the gang");
 			p.sendMessage(ChatColor.GREEN + "/gang disband");
 			p.sendMessage(ChatColor.YELLOW + "    Disbands a gang");
-			p.sendMessage(ChatColor.GREEN + "/gang ally <gangName>");
-			p.sendMessage(ChatColor.YELLOW + "    Requests an allyship from another gang");
-			p.sendMessage(ChatColor.GREEN + "/gang c");
-			p.sendMessage(ChatColor.YELLOW + "    Switches between between gang chat and public chat");
-			p.sendMessage(ChatColor.GREEN + "/gang c a");
-			p.sendMessage(ChatColor.YELLOW + "Switches between ally chat and public chat");
+			return true;
+		}else if(args[0].equalsIgnoreCase("help")){
+			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 			return true;
 		}
 	}else if(cmd.getName().equalsIgnoreCase("pgupdate")){
@@ -450,7 +340,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			if(plugin.getConfig().getBoolean("auto-updater")){
 				@SuppressWarnings("unused")
 				Updater updater = new Updater(plugin, 66577, plugin.getPluginFile(), Updater.UpdateType.NO_VERSION_CHECK, true); // Go straight to downloading, and announce progress to console.
-				sender.sendMessage(Lang.PREFIX.toString() + ChatColor.GREEN + "Starting the download of the latest version of GuardOverseer. Check console for progress on the download. Reload after is has downloaded!");
+				sender.sendMessage(Lang.PREFIX.toString() + ChatColor.GREEN + "Starting the download of the latest version of PrisonGangs. Check console for progress on the download. Reload after is has downloaded!");
 				return true;
 			}else{
 				sender.sendMessage(ChatColor.RED + "Please enable auto updating in the PrisonGangs config.yml to use this feature");

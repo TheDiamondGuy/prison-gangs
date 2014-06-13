@@ -25,6 +25,7 @@ public enum Lang {
 	PLAYER_NOT_ONLINE("player-not-online", "&cThe specified player isn't online!"),
 	SENDER_SUCCESS_PROMOTE("sender-success-promote", "&aYou succesfully promoted %p% to a %r%!"), //%p% = player; %r% = rank
 	TARGET_SUCCESS_PROMOTE("target-success-promote", "&aYou have been promoted to %r%!"),
+	TARGET_SUCCESS_UNINVITE("target-success-uninvite", "&cYou have been uninvited from %g%!"),
 	ALREADY_LEADER("already-leader", "&cThat player is already a leader!"),
 	NO_PERMS_PROMOTE("no-perms-promote", "&cYou do not have permisison to promote people! (You must be a Officer+)"),
 	NO_PERMS_DEMOTE("no-perms-demote", "&cYou do not have permission to demote people! (You must be a Officer+"),
@@ -57,7 +58,7 @@ public enum Lang {
 	SUCCESS_UNINVITE("success-uninvite", "&c%s% has just uninvited %p%!"),
 	SUCCESS_DISBAND("success-disband", "&cThe gang has been disbanded!"),
 	SENDER_SUCCESS_DISBAND("sender-success-disband", "&aSuccesfully disbanded the gang!"),
-	CANT_DISBAND("cant-disband", "&cOnly gang owners can disband the gang!");
+	NO_PERMS_DISBAND("no-perms-disband", "&cOnly gang owners can disband the gang!");
 	
 
 	private String path;
@@ -97,6 +98,13 @@ public enum Lang {
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toString());
+		}
+	}
+	public String toString(Player sender, Ranks r, String gName) {
+		if (this == PREFIX){
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
+		}else{
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", gName).replaceAll("%r%", r.toString());
 		}
 	}
 	public String toString(Player sender, Gang g) {

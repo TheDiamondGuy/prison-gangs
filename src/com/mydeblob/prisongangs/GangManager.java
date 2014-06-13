@@ -1,6 +1,7 @@
 package com.mydeblob.prisongangs;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -9,11 +10,16 @@ import org.bukkit.entity.Player;
 
 public class GangManager {
 	private static GangManager instance = new GangManager();
+	private static HashMap<String, Gang> invited = new HashMap<String, Gang>();
 	private FileManager f = FileManager.getFileManager();
 	public static GangManager getGangManager(){
 		return instance;
 	}
 
+	public HashMap<String, Gang> getInvited(){
+		return invited;
+	}
+	
 	public Gang getGangByName(String name){
 		for (Gang g: Gang.getGangs()){
 			if (g.getName().equalsIgnoreCase(name)){
@@ -396,7 +402,60 @@ public class GangManager {
 			return;
 		}
 	}
-
+	
+	public void invitePlayer(Player sender, Player target, Gang gang){
+		if(gang.getMembers().contains(sender.getName())){
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(target.getName(), gang)));
+			return;
+		}else{
+			invited.put(target.getName(), gang);
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+			target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+			messageGang(gang, Lang.SUCCESS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+			return;
+		}
+	}
+	
+	public boolean isInvited(Player p){
+		if(invited.containsKey(p.getName())){
+			return true;
+		}else{
+			return false;
+		}
+	}
+	
+	public void removeInvitation(Player p){
+		if(invited.containsKey(p.getName())){
+			invited.remove(p.getName());
+		}
+	}
+	
+	public void uninvitePlayer(Player sender, Player target, Gang gang){
+		if(gang.getMembers().contains(sender.getName())){
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+			return;
+		}else{
+			if(isInvited(target)){
+				removeInvitation(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_UNINVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_UNINVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+				messageGang(gang, Lang.SUCCESS_UNINVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+				return;
+			}else{
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.NEVER_INVITED.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+				return;
+			}
+		}
+	}
+	
+	public boolean gangsMatchInvited(Player p, String gangName){
+		if(invited.containsKey(p.getName())){
+			if(invited.get(p.getName()) == getGangByName(gangName)){
+				return true;
+			}
+		}
+		return false;
+	}
 	public void createGang(Player owner, String name){
 		f.getGangConfig().set("gangs." + name + ".members", new ArrayList<String>());
 		f.getGangConfig().set("gangs." + name + ".trusted", new ArrayList<String>());
@@ -423,14 +482,21 @@ public class GangManager {
 
 	public void disbandGang(Player p, String name){
 		Gang g = getGangByName(name);
-		String gname = g.getName();
-		f.getGangConfig().set("gangs." + g.getName(), null);
-		List<String> gangs = f.getGangConfig().getStringList("gang-names");
-		gangs.remove(g.getName());
-		f.getGangConfig().set("gang-names", gangs);
-		f.saveGangConfig();
-		Gang.removeGang(g);
-		messageGang(g, Lang.SUCCESS_DISBAND.toString().replaceAll("%s%", p.getName()).replaceAll("%g%", gname));
-		p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DISBAND.toString().replaceAll("%s%", p.getName()).replaceAll("%g%", gname));
+		if(g.getOwner() == p.getName()){
+			String gname = g.getName();
+			Ranks r = Gang.getPlayerRank(p.getName(), g);
+			f.getGangConfig().set("gangs." + g.getName(), null);
+			List<String> gangs = f.getGangConfig().getStringList("gang-names");
+			gangs.remove(g.getName());
+			f.getGangConfig().set("gang-names", gangs);
+			f.saveGangConfig();
+			Gang.removeGang(g);
+			messageGang(g, Lang.SUCCESS_DISBAND.toString(p, r, gname));
+			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DISBAND.toString(p, r, gname));
+			return;
+		}else{
+			p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_DISBAND.toString(p, Gang.getPlayerRank(p.getName(), getGangByName(name)), getGangByName(name)));
+			return;
+		}
 	}
 }
