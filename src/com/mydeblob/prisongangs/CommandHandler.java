@@ -172,313 +172,244 @@ public class CommandHandler implements CommandExecutor, Listener{
 					p.sendMessage(Lang.NO_PERMS.toString(p));
 					return true;
 				}
-		}else if(args[0].equalsIgnoreCase("demote") && args.length != 2){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
-		}if(args[0].equalsIgnoreCase("kick") && args.length == 2){
-			if(p.hasPermission("gangs.kick") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-				if(gm.getGangWithPlayer(p) == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
-					return true;
-				}
-				Player target = (Player) Bukkit.getPlayerExact(args[1]);
-				if(target == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
-					return true;
-				}if(gm.getGangWithPlayer(target) == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG.toString(p, target, gm.getGangWithPlayer(p))); 
-					return true;
-				}if(gm.getGangWithPlayer(target) != gm.getGangWithPlayer(p)){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_YOUR_GANG.toString(p, target, gm.getGangWithPlayer(p)));
-					return true;
-				}
-				gm.kickPlayer(p, target, gm.getGangWithPlayer(p));
+			}else if(args[0].equalsIgnoreCase("demote") && args.length != 2){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 				return true;
-			}else{
-				p.sendMessage(Lang.NO_PERMS.toString(p));
-				return true;
-			}
-		}else if(args[0].equalsIgnoreCase("kick") && args.length != 2){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
-		}else if(args[0].equalsIgnoreCase("leave") && args.length == 1){
-			if(p.hasPermission("gangs.leave") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-				if(gm.getGangWithPlayer(p) == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
-					return true;
-				}
-				gm.leave(p, gm.getGangWithPlayer(p));
-				return true;
-			}else{
-				p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString(p));
-				return true;
-			}
-		}else if(args[0].equalsIgnoreCase("leave") && args.length != 1){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
-		}else if(args[0].equalsIgnoreCase("invite") && args.length == 2){
-			if(p.hasPermission("gangs.invite") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-				if(gm.getGangWithPlayer(p) == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
-					return true;
-				}
-				Player target = (Player) Bukkit.getPlayerExact(args[1]);
-				if(target == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
-					return true;
-				}
-				gm.invitePlayer(p, target, gm.getGangWithPlayer(p));
-				return true;
-			}else{
-				p.sendMessage(Lang.NO_PERMS.toString(p));
-				return true;
-			}
-		}else if(args[0].equalsIgnoreCase("invite") && args.length != 2){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
-		}else if(args[0].equalsIgnoreCase("join") && args.length == 2){
-			if(p.hasPermission("gangs.join") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-				if(gm.getGangWithPlayer(p) != null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
-					return true;
-				}
-				if(gm.getGangByName(args[1]) == null && !(f.getGangConfig().getStringList("gang-names").contains(args[1]))){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
-					return true;
-				}
-				if(gm.isInvited(p)){
-					if(gm.gangsMatchInvited(p, args[1])){
-						gm.removeInvitation(p);
-						gm.getGangByName(args[1]).addMember(p);
-						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_JOIN.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
-						gm.messageGang(gm.getGangByName(args[1]), Lang.SUCCESS_JOIN.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+			}if(args[0].equalsIgnoreCase("kick") && args.length == 2){
+				if(p.hasPermission("gangs.kick") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
-					}else{
+					}
+					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					if(target == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						return true;
+					}if(gm.getGangWithPlayer(target) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG.toString(p, target, gm.getGangWithPlayer(p))); 
+						return true;
+					}if(gm.getGangWithPlayer(target) != gm.getGangWithPlayer(p)){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_YOUR_GANG.toString(p, target, gm.getGangWithPlayer(p)));
+						return true;
+					}
+					gm.kickPlayer(p, target, gm.getGangWithPlayer(p));
+					return true;
+				}else{
+					p.sendMessage(Lang.NO_PERMS.toString(p));
+					return true;
+				}
+			}else if(args[0].equalsIgnoreCase("kick") && args.length != 2){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}else if(args[0].equalsIgnoreCase("leave") && args.length == 1){
+				if(p.hasPermission("gangs.leave") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
+						return true;
+					}
+					gm.leave(p, gm.getGangWithPlayer(p));
+					return true;
+				}else{
+					p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString(p));
+					return true;
+				}
+			}else if(args[0].equalsIgnoreCase("leave") && args.length != 1){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}else if(args[0].equalsIgnoreCase("invite") && args.length == 2){
+				if(p.hasPermission("gangs.invite") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
+						return true;
+					}
+					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					if(target == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						return true;
+					}
+					gm.invitePlayer(p, target, gm.getGangWithPlayer(p));
+					return true;
+				}else{
+					p.sendMessage(Lang.NO_PERMS.toString(p));
+					return true;
+				}
+			}else if(args[0].equalsIgnoreCase("invite") && args.length != 2){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}else if(args[0].equalsIgnoreCase("join") && args.length == 2){
+				if(p.hasPermission("gangs.join") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) != null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+						return true;
+					}
+					if(gm.getGangByName(args[1]) == null && !(f.getGangConfig().getStringList("gang-names").contains(args[1]))){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
 						return true;
 					}
+					if(gm.isInvited(p)){
+						if(gm.gangsMatchInvited(p, args[1])){
+							gm.removeInvitation(p);
+							gm.getGangByName(args[1]).addMember(p);
+							p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_JOIN.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+							gm.messageGang(gm.getGangByName(args[1]), Lang.SUCCESS_JOIN.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+							return true;
+						}else{
+							p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
+							return true;
+						}
+					}else{
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_INVITED.toString(p));
+						return true;
+					}
 				}else{
-					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_INVITED.toString(p));
+					p.sendMessage(Lang.NO_PERMS.toString(p));
+					return true;
+				}
+			}else if(args[0].equalsIgnoreCase("join") && args.length != 2){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}else if(args[0].equalsIgnoreCase("uninvite") && args.length == 2){
+				if(p.hasPermission("gangs.uninvite") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
+						return true;
+					}
+					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					gm.uninvitePlayer(p, target, gm.getGangWithPlayer(p));
+					return true;
+				}else{
+					p.sendMessage(Lang.NO_PERMS.toString(p));
+					return true;
+				}
+			}else if(args[0].equalsIgnoreCase("uninvite") && args.length != 2){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}else if(args[0].equalsIgnoreCase("disband") && args.length == 1){
+				if(p.hasPermission("gangs.disband") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
+						return true;
+					}
+					gm.disbandGang(p, gm.getGangWithPlayer(p).getName());
+					return true;
+				}else{
+					p.sendMessage(Lang.NO_PERMS.toString(p));
+					return true;
+				}
+			}else if(args[0].equalsIgnoreCase("disband") && args.length != 1){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}else if(args[0].equalsIgnoreCase("help") && args.length == 1){
+				p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "PrisonGangs " + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
+				p.sendMessage(ChatColor.RED + "g is in alias for gang!");
+				p.sendMessage(ChatColor.GREEN + "/gang create <gangName>");
+				p.sendMessage(ChatColor.YELLOW + "    Creates a gang");
+				p.sendMessage(ChatColor.GREEN + "/gang or /gang info <gangInfo>");
+				p.sendMessage(ChatColor.YELLOW + "    Displays information about a gang");
+				p.sendMessage(ChatColor.GREEN + "/gang leave");
+				p.sendMessage(ChatColor.YELLOW + "    Leaves the gang");
+				p.sendMessage(ChatColor.GREEN + "/gang join <gangName>");
+				p.sendMessage(ChatColor.YELLOW + "    Joins a gang if invited");
+				p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 2 " + ChatColor.BLUE + "to read the second page!");
+				return true;
+			}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("2") && args.length == 2){
+				p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
+				p.sendMessage(ChatColor.RED + "g is in alias for gang!");
+				p.sendMessage(ChatColor.GREEN + "/gang invite <PlayerName>");
+				p.sendMessage(ChatColor.YELLOW + "    Invites a player to the gang");
+				p.sendMessage(ChatColor.GREEN + "/gang uninvite <PlayerName>");
+				p.sendMessage(ChatColor.YELLOW + "    Uninvites a player to the gang");
+				p.sendMessage(ChatColor.GREEN + "/gang kick <PlayerName>");
+				p.sendMessage(ChatColor.YELLOW + "    Kicks a player from the gang");
+				p.sendMessage(ChatColor.GREEN + "/gang promote <PlayerName>");
+				p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 3 " + ChatColor.BLUE + "to read the second page!");
+				return true;
+			}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("3")  && args.length == 2){
+				p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
+				p.sendMessage(ChatColor.RED + "g is in alias for gang!");
+				p.sendMessage(ChatColor.YELLOW + "    Promotes a player in the gang");
+				p.sendMessage(ChatColor.GREEN + "/gang disband");
+				p.sendMessage(ChatColor.YELLOW + "    Disbands a gang");
+				return true;
+			}else if(args[0].equalsIgnoreCase("help")){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}
+		}else if(cmd.getName().equalsIgnoreCase("pgupdate")){
+			if(sender.hasPermission("gangs.admin") || sender.hasPermission("gangs.update")){
+				if(plugin.getConfig().getBoolean("auto-updater")){
+					@SuppressWarnings("unused")
+					Updater updater = new Updater(plugin, 66577, plugin.getPluginFile(), Updater.UpdateType.NO_VERSION_CHECK, true); // Go straight to downloading, and announce progress to console.
+					sender.sendMessage(Lang.PREFIX.toString() + ChatColor.GREEN + "Starting the download of the latest version of PrisonGangs. Check console for progress on the download. Reload after is has downloaded!");
+					return true;
+				}else{
+					sender.sendMessage(ChatColor.RED + "Please enable auto updating in the PrisonGangs config.yml to use this feature");
 					return true;
 				}
 			}else{
-				p.sendMessage(Lang.NO_PERMS.toString(p));
-				return true;
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
 			}
-		}else if(args[0].equalsIgnoreCase("join") && args.length != 2){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
-		}else if(args[0].equalsIgnoreCase("uninvite") && args.length == 2){
-			if(p.hasPermission("gangs.uninvite") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-				if(gm.getGangWithPlayer(p) == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
-					return true;
-				}
-				Player target = (Player) Bukkit.getPlayerExact(args[1]);
-				gm.uninvitePlayer(p, target, gm.getGangWithPlayer(p));
-				return true;
-			}else{
-				p.sendMessage(Lang.NO_PERMS.toString(p));
-				return true;
-			}
-		}else if(args[0].equalsIgnoreCase("uninvite") && args.length != 2){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
-		}else if(args[0].equalsIgnoreCase("disband") && args.length == 1){
-			if(p.hasPermission("gangs.disband") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-				if(gm.getGangWithPlayer(p) == null){
-					p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
-					return true;
-				}
-				gm.disbandGang(p, gm.getGangWithPlayer(p).getName());
-				return true;
-			}else{
-				p.sendMessage(Lang.NO_PERMS.toString(p));
-				return true;
-			}
-		}else if(args[0].equalsIgnoreCase("disband") && args.length != 1){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
-		}else if(args[0].equalsIgnoreCase("help") && args.length == 1){
-			p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "PrisonGangs " + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
-			p.sendMessage(ChatColor.RED + "g is in alias for gang!");
-			p.sendMessage(ChatColor.GREEN + "/gang create <gangName>");
-			p.sendMessage(ChatColor.YELLOW + "    Creates a gang");
-			p.sendMessage(ChatColor.GREEN + "/gang or /gang info <gangInfo>");
-			p.sendMessage(ChatColor.YELLOW + "    Displays information about a gang");
-			p.sendMessage(ChatColor.GREEN + "/gang leave");
-			p.sendMessage(ChatColor.YELLOW + "    Leaves the gang");
-			p.sendMessage(ChatColor.GREEN + "/gang join <gangName>");
-			p.sendMessage(ChatColor.YELLOW + "    Joins a gang if invited");
-			p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 2 " + ChatColor.BLUE + "to read the second page!");
-			return true;
-		}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("2") && args.length == 2){
-			p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
-			p.sendMessage(ChatColor.RED + "g is in alias for gang!");
-			p.sendMessage(ChatColor.GREEN + "/gang invite <PlayerName>");
-			p.sendMessage(ChatColor.YELLOW + "    Invites a player to the gang");
-			p.sendMessage(ChatColor.GREEN + "/gang uninvite <PlayerName>");
-			p.sendMessage(ChatColor.YELLOW + "    Uninvites a player to the gang");
-			p.sendMessage(ChatColor.GREEN + "/gang kick <PlayerName>");
-			p.sendMessage(ChatColor.YELLOW + "    Kicks a player from the gang");
-			p.sendMessage(ChatColor.GREEN + "/gang promote <PlayerName>");
-			p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 3 " + ChatColor.BLUE + "to read the second page!");
-			return true;
-		}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("3")  && args.length == 2){
-			p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
-			p.sendMessage(ChatColor.RED + "g is in alias for gang!");
-			p.sendMessage(ChatColor.YELLOW + "    Promotes a player in the gang");
-			p.sendMessage(ChatColor.GREEN + "/gang disband");
-			p.sendMessage(ChatColor.YELLOW + "    Disbands a gang");
-			return true;
-		}else if(args[0].equalsIgnoreCase("help")){
-			p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-			return true;
 		}
-	}else if(cmd.getName().equalsIgnoreCase("pgupdate")){
-		if(sender.hasPermission("gangs.admin") || sender.hasPermission("gangs.update")){
-			if(plugin.getConfig().getBoolean("auto-updater")){
-				@SuppressWarnings("unused")
-				Updater updater = new Updater(plugin, 66577, plugin.getPluginFile(), Updater.UpdateType.NO_VERSION_CHECK, true); // Go straight to downloading, and announce progress to console.
-				sender.sendMessage(Lang.PREFIX.toString() + ChatColor.GREEN + "Starting the download of the latest version of PrisonGangs. Check console for progress on the download. Reload after is has downloaded!");
-				return true;
-			}else{
-				sender.sendMessage(ChatColor.RED + "Please enable auto updating in the PrisonGangs config.yml to use this feature");
-				return true;
+		return false;
+	}
+
+	@SuppressWarnings("deprecation")
+	public ArrayList<String> getMemberStats(Gang g){
+		ArrayList<String> memberData = new ArrayList<String>();
+		for(String s : g.getMembers()){
+			Player p = Bukkit.getServer().getPlayerExact(s);
+			String status = null;
+			if(!(p == null)){
+				status = "Online";
+			}else if(p == null){
+				status = "Offline";
 			}
-		}else{
-			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
+			String name = "Member " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
+			memberData.add(name);
 		}
-	}
-	return false;
-}
-public double clanKDR(Gang c){
-	int membersKills = 0;
-	int membersDeaths = 0;
-	int trustedKills = 0;
-	int trustedDeaths = 0;
-	int officersKills = 0;
-	int officersDeaths = 0;
-	int leadersKills = 0;
-	int leadersDeaths = 0;
-	int totalKills = 0;
-	int totalDeaths = 0;
-	double KDR = 0;
-	for(String s : c.getMembers()){
-		membersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-		membersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
-	}
-	for(String s : c.getTrusted()){
-		trustedKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-		trustedDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
-	}
-	for(String s : c.getOfficers()){
-		officersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-		officersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
-	}
-	for(String s : c.getLeaders()){
-		leadersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-		leadersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
-	}
-	if(totalDeaths == 0){
-		KDR = totalKills;
-		return KDR;
-	}else{
-		totalKills = membersKills + trustedKills + officersKills + leadersKills;
-		totalDeaths = membersDeaths + trustedDeaths + officersDeaths + leadersDeaths;
-		KDR = totalKills/totalDeaths;
-		return KDR;
-	}
-}
-public int totalKills(Gang c){
-	int membersKills = 0;
-	int trustedKills = 0;
-	int officersKills = 0;
-	int leadersKills = 0;
-	int totalKills = 0;
-	for(String s : c.getMembers()){
-		membersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-	}
-	for(String s : c.getTrusted()){
-		trustedKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-	}
-	for(String s : c.getOfficers()){
-		officersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-	}
-	for(String s : c.getLeaders()){
-		leadersKills += plugin.getGangConfig().getInt("players." + s + ".kills");
-	}
-	totalKills = membersKills + trustedKills + officersKills + leadersKills;
-	return totalKills;
-}
-public int totalDeaths(Gang c){
-	int membersDeaths = 0;
-	int trustedDeaths = 0;
-	int officersDeaths = 0;
-	int leadersDeaths = 0;
-	int totalDeaths = 0;
-	for(String s : c.getMembers()){
-		membersDeaths += plugin.getGangConfig().getInt("players." + s + ".deaths");
-	}
-	for(String s : c.getTrusted()){
-		trustedDeaths += plugin.getGangConfig().getInt("players." + s + ".death");
-	}
-	for(String s : c.getOfficers()){
-		officersDeaths += plugin.getGangConfig().getInt("players." + s + ".death");
-	}
-	for(String s : c.getLeaders()){
-		leadersDeaths += plugin.getGangConfig().getInt("players." + s + ".death");
-	}
-	totalDeaths = membersDeaths + trustedDeaths + officersDeaths + leadersDeaths;
-	return totalDeaths;
-}
-public ArrayList<String> getMemberStats(Gang c){
-	ArrayList<String> memberData = new ArrayList<String>();
-	for(String s : c.getMembers()){
-		Player p = Bukkit.getServer().getPlayer(s);
+		for(String s : g.getTrusted()){
+			Player p = Bukkit.getServer().getPlayerExact(s);
+			String status = null;
+			if(!(p == null)){
+				status = "Online";
+			}else if(p == null){
+				status = "Offline";
+			}
+			String name = "Trusted " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
+			memberData.add(name);
+		}
+		for(String s : g.getOfficers()){
+			Player p = Bukkit.getServer().getPlayerExact(s);
+			String status = null;
+			if(!(p == null)){
+				status = "Online";
+			}else if(p == null){
+				status = "Offline";
+			}
+			String name = "Officer " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
+			memberData.add(name);
+		}
+		for(String s : g.getLeaders()){
+			Player p = Bukkit.getServer().getPlayerExact(s);
+			String status = null;
+			if(!(p == null)){
+				status = "Online";
+			}else if(p == null){
+				status = "Offline";
+			}
+			String name = "Leader " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
+			memberData.add(name);
+		}
+		Player p = Bukkit.getServer().getPlayerExact(g.getOwner());
 		String status = null;
 		if(!(p == null)){
 			status = "Online";
 		}else if(p == null){
 			status = "Offline";
 		}
-		String name = "Member " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
+		String name = "Leader " + plugin.getConfig().getString("seperator") + " " +  p.getName() + " - " + status;
 		memberData.add(name);
+		return memberData;
 	}
-	for(String s : c.getTrusted()){
-		Player p = Bukkit.getServer().getPlayer(s);
-		String status = null;
-		if(!(p == null)){
-			status = "Online";
-		}else if(p == null){
-			status = "Offline";
-		}
-		String name = "Trusted " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
-		memberData.add(name);
-	}
-	for(String s : c.getOfficers()){
-		Player p = Bukkit.getServer().getPlayer(s);
-		String status = null;
-		if(!(p == null)){
-			status = "Online";
-		}else if(p == null){
-			status = "Offline";
-		}
-		String name = "Officer " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
-		memberData.add(name);
-	}
-	for(String s : c.getLeaders()){
-		Player p = Bukkit.getServer().getPlayer(s);
-		String status = null;
-		if(!(p == null)){
-			status = "Online";
-		}else if(p == null){
-			status = "Offline";
-		}
-		String name = "Leader " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
-		memberData.add(name);
-	}
-	return memberData;
-}
 
 }

@@ -499,4 +499,43 @@ public class GangManager {
 			return;
 		}
 	}
+	
+	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
+	public double getGangKDR(Gang g){
+		int totalKills = 0;
+		int totalDeaths = 0;
+		double KDR = 0;
+		for(String s:g.getAllPlayers()){
+			Player p = Bukkit.getPlayerExact(s);
+			totalKills += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
+			totalDeaths += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+		}
+		if(totalDeaths == 0){
+			KDR = totalKills;
+			return KDR;
+		}else{
+			KDR = totalKills/totalDeaths;
+			return KDR;
+		}
+	}
+	
+	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
+	public int getGangKills(Gang g){
+		int totalKills = 0;
+		for(String s:g.getAllPlayers()){
+			Player p = Bukkit.getPlayerExact(s);
+			totalKills += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
+		}
+		return totalKills;
+	}
+	
+	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
+	public int getGangDeaths(Gang g){
+		int totalDeaths = 0;
+		for(String s:g.getAllPlayers()){
+			Player p = Bukkit.getPlayerExact(s);
+			totalDeaths += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+		}
+		return totalDeaths;
+	}
 }
