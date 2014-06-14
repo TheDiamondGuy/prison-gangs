@@ -2,8 +2,6 @@ package com.mydeblob.prisongangs;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -68,10 +66,10 @@ public class CommandHandler implements CommandExecutor, Listener{
 					}
 					Gang g = gm.getGangWithPlayer(p);
 					p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + "'s Info" + ChatColor.DARK_RED + "***");
-					p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + clanKDR(g));
-					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + totalKills(g));
-					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + totalDeaths(g));
-					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + getMemberStats(g));
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + gm.getGangKDR(g));
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + gm.getGangKills(g));
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + gm.getGangDeaths(g));
+					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + getGangPlayerStats(g));
 					return true;
 				}else{
 					p.sendMessage(Lang.NO_PERMS.toString(p));
@@ -86,10 +84,10 @@ public class CommandHandler implements CommandExecutor, Listener{
 						}
 						Gang g = gm.getGangByName(args[1]);
 						p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
-						p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + clanKDR(g));
-						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + totalKills(g));
-						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + totalDeaths(g));
-						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + getMemberStats(g));
+						p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + gm.getGangKDR(g));
+						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + gm.getGangKills(g));
+						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + gm.getGangDeaths(g));
+						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + getGangPlayerStats(g));
 						return true;
 					}else{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
@@ -354,7 +352,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 	}
 
 	@SuppressWarnings("deprecation")
-	public ArrayList<String> getMemberStats(Gang g){
+	public ArrayList<String> getGangPlayerStats(Gang g){
 		ArrayList<String> memberData = new ArrayList<String>();
 		for(String s : g.getMembers()){
 			Player p = Bukkit.getServer().getPlayerExact(s);
