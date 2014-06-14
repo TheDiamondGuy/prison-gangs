@@ -40,6 +40,7 @@ public class Events implements Listener{
 			f.getGangConfig().set("players." + p.getUniqueId().toString() + ".deaths", 0);
 			f.getGangConfig().set("players." + p.getUniqueId().toString() + ".kdr", 0);
 		}
+		p.sendMessage(ChatColor.BLUE + "This server is running PrisonGangs by mydeblob!");
 	} 
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e){

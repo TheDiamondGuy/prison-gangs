@@ -1,4 +1,10 @@
 # Welcome to the messages.yml for PrisonGangs
+# **** Message Variables ****
+# %s% - Person who sent the command
+# %t% - Person command is being ran on (If applicable)
+# %g% - Name of the gang associated with the command (If applicable)
+# %r% - Rank of the player of the gang associated with the command (If applicable)
+
 
 # This is the prefix put before most messages
 prefix: "&7[&2PrisonGangs&7]"
@@ -17,4 +23,30 @@ no-perms: "&cYou do not have permission to use this command!"
 
 # This is the message a player gets when he performs a command on a gang that isnt found
 gang-not-found: "&cGang not found! Are you sure you typed the gang name correctly?"
+
+# This is the message a player gets when he performs a gang command, but isnt in a gang
+not-in-gang: "&cYou are not in a gang! To get information from another gang type /gang info <gangName>. To get help with gangs, type /gang help"
+
+# This is the message a player gets when he tries to join another gang or something
+# similar, but he is already in a gang
+in-gang: "&cYou are already in a gang! You must leave your current gang with /gang leave!"
+
+# This is the message a player gets when he tries to create a gang that already exists
+gang-exists: "&cThat gang already exists!"
+
+# This is the message a player gets he tries to perform a command on a player that needs
+# to be in a gang but isnt
+target-not-in-gang: "&c%t% is not in a gang!"
+
+# This is the message a player gets he tries to perform a command on a player that needs
+# to be in your gang but isnt
+target-not-in-your-gang: "&c%t% is not in your gang!"
+
+
+
+
+
+
+
+
 
