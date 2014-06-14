@@ -1,1 +1,20 @@
 # Welcome to the messages.yml for PrisonGangs
+
+# This is the prefix put before most messages
+prefix: "&7[&2PrisonGangs&7]"
+
+# This is the message a player gets when he uses incorrect command syntax
+wrong-command: "&cIncorrect command syntax! Type /gang help for help with commands!"
+
+# This is the message a player gets when he creates a gang with to long of a name
+char-limit: "&cError: The gang name is to long!"
+
+# This is the message a player gets when he performs a command on a player that isnt found
+player-not-found: "&cError! The specified player wasn't found! Are you sure you spelled his name correctly?"
+
+# This is the message a player gets when he doesnt have permission for a command
+no-perms: "&cYou do not have permission to use this command!"
+
+# This is the message a player gets when he performs a command on a gang that isnt found
+gang-not-found: "&cGang not found! Are you sure you typed the gang name correctly?"
+
