@@ -301,7 +301,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 				return true;
 			}else if(args[0].equalsIgnoreCase("help") && args.length == 1){
-				p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "PrisonGangs " + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
+				p.sendMessage(ChatColor.DARK_RED + "--=" + Lang.PREFIX.toString() + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
 				p.sendMessage(ChatColor.RED + "g is in alias for gang!");
 				p.sendMessage(ChatColor.GREEN + "/gang create <gangName>");
 				p.sendMessage(ChatColor.YELLOW + "    Creates a gang");
@@ -314,7 +314,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 				p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 2 " + ChatColor.BLUE + "to read the second page!");
 				return true;
 			}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("2") && args.length == 2){
-				p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
+				p.sendMessage(ChatColor.DARK_RED + "--=" + Lang.PREFIX.toString() + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
 				p.sendMessage(ChatColor.RED + "g is in alias for gang!");
 				p.sendMessage(ChatColor.GREEN + "/gang invite <PlayerName>");
 				p.sendMessage(ChatColor.YELLOW + "    Invites a player to the gang");
@@ -326,7 +326,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 				p.sendMessage(ChatColor.BLUE + "Type " + ChatColor.RED + "/gang help 3 " + ChatColor.BLUE + "to read the second page!");
 				return true;
 			}else if(args[0].equalsIgnoreCase("help") && args[1].equalsIgnoreCase("3")  && args.length == 2){
-				p.sendMessage(ChatColor.DARK_RED + "--=" + ChatColor.DARK_GREEN + "Templar" + ChatColor.AQUA + " gangs" + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
+				p.sendMessage(ChatColor.DARK_RED + "--=" +  Lang.PREFIX.toString() +  ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
 				p.sendMessage(ChatColor.RED + "g is in alias for gang!");
 				p.sendMessage(ChatColor.YELLOW + "    Promotes a player in the gang");
 				p.sendMessage(ChatColor.GREEN + "/gang disband");
@@ -408,7 +408,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 		}else if(p == null){
 			status = "Offline";
 		}
-		String name = "Leader " + plugin.getConfig().getString("seperator") + " " +  p.getName() + " - " + status;
+		String name = "Owner " + plugin.getConfig().getString("seperator") + " " +  p.getName() + " - " + status;
 		memberData.add(name);
 		return memberData;
 	}
