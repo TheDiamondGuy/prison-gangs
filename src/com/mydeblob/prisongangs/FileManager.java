@@ -10,7 +10,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
 
 public class FileManager {
-	  Plugin p;
+	  private Plugin p;
 	  static FileManager instance = new FileManager();
 	  private static FileConfiguration gangConfig;
 	  private static File gangFile;

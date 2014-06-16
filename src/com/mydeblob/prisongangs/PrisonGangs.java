@@ -14,6 +14,7 @@ public class PrisonGangs extends JavaPlugin{
 	public static String link = "";
 	public void onEnable(){
 		FileManager f = FileManager.getFileManager();
+		f.init(this);
 		File config = new File(getDataFolder(), "config.yml");
 		if(!config.exists()){
 			getLogger().info("[PrisonGangs] No config.yml found! Generating a new one!");

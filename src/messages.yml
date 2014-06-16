@@ -95,10 +95,10 @@ success-join: "&c%s% has joined the gang!"
 not-invited: "&cYou have not been invited to the gang %g%!"
 
 # This is the message a player gets when he leaves a gang
-player-success-left: "&aYou have Successfully left the gang %g%!
+player-success-left: "&aYou have Successfully left the gang %g%!"
 
 # This is the message the gang receives when a player leaves the gang
-success-left: &c%s% &9has just left the gang!
+success-left: "&c%s% &9has just left the gang!"
 
 # This is the message the gang receives when the owner leaves without setting new 
 # ownership
@@ -111,7 +111,7 @@ cant-kick-yourself: "&cYou can't kick yourself! Type /leave to leave the gang!"
 sender-success-kick: "&aSuccessfully kicked %t% from the gang!"
 
 # This is the message the target gets when someone successfully kicks him from his gang
-target-success-kick: "&cYou have been kicked from the gang %g% by %s%""
+target-success-kick: "&cYou have been kicked from the gang %g% by %s%"
 
 # This is the message the gang receives when a player is kicked from a gang
 success-kick: "&c%t% &9has just been kicked from the gang!"
