@@ -256,7 +256,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						if(gm.gangsMatchInvited(p, args[1])){
 							gm.removeInvitation(p);
 							gm.getGangByName(args[1]).addMember(p);
-							p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_JOIN.toString(p, gm.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+							p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_JOIN.toString(p, gm.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 							gm.messageGang(gm.getGangByName(args[1]), Lang.SUCCESS_JOIN.toString(p, gm.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 							return true;
 						}else{
