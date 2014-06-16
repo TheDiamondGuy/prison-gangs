@@ -104,11 +104,12 @@ public class CommandHandler implements CommandExecutor, Listener{
 						return true;
 					}
 					if(gm.getGangByName(args[1]) != null){
-						for(String s:f.getGangConfig().getStringList("gang-names"))
+						for(String s:f.getGangConfig().getStringList("gang-names")){
 							if(s.equalsIgnoreCase(args[1])){
 								p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_EXISTS.toString(p, gm.getGangByName(args[1])));
 								return true;
 							}
+						}
 					}
 					if((args[1].length() + 1) > plugin.getConfig().getInt("char-limit")){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.CHAR_LIMIT.toString(p));
@@ -243,7 +244,11 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 						return true;
 					}
-					if(gm.getGangByName(args[1]) == null && !(f.getGangConfig().getStringList("gang-names").contains(args[1]))){
+					ArrayList<String> names = new ArrayList<String>();
+					for(int i=0; i < f.getGangConfig().getStringList("gang-names").size(); i++) {
+						  names.add(f.getGangConfig().getStringList("gang-names").get(i).toLowerCase());
+						}
+					if(gm.getGangByName(args[1]) == null && !(names.contains(args[1].toLowerCase()))){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
 						return true;
 					}
