@@ -1,7 +1,9 @@
 package com.mydeblob.prisongangs;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public class Gang {
@@ -11,6 +13,10 @@ public class Gang {
 	  private ArrayList<String> trusted = new ArrayList<String>(); 
 	  private ArrayList<String> officers = new ArrayList<String>(); 
 	  private ArrayList<String> leaders = new ArrayList<String>();
+	  private ArrayList<String> membersUuid = new ArrayList<String>(); 
+	  private ArrayList<String> trustedUuid = new ArrayList<String>(); 
+	  private ArrayList<String> officersUuid = new ArrayList<String>(); 
+	  private ArrayList<String> leadersUuid = new ArrayList<String>();
 	  private static ArrayList<Gang> gangs = new ArrayList<Gang>();
 	  private String owner = null;
 	  private String name;
@@ -18,18 +24,22 @@ public class Gang {
 	public Gang(String name){
 	    this.name = name;
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".members")){
-	    	members.add(s);
+	    	membersUuid.add(s);
+	    	members.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".trusted")){
-	    	trusted.add(s);
+	    	trustedUuid.add(s);
+	    	trusted.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".officers")){
-	    	officers.add(s);
+	    	officersUuid.add(s);
+	    	officers.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".leaders")){
-	    	leaders.add(s);
+	    	leadersUuid.add(s);
+	    	leaders.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
 	    }
-	    owner = f.getGangConfig().getString("gangs." + name + ".owner");
+	    owner = Bukkit.getPlayer(UUID.fromString(f.getGangConfig().getString("gangs." + name + ".owner"))).getName();
 	    gangs.add(this);
 	  }
 	  public String getName(){
@@ -39,52 +49,52 @@ public class Gang {
 	    return this.members;
 	  }
 	  public void addMember(Player p){
-	    this.members.add(p.getName());
-	    f.getGangConfig().set("gangs." + this.name + ".members", members);
+	    this.membersUuid.add(p.getUniqueId().toString());
+	    f.getGangConfig().set("gangs." + this.name + ".members", membersUuid);
 	    f.saveGangConfig();
 	  }
 	  public void removeMember(Player p){
-	    this.members.remove(p.getName());
-	    f.getGangConfig().set("gangs." + this.name + ".members", members);
+	    this.membersUuid.remove(p.getUniqueId().toString());
+	    f.getGangConfig().set("gangs." + this.name + ".members", membersUuid);
 	    f.saveGangConfig();
 	  }
 	  public ArrayList<String> getTrusted(){
 	    return this.trusted;
 	  }
 	  public void addTrusted(Player p) {
-	    this.trusted.add(p.getName());
-	    f.getGangConfig().set("gangs." + this.name + ".trusted", trusted);
+	    this.trustedUuid.add(p.getUniqueId().toString());
+	    f.getGangConfig().set("gangs." + this.name + ".trusted", trustedUuid);
 	    f.saveGangConfig();
 	  }
 	  public void removeTrusted(Player p) {
-	    this.trusted.remove(p.getName());
-	    f.getGangConfig().set("gangs." + this.name + ".trusted", trusted);
-	    f.saveGangConfig();
+		  this.trustedUuid.remove(p.getUniqueId().toString());
+		  f.getGangConfig().set("gangs." + this.name + ".trusted", trustedUuid);
+		  f.saveGangConfig();
 	  }
 	  public ArrayList<String> getOfficers(){
 		  return this.officers;
 	  }
 	  public void addOfficer(Player p){
-		  this.officers.add(p.getName());
-		  f.getGangConfig().set("gangs." + this.name + ".officers", officers);
+		  this.officersUuid.add(p.getUniqueId().toString());
+		  f.getGangConfig().set("gangs." + this.name + ".officers", officersUuid);
 		  f.saveGangConfig();
 	  }
 	  public void removeOfficer(Player p){
-		  this.officers.remove(p.getName());
-		  f.getGangConfig().set("gangs." + this.name + ".officers", officers);
+		  this.officersUuid.remove(p.getUniqueId().toString());
+		  f.getGangConfig().set("gangs." + this.name + ".officers", officersUuid);
 		  f.saveGangConfig();
 	  }
 	  public ArrayList<String> getLeaders(){
 		  return this.leaders;
 	  }
 	  public void addLeader(Player p){
-		  this.leaders.add(p.getName());
-		  f.getGangConfig().set("gangs." + this.name + ".leaders", leaders);
+		  this.leadersUuid.add(p.getUniqueId().toString());
+		  f.getGangConfig().set("gangs." + this.name + ".leaders", leadersUuid);
 		  f.saveGangConfig();
 	  }
 	  public void removeLeader(Player p){
-		  this.leaders.remove(p.getName());
-		  f.getGangConfig().set("gangs." + this.name + ".leaders", leaders);
+		  this.leadersUuid.remove(p.getUniqueId().toString());
+		  f.getGangConfig().set("gangs." + this.name + ".leaders", leadersUuid);
 		  f.saveGangConfig();
 	  }
 	  public String getOwner(){
@@ -92,7 +102,7 @@ public class Gang {
 	  }
 	  public void setOwner(Player p){
 		  this.owner = p.getName();
-		  f.getGangConfig().set("gangs." + this.name + ".owner", owner);
+		  f.getGangConfig().set("gangs." + this.name + ".owner", p.getUniqueId().toString());
 		  f.saveGangConfig();
 	  }
 	  

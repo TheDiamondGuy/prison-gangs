@@ -461,7 +461,7 @@ public class GangManager {
 		f.getGangConfig().set("gangs." + name + ".trusted", new ArrayList<String>());
 		f.getGangConfig().set("gangs." + name + ".officers", new ArrayList<String>());
 		f.getGangConfig().set("gangs." + name + ".leaders", new ArrayList<String>());
-		f.getGangConfig().set("gangs." + name + ".owner", owner.getName());
+		f.getGangConfig().set("gangs." + name + ".owner", owner.getUniqueId().toString());
 		List<String> gangs = f.getGangConfig().getStringList("gang-names");
 		gangs.add(name);
 		f.getGangConfig().set("gang-names", gangs);
@@ -507,8 +507,8 @@ public class GangManager {
 		double KDR = 0;
 		for(String s:g.getAllPlayers()){
 			Player p = Bukkit.getPlayerExact(s);
-			totalKills += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
-			totalDeaths += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+			totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
+			totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
 		}
 		if(totalDeaths == 0){
 			KDR = totalKills;
@@ -524,7 +524,7 @@ public class GangManager {
 		int totalKills = 0;
 		for(String s:g.getAllPlayers()){
 			Player p = Bukkit.getPlayerExact(s);
-			totalKills += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
+			totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
 		}
 		return totalKills;
 	}
@@ -534,7 +534,7 @@ public class GangManager {
 		int totalDeaths = 0;
 		for(String s:g.getAllPlayers()){
 			Player p = Bukkit.getPlayerExact(s);
-			totalDeaths += f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+			totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
 		}
 		return totalDeaths;
 	}
