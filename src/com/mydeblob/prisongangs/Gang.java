@@ -140,18 +140,25 @@ public class Gang {
 	  }
 	  
 	public static Ranks getPlayerRank(String playerName, Gang g){
-		  if(g.getMembers().contains(playerName)){
-			  return Ranks.MEMBER;
-		  }else if(g.getTrusted().contains(playerName)){
-			  return Ranks.TRUSTED;
-		  }else if(g.getOfficers().contains(playerName)){
-			  return Ranks.OFFICER;
-		  }else if(g.getLeaders().contains(playerName)){
-			  return Ranks.LEADER;
+		  if(!g.getMembers().isEmpty()){
+			  if(g.getMembers().contains(playerName)){
+				  return Ranks.MEMBER;
+			  }
+		  }else if(!g.getTrusted().isEmpty()){
+			  if(g.getTrusted().contains(playerName)){
+				  return Ranks.TRUSTED;
+			  }
+		  }else if(!g.getOfficers().isEmpty()){
+			  if(g.getOfficers().contains(playerName)){
+				  return Ranks.OFFICER;
+			  }
+		  }else if(!g.getLeaders().isEmpty()){
+			 if(g.getLeaders().contains(playerName)){
+				 return Ranks.LEADER;
+			 }
 		  }else if(g.getOwner().equalsIgnoreCase(playerName)){
 			  return Ranks.OWNER;
-		  }else{
-			  return null;
 		  }
+		  return null;
 	  }
 }
