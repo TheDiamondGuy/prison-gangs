@@ -18,6 +18,10 @@ char-limit: "&cError: The gang name is to long!"
 # This is the message a player gets when he performs a command on a player that isnt found
 player-not-found: "&cError! The specified player wasn't found! Are you sure you spelled his name correctly?"
 
+# This is the message a player gets when he performs a command on a player that isnt 
+# online
+player-not-online: "&cThe specified player isn't online!"
+
 # This is the message a player gets when he doesnt have permission for a command
 no-perms: "&cYou do not have permission to use this command!"
 
@@ -35,14 +39,51 @@ in-gang: "&cYou are already in a gang! You must leave your current gang with /ga
 gang-exists: "&cThat gang already exists!"
 
 # This is the message a player gets he tries to perform a command on a player that needs
-# to be in a gang but isnt
+# to be in a gang but isn't
 target-not-in-gang: "&c%t% is not in a gang!"
 
 # This is the message a player gets he tries to perform a command on a player that needs
-# to be in your gang but isnt
+# to be in your gang but isn't
 target-not-in-your-gang: "&c%t% is not in your gang!"
 
+# This is the message a player gets when he successfully creates a gang
+created-gang: "&aSuccessfully created a gang with the name of %g%!"
 
+# This is the message a player gets when he tries to invite himself to his own gang
+cant-invite-yourself: "&cYou can't invite yourself!"
+
+# This is the message the sender gets when he successfully invites someone
+sender-success-invite: "&aSuccessfully invited %t% to the gang!"
+
+# This is the message the target gets when someone successfully invited him to their gang
+target-success-invite: "&aYou have been invited to the gang %g% by %s%! Type /gang join %g% to join!"
+
+# This is the message the gang receives when a player is invited
+success-invite: "&c%s% &9has invited %t% to the gang!"
+
+# This is the message a player gets when he tries to invite someone but isn't a high 
+# enough rank in the gang
+no-perms-invite: "&cYou do not have permission to invite people! (You must be Trusted+)"
+
+# This is the message a player gets when he tries to un-invite himself 
+cant-uninvite-yourself: "&cYou can't uninvite yourself!"
+
+# This is the message the sender gets when he successfully un-invites someone
+sender-success-uninvite: "&aSuccessfully uninvited %t% from your gang!"
+
+# This is the message the target gets when someones successfully un-invites him to their
+# gang
+target-success-uninvite: "&cYou have been uninvited from %g%!"
+
+# This is the message the gang receives when a player is un-invited
+success-uninvite: "&c%s% has just uninvited %t%!"
+
+# This is the message a player gets when he tries to un-invite someone who wasn't invited
+never-invited: "&c%p% was never invited to your gang!"
+
+# This is the message a player gets when he tries to un-invite someone but isn't a high
+# enough rank in the gang
+no-perms-uninvite: "&cYou do not have permission to un-invite people! (You must be Trusted+)"
 
 
 
