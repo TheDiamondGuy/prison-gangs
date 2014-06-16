@@ -85,9 +85,95 @@ never-invited: "&c%p% was never invited to your gang!"
 # enough rank in the gang
 no-perms-uninvite: "&cYou do not have permission to un-invite people! (You must be Trusted+)"
 
+# This is the message a player gets when he joins a gang
+player-success-join: "&aSuccessfully joined the gang %g%!"
 
+# This is the message the gang receives when a player joins the gang
+success-join: "&c%s% has joined the gang!"
 
+# This is the message a player gets when he tries to join a gang he wasn't invited to
+not-invited: "&cYou have not been invited to the gang %g%!"
 
+# This is the message a player gets when he leaves a gang
+player-success-left: "&aYou have Successfully left the gang %g%!
 
+# This is the message the gang receives when a player leaves the gang
+success-left: &c%s% &9has just left the gang!
 
+# This is the message the gang receives when the owner leaves without setting new 
+# ownership
+disband-of-absence: "&cThe gang had been disbanded due to the absence of an owner!"
 
+# This is the message a player gets when he tries to kick himself from his own gang
+cant-kick-yourself: "&cYou can't kick yourself! Type /leave to leave the gang!"
+
+# This is the message the sender gets when he successfully kicks someone
+sender-success-kick: "&aSuccessfully kicked %t% from the gang!"
+
+# This is the message the target gets when someone successfully kicks him from his gang
+target-success-kick: "&cYou have been kicked from the gang %g% by %s%""
+
+# This is the message the gang receives when a player is kicked from a gang
+success-kick: "&c%t% &9has just been kicked from the gang!"
+
+# This is the message a player gets when he tries to kick someone but isn't a high 
+# enough rank in the gang
+no-perms-kick: "&cYou do not have permission to kick people! (You must be a Officer+)"
+
+# This is the message a player gets when he tries to promote himself from his own gang
+cant-promote-yourself: "&cYou can't promote yourself!"
+
+# This is the message the sender gets when he successfully promotes someone
+sender-success-promote: "&aYou Successfully promoted %p% to a %r%!"
+
+# This is the message the target gets when someone successfully promotes him from his gang
+target-success-promote: "&aYou have been promoted to %r%!"
+
+# This is the message the gang receives when a player is promoted in a gang
+success-promote: "&c%t% &9has just been promoted to %r%!"
+
+# This is the message a player gets when he tries to promote someone to a higher rank than
+# he is
+cant-promote: "&cYou can't promote players higher or equal to you in rank!"
+
+# This is the message the owner gets when he attempts to promote someone past leader
+cant-promote-owner: "&cYou can't promote people past leader! To pass over gang ownership type /gang setowner <Player Name>!"
+
+# This is the message a player gets when he tries to promote someone but isn't a high 
+# enough rank in the gang
+no-perms-promote: "&cYou do not have permission to promote people! (You must be a Officer+)"
+
+# This is the message a player gets when he tries to demote himself from his own gang
+cant-demote-yourself: "&cYou can't demote yourself!"
+
+# This is the message the sender gets when he successfully demotes someone
+sender-success-demote: "&aYou Successfully demoted %p% to a %r%!"
+
+# This is the message the target gets when someone successfully demotes him from his gang
+target-success-demote: "&cYou have just been demoted to %r% by &9%s%"
+
+# This is the message the gang receives when a player is promoted in a gang
+success-demote: "&c%t% &9has just been demoted to %r%!"
+
+# This is the message a player gets when he tries to demote someone that is higher ranked 
+# than him
+cant-demote: "&cYou can't demote a higher ranked player than you!"
+
+# This is the message a player gets when he tries to demote someone to a lower rank than
+# member
+cant-demote-anylower: "&cYou can't demote %t% any lower then he already is (Member)!"
+
+# This is the message a player gets when he tries to demote someone but isn't a high 
+# enough rank in the gang
+no-perms-demote: "&cYou do not have permission to demote people! (You must be a Officer+)"
+
+# This is the message the player gets when he successfully disbands the gang
+sender-success-disband: "&aSuccessfully disbanded the gang!"
+
+# This is the message the gang receives when the gang has been disbanded
+success-disband: "&cThe gang has been disbanded!"
+
+# This is the message a player gets when he tries to disband the gang but isn't the owner
+no-perms-disband: "&cOnly gang owners can disband the gang!"
+
+# That's it, this is the end of the messages.yml!

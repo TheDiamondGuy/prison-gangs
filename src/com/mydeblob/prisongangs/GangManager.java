@@ -467,7 +467,7 @@ public class GangManager {
 		f.getGangConfig().set("gang-names", gangs);
 		f.saveGangConfig();
 		Gang g = new Gang(name);
-		owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESFULLY_CREATED_GANG.toString(owner, Ranks.OWNER, g));
+		owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESSFULLY_CREATED_GANG.toString(owner, Ranks.OWNER, g));
 	}
 
 	public void removeGang(String name){
