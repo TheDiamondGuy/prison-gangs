@@ -103,9 +103,12 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 						return true;
 					}
-					if(gm.getGangByName(args[1]) != null && f.getGangConfig().getStringList("gang-names").contains(args[1])){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_EXISTS.toString(p, gm.getGangByName(args[1])));
-						return true;
+					if(gm.getGangByName(args[1]) != null){
+						for(String s:f.getGangConfig().getStringList("gang-names"))
+							if(s.equalsIgnoreCase(args[1])){
+								p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_EXISTS.toString(p, gm.getGangByName(args[1])));
+								return true;
+							}
 					}
 					if((args[1].length() + 1) > plugin.getConfig().getInt("char-limit")){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.CHAR_LIMIT.toString(p));

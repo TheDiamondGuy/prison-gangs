@@ -26,6 +26,7 @@ public class PrisonGangs extends JavaPlugin{
 			f.saveDefaultLangConfig();
 		}
 		f.reloadKdrConfig();
+		f.saveKdrConfig();
 		f.reloadGangConfig();
 		Lang.setFile(f.getLangYaml());
 		Bukkit.getServer().getPluginManager().registerEvents(new CommandHandler(this), this);
