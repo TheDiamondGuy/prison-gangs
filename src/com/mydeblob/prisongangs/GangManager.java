@@ -44,6 +44,30 @@ public class GangManager {
 		}
 		return null;
 	}
+	
+	public Ranks getPlayerRank(String playerName, Gang g){
+		  if(!g.getMembers().isEmpty()){
+			  if(g.getMembers().contains(playerName)){
+				  return Ranks.MEMBER;
+			  }
+		  }else if(!g.getTrusted().isEmpty()){
+			  if(g.getTrusted().contains(playerName)){
+				  return Ranks.TRUSTED;
+			  }
+		  }else if(!g.getOfficers().isEmpty()){
+			  if(g.getOfficers().contains(playerName)){
+				  return Ranks.OFFICER;
+			  }
+		  }else if(!g.getLeaders().isEmpty()){
+			 if(g.getLeaders().contains(playerName)){
+				 return Ranks.LEADER;
+			 }
+		  }else if(g.getOwner().equalsIgnoreCase(playerName)){
+			  return Ranks.OWNER;
+		  }
+		  return null;
+	  }
+	
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void promotePlayer(Player sender, Player target, Gang gang){
 		if(gang.getOfficers().contains(sender.getName()) || sender.hasPermission("gangs.admin") || sender.isOp()){
@@ -252,7 +276,7 @@ public class GangManager {
 	public void kickPlayer(Player sender, Player target, Gang gang){ 
 		if(gang.getOfficers().contains(sender.getName())){
 			if(gang.getMembers().contains(target.getName()) || gang.getTrusted().contains(target.getName())){
-				Ranks r = Gang.getPlayerRank(target.getName(), gang);
+				Ranks r = getPlayerRank(target.getName(), gang);
 				if(r == Ranks.MEMBER){
 					gang.removeMember(target);
 					target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
@@ -267,12 +291,12 @@ public class GangManager {
 					return;
 				}
 			}else{
-				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_KICK.toString(sender, target, gang, Gang.getPlayerRank(target.getName(), gang)));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_KICK.toString(sender, target, gang, getPlayerRank(target.getName(), gang)));
 				return;
 			}
 		}if(gang.getLeaders().contains(sender.getName())){
 			if(!gang.getLeaders().contains(target.getName()) || !(gang.getOwner().equals(target.getName()))){
-				Ranks r = Gang.getPlayerRank(target.getName(), gang);
+				Ranks r = getPlayerRank(target.getName(), gang);
 				if(r == Ranks.MEMBER){
 					gang.removeMember(target);
 					target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
@@ -293,11 +317,11 @@ public class GangManager {
 					return;
 				}
 			}else{
-				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_KICK.toString(sender, target, gang, Gang.getPlayerRank(target.getName(), gang)));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_KICK.toString(sender, target, gang, getPlayerRank(target.getName(), gang)));
 				return;
 			}
 		}if(gang.getOwner() == sender.getName()){
-			Ranks r = Gang.getPlayerRank(target.getName(), gang);
+			Ranks r = getPlayerRank(target.getName(), gang);
 			if(r == Ranks.MEMBER){
 				gang.removeMember(target);
 				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
@@ -324,7 +348,7 @@ public class GangManager {
 				return;
 			}
 		}if(sender.hasPermission("gangs.admin") || sender.isOp()){
-			Ranks r = Gang.getPlayerRank(target.getName(), gang);
+			Ranks r = getPlayerRank(target.getName(), gang);
 			if(r == Ranks.MEMBER){
 				gang.removeMember(target);
 				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
@@ -350,7 +374,7 @@ public class GangManager {
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
 				return;
 			}else if(r == Ranks.OWNER){
-				Ranks rr = Gang.getPlayerRank(sender.getName(), gang);
+				Ranks rr = getPlayerRank(sender.getName(), gang);
 				String oldOwner = gang.getOwner();
 				gang.setOwner(sender);
 				gang.addLeader(Bukkit.getPlayerExact(oldOwner));
@@ -405,13 +429,13 @@ public class GangManager {
 	
 	public void invitePlayer(Player sender, Player target, Gang gang){
 		if(gang.getMembers().contains(sender.getName())){
-			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(target.getName(), gang)));
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, getPlayerRank(target.getName(), gang)));
 			return;
 		}else{
 			invited.put(target.getName(), gang);
-			sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
-			target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
-			messageGang(gang, Lang.SUCCESS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
+			target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
+			messageGang(gang, Lang.SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 			return;
 		}
 	}
@@ -432,17 +456,17 @@ public class GangManager {
 	
 	public void uninvitePlayer(Player sender, Player target, Gang gang){
 		if(gang.getMembers().contains(sender.getName())){
-			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 			return;
 		}else{
 			if(isInvited(target)){
 				removeInvitation(target);
-				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_UNINVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
-				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_UNINVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
-				messageGang(gang, Lang.SUCCESS_UNINVITE.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_UNINVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_UNINVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
+				messageGang(gang, Lang.SUCCESS_UNINVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 				return;
 			}else{
-				sender.sendMessage(Lang.PREFIX.toString() + Lang.NEVER_INVITED.toString(sender, target, gang, Gang.getPlayerRank(sender.getName(), gang)));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.NEVER_INVITED.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 				return;
 			}
 		}
@@ -484,7 +508,7 @@ public class GangManager {
 		Gang g = getGangByName(name);
 		if(g.getOwner() == p.getName()){
 			String gname = g.getName();
-			Ranks r = Gang.getPlayerRank(p.getName(), g);
+			Ranks r = getPlayerRank(p.getName(), g);
 			f.getGangConfig().set("gangs." + g.getName(), null);
 			List<String> gangs = f.getGangConfig().getStringList("gang-names");
 			gangs.remove(g.getName());
@@ -495,7 +519,7 @@ public class GangManager {
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DISBAND.toString(p, r, gname));
 			return;
 		}else{
-			p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_DISBAND.toString(p, Gang.getPlayerRank(p.getName(), getGangByName(name)), getGangByName(name)));
+			p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_DISBAND.toString(p, getPlayerRank(p.getName(), getGangByName(name)), getGangByName(name)));
 			return;
 		}
 	}

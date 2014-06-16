@@ -7,6 +7,8 @@ public enum Ranks {
 	OFFICER,
 	LEADER,
 	OWNER;
+	
+	@Override
 	public String toString(){
 		if(this == MEMBER){
 			return "Member";

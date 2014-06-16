@@ -100,7 +100,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			}else if(args[0].equalsIgnoreCase("create") && args.length == 2){
 				if(p.hasPermission("gangs.create") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 					if(gm.getGangWithPlayer(p) != null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, gm.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 						return true;
 					}
 					if(gm.getGangByName(args[1]) != null){
@@ -127,7 +127,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			}if(args[0].equalsIgnoreCase("promote") && args.length == 2){
 				if(p.hasPermission("gangs.promote") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 					if(gm.getGangWithPlayer(p) != null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, gm.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 						return true;
 					}
 					Player target = Bukkit.getPlayerExact(args[1]);
@@ -241,7 +241,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			}else if(args[0].equalsIgnoreCase("join") && args.length == 2){
 				if(p.hasPermission("gangs.join") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 					if(gm.getGangWithPlayer(p) != null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, gm.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 						return true;
 					}
 					ArrayList<String> names = new ArrayList<String>();
@@ -256,15 +256,15 @@ public class CommandHandler implements CommandExecutor, Listener{
 						if(gm.gangsMatchInvited(p, args[1])){
 							gm.removeInvitation(p);
 							gm.getGangByName(args[1]).addMember(p);
-							p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_JOIN.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
-							gm.messageGang(gm.getGangByName(args[1]), Lang.SUCCESS_JOIN.toString(p, Gang.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+							p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_JOIN.toString(p, gm.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+							gm.messageGang(gm.getGangByName(args[1]), Lang.SUCCESS_JOIN.toString(p, gm.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
 							return true;
 						}else{
 							p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
 							return true;
 						}
 					}else{
-						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_INVITED.toString(p));
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_INVITED.toString(p, gm.getGangByName(args[1])));
 						return true;
 					}
 				}else{
