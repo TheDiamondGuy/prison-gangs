@@ -182,7 +182,7 @@ public class GangManager {
 
 	@SuppressWarnings("deprecation")
 	public void demotePlayer(Player sender, Player target, Gang gang){
-		if(gang.getOfficers().contains(sender.getName()) || sender.hasPermission("gangs.admin") || sender.isOp()){
+		if(gang.getOfficers().contains(sender.getName())){
 			if(gang.getMembers().contains(target.getName())){
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE_ANYLOWER.toString(sender, target, gang, Ranks.MEMBER));
 				return;
@@ -197,7 +197,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
 				return;
 			}
-		}if(gang.getLeaders().contains(sender.getName())){
+		}else if(gang.getLeaders().contains(sender.getName())){
 			if(gang.getOfficers().contains(target.getName())){
 				gang.removeOfficer(target);
 				gang.addTrusted(target);
@@ -219,8 +219,8 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
 				return;
 			}
-		}if(gang.getOwner().equals(sender.getName())){
-			if(gang.getOfficers().contains(target.getName())){
+		}else if(gang.getOwner().equals(sender.getName())){
+			if(gang.getLeaders().contains(target.getName())){
 				gang.removeLeader(target);
 				gang.addOfficer(target);
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));

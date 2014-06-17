@@ -110,7 +110,7 @@ public class Gang {
 	  }
 	  public void removeLeader(Player p){
 		  this.leadersUuid.remove(p.getUniqueId().toString());
-		  this.officers.remove(p.getName());
+		  this.leaders.remove(p.getName());
 		  f.getGangConfig().set("gangs." + this.name + ".leaders", leadersUuid);
 		  f.saveGangConfig();
 	  }
