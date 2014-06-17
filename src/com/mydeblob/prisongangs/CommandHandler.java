@@ -126,8 +126,8 @@ public class CommandHandler implements CommandExecutor, Listener{
 				return true;
 			}if(args[0].equalsIgnoreCase("promote") && args.length == 2){
 				if(p.hasPermission("gangs.promote") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-					if(gm.getGangWithPlayer(p) != null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, gm.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
 					Player target = Bukkit.getPlayerExact(args[1]);
