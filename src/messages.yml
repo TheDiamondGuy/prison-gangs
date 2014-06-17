@@ -59,7 +59,7 @@ sender-success-invite: "&aSuccessfully invited %t% to the gang!"
 target-success-invite: "&aYou have been invited to the gang %g% by %s%! Type /gang join %g% to join!"
 
 # This is the message the gang receives when a player is invited
-success-invite: "&c%s% &9has invited %t% to the gang!"
+success-invite: "&c%s% &9has invited &c%t% &9to the gang!"
 
 # This is the message a player gets when he invites someone more than once
 already-invited: "&cYou have already invited %t% to the gang!"
@@ -79,7 +79,7 @@ sender-success-uninvite: "&aSuccessfully uninvited %t% from your gang!"
 target-success-uninvite: "&cYou have been uninvited from %g%!"
 
 # This is the message the gang receives when a player is un-invited
-success-uninvite: "&c%s% has just uninvited %t%!"
+success-uninvite: "&c%s% &9has just uninvited &c%t%!"
 
 # This is the message a player gets when he tries to un-invite someone who wasn't invited
 never-invited: "&c%p% was never invited to your gang!"
@@ -133,7 +133,7 @@ sender-success-promote: "&aYou Successfully promoted %p% to a %r%!"
 target-success-promote: "&aYou have been promoted to %r%!"
 
 # This is the message the gang receives when a player is promoted in a gang
-success-promote: "&c%t% &9has just been promoted to %r%!"
+success-promote: "&c%t% &9has just been promoted to &c%r%!"
 
 # This is the message a player gets when he tries to promote someone to a higher rank than
 # he is
@@ -156,7 +156,7 @@ sender-success-demote: "&aYou Successfully demoted %p% to a %r%!"
 target-success-demote: "&cYou have just been demoted to %r% by &9%s%"
 
 # This is the message the gang receives when a player is promoted in a gang
-success-demote: "&c%t% &9has just been demoted to %r%!"
+success-demote: "&c%t% &9has just been demoted to &c%r%!"
 
 # This is the message a player gets when he tries to demote someone that is higher ranked 
 # than him

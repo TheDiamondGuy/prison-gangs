@@ -53,7 +53,7 @@ public enum Lang {
 	CANT_DEMOTE_YOURSELF("cant-demote-yourself", "&cYou can't demote yourself!"),
 	SENDER_SUCCESS_DEMOTE("sender-success-demote", "&aYou Successfully demoted %p% to a %r%!"),
 	TARGET_SUCCESS_DEMOTE("target-success-demote", "&cYou have just been demoted to %r% by &9%s%"),
-	SUCCESS_DEMOTE("success-demote", "&c%t% &9has just been demoted to %r%!"),
+	SUCCESS_DEMOTE("success-demote", "&c%t% &9has just been demoted to &c%r%!"),
 	CANT_DEMOTE("cant-demote", "&cYou can't demote a higher ranked player than you!"),
 	CANT_DEMOTE_ANYLOWER("cant-demote-anylower", "&cYou can't demote %t% any lower then he already is (Member)!"),
 	NO_PERMS_DEMOTE("no-perms-demote", "&cYou do not have permission to demote people! (You must be a Officer+)"),
