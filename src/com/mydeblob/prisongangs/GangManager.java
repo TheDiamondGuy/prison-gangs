@@ -73,7 +73,7 @@ public class GangManager {
 		if(sender.getName() == target.getName() && !sender.hasPermission("gangs.admin") || !sender.isOp()){
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE_YOURSELF.toString(sender, target, gang));
 		}
-		if(gang.getOfficers().contains(sender.getName()) || sender.hasPermission("gangs.admin") || sender.isOp()){
+		if(gang.getOfficers().contains(sender.getName())){
 			if(gang.getMembers().contains(target.getName())){
 				gang.addTrusted(target);
 				gang.removeMember(target);
@@ -86,7 +86,14 @@ public class GangManager {
 				return;
 			}
 		}else if(gang.getLeaders().contains(sender.getName())){
-			if(gang.getTrusted().contains(target.getName())){
+			if(gang.getMembers().contains(target.getName())){
+				gang.addTrusted(target);
+				gang.removeMember(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				messageGang(gang, Lang.SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				return;
+			}else if(gang.getTrusted().contains(target.getName())){
 				gang.addOfficer(target);
 				gang.removeTrusted(target);
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
@@ -98,7 +105,21 @@ public class GangManager {
 				return;
 			}
 		}else if(gang.getOwner().equalsIgnoreCase(sender.getName())){
-			if(gang.getOfficers().contains(target.getName())){
+			if(gang.getMembers().contains(target.getName())){
+				gang.addTrusted(target);
+				gang.removeMember(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				messageGang(gang, Lang.SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
+				return;
+			}else if(gang.getTrusted().contains(target.getName())){
+				gang.addOfficer(target);
+				gang.removeTrusted(target);
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				messageGang(gang, Lang.SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
+				return;
+			}else if(gang.getOfficers().contains(target.getName())){
 				gang.addLeader(target);
 				gang.removeOfficer(target);
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.LEADER));
