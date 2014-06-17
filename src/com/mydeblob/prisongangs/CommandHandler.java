@@ -65,7 +65,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						return true;
 					}
 					Gang g = gm.getGangWithPlayer(p);
-					p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + "'s Info" + ChatColor.DARK_RED + "***");
+					p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName()  + "'s" + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
 					p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + gm.getGangKDR(g));
 					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + gm.getGangKills(g));
 					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + gm.getGangDeaths(g));
@@ -83,7 +83,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 							return true;
 						}
 						Gang g = gm.getGangByName(args[1]);
-						p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
+						p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName() + "'s" + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
 						p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + gm.getGangKDR(g));
 						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + gm.getGangKills(g));
 						p.sendMessage(ChatColor.GREEN + g.getName() + "'s Deaths: " + ChatColor.BLUE + gm.getGangDeaths(g));
