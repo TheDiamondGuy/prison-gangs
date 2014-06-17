@@ -70,7 +70,7 @@ public class GangManager {
 	
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void promotePlayer(Player sender, Player target, Gang gang){
-		if(sender.getName() == target.getName() && !sender.hasPermission("gangs.admin") || !sender.isOp()){
+		if(sender.getName() == target.getName() && (!sender.hasPermission("gangs.admin") || !sender.isOp())){
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE_YOURSELF.toString(sender, target, gang));
 		}
 		if(gang.getOfficers().contains(sender.getName())){

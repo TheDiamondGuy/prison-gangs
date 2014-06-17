@@ -132,7 +132,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 					}
 					Player target = Bukkit.getPlayerExact(args[1]);
 					if(target == null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p)); 
 						return true;
 					}
 					if(gm.getGangWithPlayer(target) == null){

@@ -127,7 +127,7 @@ no-perms-kick: "&cYou do not have permission to kick people! (You must be a Offi
 cant-promote-yourself: "&cYou can't promote yourself!"
 
 # This is the message the sender gets when he successfully promotes someone
-sender-success-promote: "&aYou Successfully promoted %p% to a %r%!"
+sender-success-promote: "&aYou Successfully promoted %t% to a %r%!"
 
 # This is the message the target gets when someone successfully promotes him from his gang
 target-success-promote: "&aYou have been promoted to %r%!"
