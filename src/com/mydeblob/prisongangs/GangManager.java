@@ -70,6 +70,9 @@ public class GangManager {
 	
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void promotePlayer(Player sender, Player target, Gang gang){
+		if(sender.getName() == target.getName() && !sender.hasPermission("gangs.admin") || !sender.isOp()){
+			sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE_YOURSELF.toString(sender, target, gang));
+		}
 		if(gang.getOfficers().contains(sender.getName()) || sender.hasPermission("gangs.admin") || sender.isOp()){
 			if(gang.getMembers().contains(target.getName())){
 				gang.addTrusted(target);
@@ -82,7 +85,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
 				return;
 			}
-		}if(gang.getLeaders().contains(sender.getName())){
+		}else if(gang.getLeaders().contains(sender.getName())){
 			if(gang.getTrusted().contains(target.getName())){
 				gang.addOfficer(target);
 				gang.removeTrusted(target);
@@ -94,7 +97,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
 				return;
 			}
-		}if(gang.getOwner().equalsIgnoreCase(sender.getName())){
+		}else if(gang.getOwner().equalsIgnoreCase(sender.getName())){
 			if(gang.getOfficers().contains(target.getName())){
 				gang.addLeader(target);
 				gang.removeOfficer(target);
@@ -114,21 +117,21 @@ public class GangManager {
 				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
 				messageGang(gang, Lang.SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
 				return;
-			}if(gang.getTrusted().contains(target.getName())){
+			}else if(gang.getTrusted().contains(target.getName())){
 				gang.addOfficer(target);
 				gang.removeTrusted(target);
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
 				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
 				messageGang(gang, Lang.SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
 				return;
-			}if(gang.getOfficers().contains(target.getName())){
+			}else if(gang.getOfficers().contains(target.getName())){
 				gang.addLeader(target);
 				gang.removeOfficer(target);
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.LEADER));
 				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.LEADER));
 				messageGang(gang, Lang.SUCCESS_PROMOTE.toString(sender, target, gang, Ranks.LEADER));
 				return;
-			}if(gang.getLeaders().contains(target.getName())){
+			}else if(gang.getLeaders().contains(target.getName())){
 				String oldOwner = gang.getOwner();
 				gang.setOwner(target);
 				gang.addLeader(Bukkit.getPlayerExact(oldOwner));
