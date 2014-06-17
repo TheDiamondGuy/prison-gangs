@@ -3,6 +3,7 @@ package com.mydeblob.prisongangs;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -46,6 +47,7 @@ public class GangManager {
 	}
 	
 	public Ranks getPlayerRank(String playerName, Gang g){
+		Bukkit.getServer().getLogger().log(Level.SEVERE, "Gang: " + g);
 		  if(!g.getMembers().isEmpty()){
 			  if(g.getMembers().contains(playerName)){
 				  return Ranks.MEMBER;
@@ -432,6 +434,10 @@ public class GangManager {
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, getPlayerRank(target.getName(), gang)));
 			return;
 		}else{
+			if(invited.containsKey(target.getName())){
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.ALREADY_INVITED.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
+				return;
+			}
 			invited.put(target.getName(), gang);
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 			target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));

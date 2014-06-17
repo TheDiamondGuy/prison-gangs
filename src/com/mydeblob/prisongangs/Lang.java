@@ -23,6 +23,7 @@ public enum Lang {
 	SENDER_SUCCESS_INVITE("sender-success-invite", "&aSuccessfully invited %t% to the gang!"),
 	TARGET_SUCCESS_INVITE("target-success-invite", "&aYou have been invited to the gang %g% by %s%! Type /gang join %g% to join!"),
 	SUCCESS_INVITE("success-invite", "&c%s% &9has invited %t% to the gang!"), 
+	ALREADY_INVITED("already-invited", "&cYou have already invited %t% to the gang!"),
 	NO_PERMS_INVITE("no-perms-invite", "&cYou do not have permission to invite people! (You must be Trusted+)"),
 	CANT_UNINVITE_YOURSELF("cant-uninvite-yourself", "&cYou can't uninvite yourself!"),
 	SENDER_SUCCESS_UNINVITE("sender-success-uninvite", "&aSuccessfully uninvited %t% from your gang!"),
@@ -97,14 +98,14 @@ public enum Lang {
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
-			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toString());
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toText());
 		}
 	}
 	public String toString(Player sender, Ranks r, String gName) {
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
-			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", gName).replaceAll("%r%", r.toString());
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", gName).replaceAll("%r%", r.toText());
 		}
 	}
 	public String toString(Player sender, Gang g) {
@@ -125,7 +126,7 @@ public enum Lang {
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
-			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toString());
+			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toText());
 		}
 	}
 

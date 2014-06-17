@@ -8,8 +8,7 @@ public enum Ranks {
 	LEADER,
 	OWNER;
 	
-	@Override
-	public String toString(){
+	public String toText(){
 		if(this == MEMBER){
 			return "Member";
 		}else if(this == TRUSTED){

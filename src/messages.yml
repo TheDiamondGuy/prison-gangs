@@ -61,6 +61,9 @@ target-success-invite: "&aYou have been invited to the gang %g% by %s%! Type /ga
 # This is the message the gang receives when a player is invited
 success-invite: "&c%s% &9has invited %t% to the gang!"
 
+# This is the message a player gets when he invites someone more than once
+already-invited: "&cYou have already invited %t% to the gang!"
+
 # This is the message a player gets when he tries to invite someone but isn't a high 
 # enough rank in the gang
 no-perms-invite: "&cYou do not have permission to invite people! (You must be Trusted+)"
@@ -89,7 +92,7 @@ no-perms-uninvite: "&cYou do not have permission to un-invite people! (You must 
 player-success-join: "&aSuccessfully joined the gang %g%!"
 
 # This is the message the gang receives when a player joins the gang
-success-join: "&c%s% has joined the gang!"
+success-join: "&c%s% &9has joined the gang!"
 
 # This is the message a player gets when he tries to join a gang he wasn't invited to
 not-invited: "&cYou have not been invited to the gang %g%!"

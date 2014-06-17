@@ -27,7 +27,7 @@ public class Events implements Listener{
 			String f = e.getFormat().replaceAll("\\{gang\\}", pClan).replaceAll("\\{GANG\\}", pClan);
 			e.setFormat(f);
 		}else{
-			String f = e.getFormat().replaceAll("\\{gang\\}", null).replaceAll("\\{GANG\\}", null);
+			String f = e.getFormat().replaceAll("\\{gang\\}", "").replaceAll("\\{GANG\\}", "");
 			e.setFormat(f);
 		}
 	}

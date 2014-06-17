@@ -24,20 +24,28 @@ public class Gang {
 	public Gang(String name){
 	    this.name = name;
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".members")){
-	    	membersUuid.add(s);
-	    	members.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	if(s != null){
+		    	membersUuid.add(s);
+		    	members.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	}
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".trusted")){
-	    	trustedUuid.add(s);
-	    	trusted.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	if(s != null){
+		    	trustedUuid.add(s);
+		    	trusted.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	}	
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".officers")){
-	    	officersUuid.add(s);
-	    	officers.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	if(s != null){
+		    	officersUuid.add(s);
+		    	officers.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	}
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".leaders")){
-	    	leadersUuid.add(s);
-	    	leaders.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	if(s != null){
+		    	leadersUuid.add(s);
+		    	leaders.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+	    	}
 	    }
 	    owner = Bukkit.getPlayer(UUID.fromString(f.getGangConfig().getString("gangs." + name + ".owner"))).getName();
 	    gangs.add(this);
@@ -50,11 +58,13 @@ public class Gang {
 	  }
 	  public void addMember(Player p){
 	    this.membersUuid.add(p.getUniqueId().toString());
+	    this.members.add(p.getName());
 	    f.getGangConfig().set("gangs." + this.name + ".members", membersUuid);
 	    f.saveGangConfig();
 	  }
 	  public void removeMember(Player p){
 	    this.membersUuid.remove(p.getUniqueId().toString());
+	    this.members.remove(p.getName());
 	    f.getGangConfig().set("gangs." + this.name + ".members", membersUuid);
 	    f.saveGangConfig();
 	  }
@@ -63,11 +73,13 @@ public class Gang {
 	  }
 	  public void addTrusted(Player p) {
 	    this.trustedUuid.add(p.getUniqueId().toString());
+	    this.trusted.add(p.getName());
 	    f.getGangConfig().set("gangs." + this.name + ".trusted", trustedUuid);
 	    f.saveGangConfig();
 	  }
 	  public void removeTrusted(Player p) {
 		  this.trustedUuid.remove(p.getUniqueId().toString());
+		    this.trusted.remove(p.getName());
 		  f.getGangConfig().set("gangs." + this.name + ".trusted", trustedUuid);
 		  f.saveGangConfig();
 	  }
@@ -76,11 +88,13 @@ public class Gang {
 	  }
 	  public void addOfficer(Player p){
 		  this.officersUuid.add(p.getUniqueId().toString());
+		  this.officers.add(p.getName());
 		  f.getGangConfig().set("gangs." + this.name + ".officers", officersUuid);
 		  f.saveGangConfig();
 	  }
 	  public void removeOfficer(Player p){
 		  this.officersUuid.remove(p.getUniqueId().toString());
+		  this.officers.remove(p.getName());
 		  f.getGangConfig().set("gangs." + this.name + ".officers", officersUuid);
 		  f.saveGangConfig();
 	  }
@@ -89,11 +103,13 @@ public class Gang {
 	  }
 	  public void addLeader(Player p){
 		  this.leadersUuid.add(p.getUniqueId().toString());
+		  this.leaders.add(p.getName());
 		  f.getGangConfig().set("gangs." + this.name + ".leaders", leadersUuid);
 		  f.saveGangConfig();
 	  }
 	  public void removeLeader(Player p){
 		  this.leadersUuid.remove(p.getUniqueId().toString());
+		  this.officers.remove(p.getName());
 		  f.getGangConfig().set("gangs." + this.name + ".leaders", leadersUuid);
 		  f.saveGangConfig();
 	  }
@@ -108,19 +124,19 @@ public class Gang {
 	  
 	  public ArrayList<String> getAllPlayers(){
 		  ArrayList<String> allPlayers = new ArrayList<String>();
-		  for(String s:getMembers()){
+		  for(String s:this.getMembers()){
 			  allPlayers.add(s);
 		  }
-		  for(String s:getTrusted()){
+		  for(String s:this.getTrusted()){
 			  allPlayers.add(s);
 		  }
-		  for(String s:getOfficers()){
+		  for(String s:this.getOfficers()){
 			  allPlayers.add(s);
 		  }
-		  for(String s:getLeaders()){
+		  for(String s:this.getLeaders()){
 			  allPlayers.add(s);
 		  }
-		  allPlayers.add(getOwner());
+		  allPlayers.add(this.getOwner());
 		  return allPlayers;
 	  }
 		public static void loadGangs(){
