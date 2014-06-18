@@ -177,7 +177,55 @@ public class CommandHandler implements CommandExecutor, Listener{
 			}else if(args[0].equalsIgnoreCase("demote") && args.length != 2){
 				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 				return true;
-			}if(args[0].equalsIgnoreCase("kick") && args.length == 2){
+			}else if(args[0].equalsIgnoreCase("setowner") && args.length == 2){ 
+				if(p.hasPermission("gangs.setowner") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
+						return true;
+					}
+					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					if(target == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						return true;
+					}if(gm.getGangWithPlayer(target) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG.toString(p, target, gm.getGangWithPlayer(p))); 
+						return true;
+					}if(gm.getGangWithPlayer(target) != gm.getGangWithPlayer(p)){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_YOUR_GANG.toString(p, target, gm.getGangWithPlayer(p)));
+						return true;
+					}
+					Gang g = gm.getGangWithPlayer(p);
+					if(g.getOwner() != p.getName()){
+						target.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
+						return true;
+					}else{
+						Ranks rr = gm.getPlayerRank(p.getName(), g);
+						String oldOwner = g.getOwner();
+						g.setOwner(target);
+						g.addLeader(Bukkit.getPlayerExact(oldOwner));
+						g.removeLeader(Bukkit.getPlayerExact(oldOwner));
+						if(rr == Ranks.MEMBER){
+							g.removeMember(target);
+						}else if(rr == Ranks.TRUSTED){
+							g.removeTrusted(target);
+						}else if(rr == Ranks.OFFICER){
+							g.removeOfficer(target);
+						}else if(rr == Ranks.LEADER){
+							g.removeLeader(target);
+						}
+						p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(p.getName(), g)));
+						target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
+						gm.messageGang(g, Lang.SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(p.getName(), g)));
+						return true;
+					}
+				}else{
+					p.sendMessage(Lang.NO_PERMS.toString(p));
+					return true;
+				}
+			}else if (args[0].equalsIgnoreCase("setowner") && args.length != 2){
+				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
+				return true;
+			}else if(args[0].equalsIgnoreCase("kick") && args.length == 2){
 				if(p.hasPermission("gangs.kick") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 					if(gm.getGangWithPlayer(p) == null){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));

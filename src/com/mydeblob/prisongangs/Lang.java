@@ -57,6 +57,10 @@ public enum Lang {
 	CANT_DEMOTE("cant-demote", "&cYou can't demote a higher ranked player than you!"),
 	CANT_DEMOTE_ANYLOWER("cant-demote-anylower", "&cYou can't demote %t% any lower then he already is (Member)!"),
 	NO_PERMS_DEMOTE("no-perms-demote", "&cYou do not have permission to demote people! (You must be a Officer+)"),
+	SENDER_SUCCESS_SET_OWNERSHIP("sender-success-set-ownership", "&aYou have successfully transfered the gang ownership to %t%!"),
+	TARGET_SUCCESS_SET_OWNERSHIP("target-success-set-ownership", "&a%s% has just made you owner of the gang!"),
+	SUCCESS_SET_OWNERSHIP("success-set-ownership", "&c%s% &9just transfered gang ownership to &c%t%!"),
+	NO_PERMS_SET_OWNERSHIP("no-perms-set-ownership", "&cYou do not have permission to transfer gang ownership! (You must be the Owner!)"),
 	SENDER_SUCCESS_DISBAND("sender-success-disband", "&aSuccessfully disbanded the gang!"),
 	SUCCESS_DISBAND("success-disband", "&cThe gang has been disbanded!"),
 	NO_PERMS_DISBAND("no-perms-disband", "&cOnly gang owners can disband the gang!");
