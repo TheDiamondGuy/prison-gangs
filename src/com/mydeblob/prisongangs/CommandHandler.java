@@ -196,14 +196,13 @@ public class CommandHandler implements CommandExecutor, Listener{
 					}
 					Gang g = gm.getGangWithPlayer(p);
 					if(g.getOwner() != p.getName()){
-						target.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
 						return true;
 					}else{
-						Ranks rr = gm.getPlayerRank(p.getName(), g);
+						Ranks rr = gm.getPlayerRank(target.getName(), g);
 						String oldOwner = g.getOwner();
 						g.setOwner(target);
 						g.addLeader(Bukkit.getPlayerExact(oldOwner));
-						g.removeLeader(Bukkit.getPlayerExact(oldOwner));
 						if(rr == Ranks.MEMBER){
 							g.removeMember(target);
 						}else if(rr == Ranks.TRUSTED){
@@ -214,7 +213,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 							g.removeLeader(target);
 						}
 						p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(p.getName(), g)));
-						target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
+						target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_SET_OWNERSHIP.toString(p, target, g, Ranks.OWNER));
 						gm.messageGang(g, Lang.SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(p.getName(), g)));
 						return true;
 					}

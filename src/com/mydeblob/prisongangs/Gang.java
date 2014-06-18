@@ -123,6 +123,7 @@ public class Gang {
 		  f.saveGangConfig();
 	  }
 	  
+	  
 	  public ArrayList<String> getAllPlayers(){
 		  ArrayList<String> allPlayers = new ArrayList<String>();
 		  for(String s:this.getMembers()){

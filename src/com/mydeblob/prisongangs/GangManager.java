@@ -62,7 +62,7 @@ public class GangManager {
 			 if(g.getLeaders().contains(playerName)){
 				 return Ranks.LEADER;
 			 }
-		  }else if(g.getOwner().equalsIgnoreCase(playerName)){
+		  }else if(g.getOwner() == playerName){
 			  return Ranks.OWNER;
 		  }
 		  return null;

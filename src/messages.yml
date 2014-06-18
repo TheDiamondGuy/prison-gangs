@@ -150,7 +150,7 @@ no-perms-promote: "&cYou do not have permission to promote people! (You must be 
 cant-demote-yourself: "&cYou can't demote yourself!"
 
 # This is the message the sender gets when he successfully demotes someone
-sender-success-demote: "&aYou Successfully demoted %p% to a %r%!"
+sender-success-demote: "&aYou Successfully demoted %t% to a %r%!"
 
 # This is the message the target gets when someone successfully demotes him from his gang
 target-success-demote: "&cYou have just been demoted to %r% by &9%s%"
@@ -174,7 +174,7 @@ no-perms-demote: "&cYou do not have permission to demote people! (You must be a 
 sender-success-set-ownership: "&aYou have successfully transferred the gang ownership to %t%!"
 
 # This is the message the target gets when the owner of a gang transfers ownership
-target-success-set-ownership: "&a&a%s% has just made you owner of the gang!"
+target-success-set-ownership: "&a%s% has just made you owner of the gang!"
 
 # This is the message the gang receives when gang ownership has been transferred
 success-set-ownership: "&c%s% &9just transfered gang ownership to &c%t%!"
