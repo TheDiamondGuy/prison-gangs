@@ -51,7 +51,7 @@ public enum Lang {
 	CANT_PROMOTE_OWNER("cant-promote-owner", "&cYou can't promote people past leader! To pass over gang ownership type /gang setowner <Player Name>!"),
 	NO_PERMS_PROMOTE("no-perms-promote", "&cYou do not have permission to promote people! (You must be a Officer+)"),
 	CANT_DEMOTE_YOURSELF("cant-demote-yourself", "&cYou can't demote yourself!"),
-	SENDER_SUCCESS_DEMOTE("sender-success-demote", "&aYou Successfully demoted %t% to a %r%!"),
+	SENDER_SUCCESS_DEMOTE("sender-success-demote", "&aYou Successfully demoted %t% to %r%!"),
 	TARGET_SUCCESS_DEMOTE("target-success-demote", "&cYou have just been demoted to %r% by &9%s%"),
 	SUCCESS_DEMOTE("success-demote", "&c%t% &9has just been demoted to &c%r%!"),
 	CANT_DEMOTE("cant-demote", "&cYou can't demote a higher ranked player than you!"),

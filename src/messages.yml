@@ -150,7 +150,7 @@ no-perms-promote: "&cYou do not have permission to promote people! (You must be 
 cant-demote-yourself: "&cYou can't demote yourself!"
 
 # This is the message the sender gets when he successfully demotes someone
-sender-success-demote: "&aYou Successfully demoted %t% to a %r%!"
+sender-success-demote: "&aYou Successfully demoted %t% to %r%!"
 
 # This is the message the target gets when someone successfully demotes him from his gang
 target-success-demote: "&cYou have just been demoted to %r% by &9%s%"
