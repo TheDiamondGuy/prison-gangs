@@ -35,6 +35,7 @@ public class PrisonGangs extends JavaPlugin{
 		getCommand("pgupdate").setExecutor(new CommandHandler(this));
 		getServer().getPluginManager().registerEvents(new Events(this),  this);
 		Gang.loadGangs();
+		GangManager.getGangManager().loadInvites();
 		if(getConfig().getBoolean("auto-updater")){
 			Updater updater = new Updater(this, 66577, this.getFile(), Updater.UpdateType.NO_DOWNLOAD, false); // Start Updater but just do a version check
 			update = updater.getResult() == Updater.UpdateResult.UPDATE_AVAILABLE; // Determine if there is an update ready for us

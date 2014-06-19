@@ -461,6 +461,9 @@ public class GangManager {
 				return;
 			}
 			invited.put(target.getName(), gang);
+			f.getGangConfig().set("invited-players", target.getName());
+			f.getGangConfig().set("invited-players." + target.getName(), gang.getName());
+			f.saveGangConfig();
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 			target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 			messageGang(gang, Lang.SUCCESS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
@@ -479,6 +482,8 @@ public class GangManager {
 	public void removeInvitation(Player p){
 		if(invited.containsKey(p.getName())){
 			invited.remove(p.getName());
+			f.getGangConfig().set("invited-players." + p.getName(), null);
+			f.saveGangConfig();
 		}
 	}
 	
@@ -496,6 +501,17 @@ public class GangManager {
 			}else{
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.NEVER_INVITED.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
 				return;
+			}
+		}
+	}
+	
+	public void loadInvites(){
+		invited.clear();
+		if(f.getGangConfig().getConfigurationSection("invited-players") != null){
+			for(String s:f.getGangConfig().getConfigurationSection("invited-players").getKeys(false)){
+				if(getGangByName(f.getGangConfig().getString("invited-players." + s)) != null){
+					invited.put(s, getGangByName(f.getGangConfig().getString("invited-players." + s)));
+				}
 			}
 		}
 	}
