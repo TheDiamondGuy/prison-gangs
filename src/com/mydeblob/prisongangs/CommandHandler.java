@@ -194,8 +194,12 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_YOUR_GANG.toString(p, target, gm.getGangWithPlayer(p)));
 						return true;
 					}
+					if(p.getName().equals(target.getName())){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.CANT_TRANSFER_OWNERSHIP_TO_YOURSELF.toString(p));
+						return true;
+					}
 					Gang g = gm.getGangWithPlayer(p);
-					if(g.getOwner() != p.getName()){
+					if(!g.getOwner().equalsIgnoreCase(p.getName())){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
 						return true;
 					}else{
@@ -213,7 +217,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 							g.removeLeader(target);
 						}
 						p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(p.getName(), g)));
-						target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_SET_OWNERSHIP.toString(p, target, g, Ranks.OWNER));
+						target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
 						gm.messageGang(g, Lang.SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(p.getName(), g)));
 						return true;
 					}

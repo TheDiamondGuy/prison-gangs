@@ -50,19 +50,19 @@ public class GangManager {
 			  if(g.getMembers().contains(playerName)){
 				  return Ranks.MEMBER;
 			  }
-		  }else if(!g.getTrusted().isEmpty()){
+		  }if(!g.getTrusted().isEmpty()){
 			  if(g.getTrusted().contains(playerName)){
 				  return Ranks.TRUSTED;
 			  }
-		  }else if(!g.getOfficers().isEmpty()){
+		  }if(!g.getOfficers().isEmpty()){
 			  if(g.getOfficers().contains(playerName)){
 				  return Ranks.OFFICER;
 			  }
-		  }else if(!g.getLeaders().isEmpty()){
+		  }if(!g.getLeaders().isEmpty()){
 			 if(g.getLeaders().contains(playerName)){
 				 return Ranks.LEADER;
 			 }
-		  }else if(g.getOwner().equals(playerName)){
+		  }if(g.getOwner().equals(playerName)){
 			  return Ranks.OWNER;
 		  }
 		  return null;
@@ -85,7 +85,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE.toString(sender, target, gang, Ranks.TRUSTED));
 				return;
 			}
-		}else if(gang.getLeaders().contains(sender.getName())){
+		}if(gang.getLeaders().contains(sender.getName())){
 			if(gang.getMembers().contains(target.getName())){
 				gang.addTrusted(target);
 				gang.removeMember(target);
@@ -104,7 +104,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_PROMOTE.toString(sender, target, gang, Ranks.OFFICER));
 				return;
 			}
-		}else if(gang.getOwner().equalsIgnoreCase(sender.getName())){
+		}if(gang.getOwner().equals(sender.getName())){
 			if(gang.getMembers().contains(target.getName())){
 				gang.addTrusted(target);
 				gang.removeMember(target);
@@ -197,7 +197,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.OFFICER));
 				return;
 			}
-		}else if(gang.getLeaders().contains(sender.getName())){
+		}if(gang.getLeaders().contains(sender.getName())){
 			if(gang.getOfficers().contains(target.getName())){
 				gang.removeOfficer(target);
 				gang.addTrusted(target);
@@ -219,7 +219,7 @@ public class GangManager {
 				sender.sendMessage(Lang.PREFIX.toString() + Lang.CANT_DEMOTE.toString(sender, target, gang, Ranks.LEADER));
 				return;
 			}
-		}else if(gang.getOwner().equals(sender.getName())){
+		}if(gang.getOwner().equals(sender.getName())){
 			if(gang.getLeaders().contains(target.getName())){
 				gang.removeLeader(target);
 				gang.addOfficer(target);

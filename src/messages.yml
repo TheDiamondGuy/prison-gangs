@@ -170,6 +170,9 @@ cant-demote-anylower: "&cYou can't demote %t% any lower then he already is (Memb
 # enough rank in the gang
 no-perms-demote: "&cYou do not have permission to demote people! (You must be a Officer+)"
 
+# This is the message the player gets when he tries to transfer ownership to himself
+cant-transfer-ownership-to-yourself: "&cYou can't transfer ownership to yourself!"
+
 # This its he message the sender gets when he transfers gang ownership
 sender-success-set-ownership: "&aYou have successfully transferred the gang ownership to %t%!"
 
