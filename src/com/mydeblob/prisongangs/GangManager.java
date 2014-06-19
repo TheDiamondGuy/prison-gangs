@@ -309,8 +309,8 @@ public class GangManager {
 					return;
 				}else if(r == Ranks.TRUSTED){
 					gang.removeTrusted(target);
-					target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
-					sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+					target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+					sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 					messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 					return;
 				}
@@ -323,20 +323,20 @@ public class GangManager {
 				Ranks r = getPlayerRank(target.getName(), gang);
 				if(r == Ranks.MEMBER){
 					gang.removeMember(target);
-					target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
-					sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
+					target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
+					sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
 					messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
 					return;
 				}else if(r == Ranks.TRUSTED){
 					gang.removeTrusted(target);
-					target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
-					sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+					target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+					sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 					messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 					return;
 				}else if(r == Ranks.OFFICER){
 					gang.removeOfficer(target);
-					target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
-					sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
+					target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
+					sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
 					messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
 					return;
 				}
@@ -348,26 +348,26 @@ public class GangManager {
 			Ranks r = getPlayerRank(target.getName(), gang);
 			if(r == Ranks.MEMBER){
 				gang.removeMember(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
 				return;
 			}else if(r == Ranks.TRUSTED){
 				gang.removeTrusted(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 				return;
 			}else if(r == Ranks.OFFICER){
 				gang.removeOfficer(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
 				return;
 			}else if(r == Ranks.LEADER){
 				gang.removeLeader(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
 				return;
 			}
@@ -375,26 +375,26 @@ public class GangManager {
 			Ranks r = getPlayerRank(target.getName(), gang);
 			if(r == Ranks.MEMBER){
 				gang.removeMember(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.MEMBER));
 				return;
 			}else if(r == Ranks.TRUSTED){
 				gang.removeTrusted(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.TRUSTED));
 				return;
 			}else if(r == Ranks.OFFICER){
 				gang.removeOfficer(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.OFFICER));
 				return;
 			}else if(r == Ranks.LEADER){
 				gang.removeLeader(target);
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.LEADER));
 				return;
 			}else if(r == Ranks.OWNER){
@@ -413,8 +413,8 @@ public class GangManager {
 					gang.removeLeader(sender);
 				}
 				target.sendMessage(ChatColor.GREEN + "You are now the new owner of the gang.");
-				target.sendMessage(Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OWNER));
-				sender.sendMessage(Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OWNER));
+				target.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_SUCCESS_KICK.toString(sender, target, gang, Ranks.OWNER));
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_KICK.toString(sender, target, gang, Ranks.OWNER));
 				messageGang(gang, Lang.SUCCESS_KICK.toString(sender, target, gang, Ranks.OWNER));
 				return;
 			}
