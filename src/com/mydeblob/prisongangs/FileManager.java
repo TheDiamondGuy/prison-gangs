@@ -17,7 +17,7 @@ public class FileManager {
 	  private static FileConfiguration kdrConfig = null;
 	  private static File kdrFile = null;
 	  private static FileConfiguration langConfig = null;
-	  private static File langFile = null;
+	  public static File langFile = null;
 	  public static FileManager getFileManager(){
 	    return instance;
 	  }

@@ -29,9 +29,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 			if(p.hasPermission("gangs.kdr") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 				if(args.length < 1){
 					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX.toString()   + ChatColor.DARK_RED + "--=");
-					p.sendMessage(ChatColor.GREEN + "Your KDR: " + ChatColor.BLUE + f.getGangConfig().getDouble("players." + p.getUniqueId().toString() + ".kdr"));
-					p.sendMessage(ChatColor.GREEN + "Your kills: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".kills"));
-					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + p.getUniqueId().toString() + ".deaths"));
+					p.sendMessage(ChatColor.GREEN + "Your KDR: " + ChatColor.BLUE + f.getKdrConfig().getDouble("players." + p.getUniqueId().toString() + ".kdr"));
+					p.sendMessage(ChatColor.GREEN + "Your kills: " + ChatColor.BLUE + f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills"));
+					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths"));
 					return true;
 				}else if(args.length == 1){
 					Player t = Bukkit.getPlayerExact(args[0]);
@@ -40,9 +40,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 						return true;
 					}
 					p.sendMessage(ChatColor.DARK_RED + "=--" + Lang.TRUNCATED_PREFIX.toString() + ChatColor.DARK_RED + "--=");
-					p.sendMessage(ChatColor.GREEN + t.getName() + "'s KDR: " + ChatColor.BLUE + f.getGangConfig().getDouble("players." + t.getUniqueId().toString() + ".kdr"));
-					p.sendMessage(ChatColor.GREEN + t.getName() + "'s kills: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + t.getUniqueId().toString() + ".kills"));
-					p.sendMessage(ChatColor.GREEN + t.getName() + "'s deaths: " + ChatColor.BLUE + f.getGangConfig().getInt("players." + t.getUniqueId().toString() + ".deaths"));
+					p.sendMessage(ChatColor.GREEN + t.getName() + "'s KDR: " + ChatColor.BLUE + f.getKdrConfig().getDouble("players." + t.getUniqueId().toString() + ".kdr"));
+					p.sendMessage(ChatColor.GREEN + t.getName() + "'s kills: " + ChatColor.BLUE + f.getKdrConfig().getInt("players." + t.getUniqueId().toString() + ".kills"));
+					p.sendMessage(ChatColor.GREEN + t.getName() + "'s deaths: " + ChatColor.BLUE + f.getKdrConfig().getInt("players." + t.getUniqueId().toString() + ".deaths"));
 					return true;
 				}
 				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));

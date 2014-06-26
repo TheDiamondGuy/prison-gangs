@@ -3,7 +3,9 @@ package com.mydeblob.prisongangs;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
 import com.mydeblob.prisongangs.Updater.ReleaseType;
 
 public class PrisonGangs extends JavaPlugin{
@@ -25,10 +27,11 @@ public class PrisonGangs extends JavaPlugin{
 			getLogger().info("[PrisonGangs] No messages.yml found! Generating a new one!");
 			f.saveDefaultLangConfig();
 		}
+		f.reloadLangConfig();
 		f.reloadKdrConfig();
 		f.saveKdrConfig();
 		f.reloadGangConfig();
-		Lang.setFile(f.getLangYaml());
+		Lang.setFile(YamlConfiguration.loadConfiguration(FileManager.langFile));
 		Bukkit.getServer().getPluginManager().registerEvents(new CommandHandler(this), this);
 		getCommand("gang").setExecutor(new CommandHandler(this));
 		getCommand("kdr").setExecutor(new CommandHandler(this));
@@ -50,6 +53,9 @@ public class PrisonGangs extends JavaPlugin{
 		FileManager f = FileManager.getFileManager();
 		f.saveKdrConfig();
 		f.saveGangConfig();
+		for(Gang g:Gang.getGangs()){
+			g.clearPlayers();
+		}
 	}
 	
 	public File getPluginFile(){

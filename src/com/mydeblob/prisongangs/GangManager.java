@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 public class GangManager {
 	private static GangManager instance = new GangManager();
 	private static HashMap<String, Gang> invited = new HashMap<String, Gang>();
+	private static HashMap<Gang, Gang> allied = new HashMap<Gang, Gang>(); //Gang requestion ally; Gang recieveing request; This is ally requests
 	private FileManager f = FileManager.getFileManager();
 	public static GangManager getGangManager(){
 		return instance;
@@ -18,6 +19,10 @@ public class GangManager {
 
 	public HashMap<String, Gang> getInvited(){
 		return invited;
+	}
+	
+	public HashMap<Gang, Gang> getAllied(){
+		return allied;
 	}
 	
 	public Gang getGangByName(String name){
@@ -428,22 +433,22 @@ public class GangManager {
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			g.removeMember(p);
 			return;
-		}if(g.getTrusted().contains(p.getName())){
+		}else if(g.getTrusted().contains(p.getName())){
 			messageGang(g, Lang.SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			g.removeTrusted(p);
 			return;
-		}if(g.getOfficers().contains(p.getName())){
+		}else if(g.getOfficers().contains(p.getName())){
 			messageGang(g, Lang.SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			g.removeTrusted(p);
 			return;
-		}if(g.getLeaders().contains(p.getName())){
+		}else if(g.getLeaders().contains(p.getName())){
 			messageGang(g, Lang.SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			g.removeTrusted(p);
 			return;
-		}if(g.getOwner().equals(p.getName())){
+		}else if(g.getOwner().equals(p.getName())){
 			messageGang(g, Lang.DISBAND_ABSENCE.toString(p, getPlayerRank(p.getName(), g), g));
 			removeGang(g.getName());
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
@@ -516,6 +521,12 @@ public class GangManager {
 		}
 	}
 	
+	public void allyGang(Player sender, Gang toAlly, Gang requestingToAlly){
+		if(requestingToAlly.getMembers().contains(sender.getName()) || requestingToAlly.getTrusted().contains(sender.getName())){
+			
+		}
+	}
+	
 	public boolean gangsMatchInvited(Player p, String gangName){
 		if(invited.containsKey(p.getName())){
 			if(invited.get(p.getName()) == getGangByName(gangName)){
@@ -524,6 +535,8 @@ public class GangManager {
 		}
 		return false;
 	}
+	
+	
 	public void createGang(Player owner, String name){
 		f.getGangConfig().set("gangs." + name + ".members", new ArrayList<String>());
 		f.getGangConfig().set("gangs." + name + ".trusted", new ArrayList<String>());

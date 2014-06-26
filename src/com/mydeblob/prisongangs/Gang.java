@@ -141,6 +141,20 @@ public class Gang {
 		  allPlayers.add(this.getOwner());
 		  return allPlayers;
 	  }
+	  
+	  public void clearPlayers(){ //Much dangerous; Seriously, don't use this (except on disable)
+		  this.members.clear();
+		  this.membersUuid.clear();
+		  this.trusted.clear();
+		  this.trustedUuid.clear();
+		  this.officers.clear();
+		  this.officersUuid.clear();
+		  this.leaders.clear();
+		  this.leadersUuid.clear();
+		  this.owner = null;
+	  }
+	  
+	  
 		public static void loadGangs(){
 		    Gang.gangs.clear();
 		    for(String s:f.getGangConfig().getStringList("gang-names")){
