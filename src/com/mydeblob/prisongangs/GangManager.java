@@ -450,8 +450,8 @@ public class GangManager {
 			return;
 		}else if(g.getOwner().equals(p.getName())){
 			messageGang(g, Lang.DISBAND_ABSENCE.toString(p, getPlayerRank(p.getName(), g), g));
-			removeGang(g.getName());
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
+			removeGang(g);
 			return;
 		}
 	}
@@ -551,8 +551,7 @@ public class GangManager {
 		owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESSFULLY_CREATED_GANG.toString(owner, Ranks.OWNER, g));
 	}
 
-	public void removeGang(String name){
-		Gang g = getGangByName(name);
+	public void removeGang(Gang g){
 		f.getGangConfig().set("gangs." + g.getName(), null);
 		List<String> gangs = f.getGangConfig().getStringList("gang-names");
 		gangs.remove(g.getName());

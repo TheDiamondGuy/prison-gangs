@@ -53,9 +53,6 @@ public class PrisonGangs extends JavaPlugin{
 		FileManager f = FileManager.getFileManager();
 		f.saveKdrConfig();
 		f.saveGangConfig();
-		for(Gang g:Gang.getGangs()){
-			g.clearPlayers();
-		}
 	}
 	
 	public File getPluginFile(){

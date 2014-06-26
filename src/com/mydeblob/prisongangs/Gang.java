@@ -166,6 +166,7 @@ public class Gang {
 		    return Gang.gangs;
 		  }
 	  public static void removeGang(Gang g){
+		  g.clearPlayers();
 		  if(Gang.gangs.contains(g)){
 			  Gang.gangs.remove(g);
 		  }
