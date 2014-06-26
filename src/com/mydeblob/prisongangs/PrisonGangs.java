@@ -31,6 +31,7 @@ public class PrisonGangs extends JavaPlugin{
 		f.reloadKdrConfig();
 		f.saveKdrConfig();
 		f.reloadGangConfig();
+		f.saveGangConfig();
 		Lang.setFile(YamlConfiguration.loadConfiguration(FileManager.langFile));
 		Bukkit.getServer().getPluginManager().registerEvents(new CommandHandler(this), this);
 		getCommand("gang").setExecutor(new CommandHandler(this));
