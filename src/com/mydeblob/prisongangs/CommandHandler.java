@@ -115,6 +115,14 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.CHAR_LIMIT.toString(p));
 						return true;
 					}
+					if(!plugin.getConfig().getStringList("blocked-commands").isEmpty()){
+						for(String s:plugin.getConfig().getStringList("blocked-commands")){
+							if(args[1].contains(s)){
+								p.sendMessage(Lang.PREFIX.toString() + Lang.INAPPROPRIATE_NAME.toString(p));
+								return true;
+							}
+						}
+					}
 					gm.createGang(p, args[1]);
 					return true;
 				}else{

@@ -15,6 +15,9 @@ wrong-command: "&cIncorrect command syntax! Type /gang help for help with comman
 # This is the message a player gets when he creates a gang with to long of a name
 char-limit: "&cError: The gang name is to long!"
 
+# This is the message a player gets when he creates a gang name with a blocked name
+inappropriate-name: "&cError: The gang name has a inappropriate word in it!"
+
 # This is the message a player gets when he performs a command on a player that isnt found
 player-not-found: "&cError! The specified player wasn't found! Are you sure you spelled his name correctly?"
 
