@@ -17,14 +17,25 @@ public class GangManager {
 		return instance;
 	}
 
+	/**
+	 * Get the invited players and the gang they were invited to
+	 * 
+	 * @return the invited players and gang
+	 */
 	public HashMap<String, Gang> getInvited(){
 		return invited;
 	}
 	
-	public HashMap<Gang, Gang> getAllied(){
+	public HashMap<Gang, Gang> getAllied(){ //Not functional
 		return allied;
 	}
 	
+	/**
+	 * Get a gang object by name
+	 * 
+	 * @param name - Name of the gang object you are attempting to get
+	 * @return NULL if no gang found, otherwise @return gang object
+	 */
 	public Gang getGangByName(String name){
 		for (Gang g: Gang.getGangs()){
 			if (g.getName().equalsIgnoreCase(name)){
@@ -34,6 +45,12 @@ public class GangManager {
 		return null;
 	}
 
+	/**
+	 * Checks if a player is in a gang
+	 * 
+	 * @param p - The player you want to check if is in a gang
+	 * @return TRUE if the player is in a gang, FALSE otherwise
+	 */
 	public boolean isInGang(Player p){
 		if(getGangWithPlayer(p) == null){
 			return false;
@@ -41,6 +58,13 @@ public class GangManager {
 			return true;
 		}
 	}
+	
+	/**
+	 * Gets the gang object that has a player in it
+	 * 
+	 * @param p - Player to get the gang object for
+	 * @return NULL if the player isn't in a gang, @return a gang object otherwise
+	 */
 	public Gang getGangWithPlayer(Player p){
 		for (Gang g: Gang.getGangs()){
 			if(g.getAllPlayers().contains(p.getName())){
@@ -50,6 +74,14 @@ public class GangManager {
 		return null;
 	}
 	
+	/**
+	 * Gets the players rank
+	 * 
+	 * @throws NPE if player isn't in a gang
+	 * @param playerName - Player you want to get the rank
+	 * @param g - Players gang
+	 * @return enum Ranks (Players rank)
+	 */
 	public Ranks getPlayerRank(String playerName, Gang g){
 		  if(!g.getMembers().isEmpty()){
 			  if(g.getMembers().contains(playerName)){
@@ -73,6 +105,14 @@ public class GangManager {
 		  return null;
 	  }
 	
+	/**
+	 * Promotes the specified player in the specified gang
+	 * 
+	 * @throws NPE if the player isn't in the specified gang and/or it doesn't exist
+	 * @param sender - The player that sent the command
+	 * @param target - The player getting promoted
+	 * @param gang - The gang of the players
+	 */
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void promotePlayer(Player sender, Player target, Gang gang){
 		if(sender.getName() == target.getName() && (!sender.hasPermission("gangs.admin") || !sender.isOp())){
@@ -177,6 +217,13 @@ public class GangManager {
 		}
 	}
 
+	/**
+	 * Messages all players in a gang the specified message
+	 * 
+	 * @throws NPE if the gang doesn't exist
+	 * @param g - The gang to message
+	 * @param message - The message to send
+	 */
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void messageGang(Gang g, String message){
 		for(String s:g.getAllPlayers()){
@@ -185,6 +232,14 @@ public class GangManager {
 		}
 	}
 
+	/**
+	 * Demote the specified player in the specified gang
+	 * 
+	 * @throws NPE if the player isn't in the specified gang and/or it doesn't exist
+	 * @param sender - The player that sent the command
+	 * @param target - The player getting promoted
+	 * @param gang - The gang of the players
+	 */
 	@SuppressWarnings("deprecation")
 	public void demotePlayer(Player sender, Player target, Gang gang){
 		if(gang.getOfficers().contains(sender.getName())){
@@ -301,6 +356,14 @@ public class GangManager {
 		}
 	}
 
+	/**
+	 * Kicks the specified player in the specified gang
+	 * 
+	 * @throws NPE if the player isn't in the specified gang and/or it doesn't exist
+	 * @param sender - The player that sent the command
+	 * @param target - The player getting promoted
+	 * @param gang - The gang of the players
+	 */
 	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void kickPlayer(Player sender, Player target, Gang gang){ 
 		if(gang.getOfficers().contains(sender.getName())){
@@ -427,6 +490,13 @@ public class GangManager {
 			
 	}
 
+	/**
+	 * Leaves the specified gang
+	 * 
+	 * @throws NPE if the player isn't in the specified gang and/or it doesn't exist
+	 * @param p - The player that is leaving
+	 * @param gang - The gang of the player leaving
+	 */
 	public void leave(Player p, Gang g){
 		if(g.getMembers().contains(p.getName())){
 			messageGang(g, Lang.SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
@@ -456,6 +526,14 @@ public class GangManager {
 		}
 	}
 	
+	/**
+	 * Invites the specified player to the specified gang
+	 * 
+	 * @throws NPE if the player isn't in the specified gang and/or it doesn't exist
+	 * @param sender - The player that sent the command
+	 * @param target - The player getting invited
+	 * @param gang - The gang of the players
+	 */
 	public void invitePlayer(Player sender, Player target, Gang gang){
 		if(gang.getMembers().contains(sender.getName())){
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, getPlayerRank(target.getName(), gang)));
@@ -476,6 +554,12 @@ public class GangManager {
 		}
 	}
 	
+	/**
+	 * Checks if the specified player is invited to a gang
+	 * 
+	 * @param p - The player you want to check if he is invited
+	 * @return TRUE if he is invited to a gang, FALSE otherwise
+	 */
 	public boolean isInvited(Player p){
 		if(invited.containsKey(p.getName())){
 			return true;
@@ -484,6 +568,11 @@ public class GangManager {
 		}
 	}
 	
+	/**
+	 * Removes the specified players invitations
+	 * 
+	 * @param p - The player you want to remove his invitations
+	 */
 	public void removeInvitation(Player p){
 		if(invited.containsKey(p.getName())){
 			invited.remove(p.getName());
@@ -492,6 +581,13 @@ public class GangManager {
 		}
 	}
 	
+	/**
+	 * Uninvites the specifed player from the specified gang
+	 * 
+	 * @param sender - The player that sent the command
+	 * @param target - The player to be uninvited
+	 * @param gang - The gang to uninvite the player from
+	 */
 	public void uninvitePlayer(Player sender, Player target, Gang gang){
 		if(gang.getMembers().contains(sender.getName())){
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_INVITE.toString(sender, target, gang, getPlayerRank(sender.getName(), gang)));
@@ -510,6 +606,9 @@ public class GangManager {
 		}
 	}
 	
+	/**
+	 * Loads invited on server startup... don't touch this method
+	 */
 	public void loadInvites(){
 		invited.clear();
 		if(f.getGangConfig().getConfigurationSection("invited-players") != null){
@@ -521,12 +620,20 @@ public class GangManager {
 		}
 	}
 	
+	//Not functional
 	public void allyGang(Player sender, Gang toAlly, Gang requestingToAlly){
 		if(requestingToAlly.getMembers().contains(sender.getName()) || requestingToAlly.getTrusted().contains(sender.getName())){
 			
 		}
 	}
 	
+	/**
+	 * Checks if the specified gang name matches the players invite
+	 * 
+	 * @param p - The player that has been invited
+	 * @param gangName - The gang name to check
+	 * @return TRUE if the names match, FALSE otherwise
+	 */
 	public boolean gangsMatchInvited(Player p, String gangName){
 		if(invited.containsKey(p.getName())){
 			if(invited.get(p.getName()) == getGangByName(gangName)){
@@ -536,7 +643,12 @@ public class GangManager {
 		return false;
 	}
 	
-	
+	/**
+	 * Creates a gang
+	 * 
+	 * @param owner - Owner of the gang (CommandSender)
+	 * @param name - Name of the gang
+	 */
 	public void createGang(Player owner, String name){
 		f.getGangConfig().set("gangs." + name + ".members", new ArrayList<String>());
 		f.getGangConfig().set("gangs." + name + ".trusted", new ArrayList<String>());
@@ -551,6 +663,11 @@ public class GangManager {
 		owner.sendMessage(Lang.PREFIX.toString() + Lang.SUCCESSFULLY_CREATED_GANG.toString(owner, Ranks.OWNER, g));
 	}
 
+	/**
+	 * Removes a gang
+	 * 
+	 * @param g - The gang to remove
+	 */
 	public void removeGang(Gang g){
 		f.getGangConfig().set("gangs." + g.getName(), null);
 		List<String> gangs = f.getGangConfig().getStringList("gang-names");
@@ -560,6 +677,12 @@ public class GangManager {
 		Gang.removeGang(g);
 	}
 
+	/**
+	 * Disbands a gang (Used in CommandHandler)
+	 * 
+	 * @param p - The player sending the command
+	 * @param name - The name of the gang
+	 */
 	public void disbandGang(Player p, String name){
 		Gang g = getGangByName(name);
 		if(g.getOwner() == p.getName()){
@@ -580,6 +703,13 @@ public class GangManager {
 		}
 	}
 	
+	/**
+	 * Get's the gang KDR for use in /g or /g info
+	 * 
+	 * @throws NPE for reason unknown (Game breaking)
+	 * @param g - Gang to get the kdr
+	 * @return The gangs total kdr
+	 */
 	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
 	public double getGangKDR(Gang g){
 		int totalKills = 0;
@@ -587,8 +717,10 @@ public class GangManager {
 		double KDR = 0;
 		for(String s:g.getAllPlayers()){
 			Player p = Bukkit.getPlayerExact(s);
-			totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
-			totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+			if(f.getKdrConfig().contains("players." + p.getUniqueId().toString())){
+				totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
+				totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+			}
 		}
 		if(totalDeaths == 0){
 			KDR = totalKills;
@@ -599,6 +731,12 @@ public class GangManager {
 		}
 	}
 	
+	 /**
+	  * Get's a gangs total kills (For use in the getGangKDR method)
+	  * 
+	  * @param g - Gang to get the kills 
+	  * @return The specified gangs total kills
+	  */
 	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
 	public int getGangKills(Gang g){
 		int totalKills = 0;
@@ -609,6 +747,12 @@ public class GangManager {
 		return totalKills;
 	}
 	
+	 /**
+	  * Get's a gangs total deaths (For use in the getGangKDR method)
+	  * 
+	  * @param g - Gang to get the deaths
+	  * @return The specified gangs total deaths
+	  */
 	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
 	public int getGangDeaths(Gang g){
 		int totalDeaths = 0;

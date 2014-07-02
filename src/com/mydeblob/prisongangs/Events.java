@@ -18,7 +18,11 @@ public class Events implements Listener{
 	public Events(PrisonGangs plugin){
 		this.plugin = plugin;
 	}
-	@EventHandler(priority = EventPriority.HIGH)
+	
+	/**
+	 * Replace the {gang} tag in chat with the players gang name
+	 */
+	@EventHandler(priority = EventPriority.HIGH) //High so PrisonGangs gets to it last (So it doesn't interfere with other chat options)
 	public void onChat(AsyncPlayerChatEvent e){
 		Player p = e.getPlayer();
 		if(gm.getGangWithPlayer(p) != null){
@@ -32,6 +36,9 @@ public class Events implements Listener{
 		}
 	}
 
+	/**
+	 * Setting base information for the kdr.yml and adding the join message
+	 */
 	@EventHandler
 	public void onJoin(PlayerJoinEvent event){
 		Player p = (Player) event.getPlayer();
@@ -42,6 +49,10 @@ public class Events implements Listener{
 		}
 		p.sendMessage(ChatColor.BLUE + "This server is running PrisonGangs by mydeblob!");
 	} 
+	
+	/**
+	 * When a player dies edit the killers and victims kdr appropiatly
+	 */
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e){
 		Player victim = e.getEntity();
@@ -71,6 +82,9 @@ public class Events implements Listener{
 		}
 	}
 
+	/**
+	 * Don't allow gang members to hurt each other
+	 */
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event){
 		if(event.getEntity() instanceof Player){

@@ -418,6 +418,12 @@ public class CommandHandler implements CommandExecutor, Listener{
 		return false;
 	}
 
+	/**
+	 * Returns the information needed to display all the members of a gang
+	 * 
+	 * @param g - The gang needing the retrieval of data
+	 * @return A List of all the gang members and there current status (Gang rank and online/offline)
+	 */
 	@SuppressWarnings("deprecation")
 	public ArrayList<String> getGangPlayerStats(Gang g){
 		ArrayList<String> memberData = new ArrayList<String>();

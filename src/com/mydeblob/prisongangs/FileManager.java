@@ -72,17 +72,6 @@ public class FileManager {
 	        }
 	    }
 	    
-	    public YamlConfiguration getLangYaml(){
-	    	if (langConfig == null) {
-	            this.reloadLangConfig();
-	        }
-	    	InputStream defConfigStream = p.getResource("messages.yml");
-	        if (defConfigStream != null) {
-	            YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigStream);
-	            return defConfig;
-	        }
-	        return null;
-	    }
 	    public FileConfiguration getLangConfig() {
 	        if (langConfig == null) {
 	            this.reloadLangConfig();
