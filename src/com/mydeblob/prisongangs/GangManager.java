@@ -3,6 +3,7 @@ package com.mydeblob.prisongangs;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -710,13 +711,13 @@ public class GangManager {
 	 * @param g - Gang to get the kdr
 	 * @return The gangs total kdr
 	 */
-	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
 	public double getGangKDR(Gang g){
 		int totalKills = 0;
 		int totalDeaths = 0;
 		double KDR = 0;
-		for(String s:g.getAllPlayers()){
-			Player p = Bukkit.getPlayerExact(s);
+		for(String s:g.getAllPlayersUUID()){
+			UUID uuid = UUID.fromString(s);
+			Player p = Bukkit.getPlayer(uuid);
 			if(f.getKdrConfig().contains("players." + p.getUniqueId().toString())){
 				totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
 				totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");

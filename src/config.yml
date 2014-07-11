@@ -13,11 +13,14 @@ char-limit: 15
 # %g% is replaced with the gang name
 format: '&f[&8%g%&f]'
 
-# These are words that won't be allowed in gang names
+# These are words (or characters) that won't be allowed in gang names
 blocked-names:
   - sucks
   - loser
   - dumb
+  - $
+  - {
+  - }
 
 # If this is set to true the plugin will auto update
 auto-updater: true

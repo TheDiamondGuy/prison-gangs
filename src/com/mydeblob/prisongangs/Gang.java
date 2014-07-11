@@ -17,6 +17,7 @@ public class Gang {
 	  private ArrayList<String> trustedUuid = new ArrayList<String>(); 
 	  private ArrayList<String> officersUuid = new ArrayList<String>(); 
 	  private ArrayList<String> leadersUuid = new ArrayList<String>();
+	  private String ownersUuid = null;
 	  private static ArrayList<Gang> gangs = new ArrayList<Gang>();
 	  private String owner = null;
 	  private String name;
@@ -49,6 +50,7 @@ public class Gang {
 	    	}
 	    }
 	    owner = Bukkit.getOfflinePlayer(UUID.fromString(f.getGangConfig().getString("gangs." + name + ".owner"))).getName();
+	    ownersUuid = f.getGangConfig().getString("gangs." + name + ".owner");
 	    gangs.add(this);
 	  }
 	  public String getName(){
@@ -119,6 +121,7 @@ public class Gang {
 	  }
 	  public void setOwner(Player p){
 		  this.owner = p.getName();
+		  this.ownersUuid = p.getUniqueId().toString();
 		  f.getGangConfig().set("gangs." + this.name + ".owner", p.getUniqueId().toString());
 		  f.saveGangConfig();
 	  }
@@ -139,6 +142,24 @@ public class Gang {
 			  allPlayers.add(s);
 		  }
 		  allPlayers.add(this.getOwner());
+		  return allPlayers;
+	  }
+	  
+	  public ArrayList<String> getAllPlayersUUID(){
+		  ArrayList<String> allPlayers = new ArrayList<String>();
+		  for(String s:this.membersUuid){
+			  allPlayers.add(s);
+		  }
+		  for(String s:this.trustedUuid){
+			  allPlayers.add(s);
+		  }
+		  for(String s:this.officersUuid){
+			  allPlayers.add(s);
+		  }
+		  for(String s:this.leadersUuid){
+			  allPlayers.add(s);
+		  }
+		  allPlayers.add(this.ownersUuid);
 		  return allPlayers;
 	  }
 	  

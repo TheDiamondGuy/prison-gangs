@@ -118,9 +118,13 @@ public class CommandHandler implements CommandExecutor, Listener{
 					if(!plugin.getConfig().getStringList("blocked-names").isEmpty()){
 						for(String s:plugin.getConfig().getStringList("blocked-names")){
 							if(args[1].contains(s)){
-								p.sendMessage(Lang.PREFIX.toString() + Lang.INAPPROPRIATE_NAME.toString(p));
+								p.sendMessage(Lang.PREFIX.toString() + Lang.BLOCKED_NAME.toString(p));
 								return true;
 							}
+						}
+						if(args[1].contains(".")){
+							p.sendMessage(Lang.PREFIX.toString() + Lang.BLOCKED_NAME.toString(p));
+							return true;
 						}
 					}
 					gm.createGang(p, args[1]);

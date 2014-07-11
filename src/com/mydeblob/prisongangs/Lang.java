@@ -9,7 +9,7 @@ public enum Lang {
 	TRUNCATED_PREFIX("prefix", "&7[&2PrisonGangs&7]"),
 	WRONG_COMMAND("wrong-command", "&cIncorrect command syntax! Type /gang help for help with commands!"),
 	CHAR_LIMIT("char-limit", "&cError: The gang name is to long!"),
-	INAPPROPRIATE_NAME("inappropriate-name", "&cError: The gang name has a inappropriate word in it!"),
+	BLOCKED_NAME("blocked-name", "&cError: The gang name has a blocked word and/or character in it!"),
 	PLAYER_NOT_FOUND("player-not-found", "&cError! The specified player wasn't found! Are you sure you spelled his name correctly?"),
 	PLAYER_NOT_ONLINE("player-not-online", "&cThe specified player isn't online!"),
 	NO_PERMS("no-perms", "&cYou do not have permission to use this command!"),
