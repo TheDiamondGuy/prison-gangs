@@ -17,6 +17,8 @@ public enum Lang {
 	NOT_IN_GANG("not-in-gang", "&cYou are not in a gang! To get information from another gang type /gang info <gangName>. To get help with gangs, type /gang help"),
 	IN_GANG("in-gang", "&cYou are already in a gang! You must leave your current gang with /gang leave!"),
 	GANG_EXISTS("gang-exists", "&cThat gang already exists!"),
+	SWITCH_TO_GANG_CHAT("switch-to-gang-chat", "&aYou successfully switched to gang chat!"),
+	SWITCH_TO_PUBLIC_CHAT("switch-to-public-chat", "&aYou successfully switch to public chat!"),
 	TARGET_NOT_IN_GANG("target-not-in-gang", "&c%t% is not in a gang!"),
 	TARGET_NOT_IN_YOUR_GANG("target-not-in-your-gang", "&c%t% is not in your gang!"),
 	SUCCESSFULLY_CREATED_GANG("created-gang", "&aSuccessfully created a gang with the name of %g%!"), 

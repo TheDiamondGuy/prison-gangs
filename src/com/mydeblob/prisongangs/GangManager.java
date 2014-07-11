@@ -13,6 +13,7 @@ public class GangManager {
 	private static GangManager instance = new GangManager();
 	private static HashMap<String, Gang> invited = new HashMap<String, Gang>();
 	private static HashMap<Gang, Gang> allied = new HashMap<Gang, Gang>(); //Gang requestion ally; Gang recieveing request; This is ally requests
+	private static HashMap<String, Gang> gangChat = new HashMap<String, Gang>();
 	private FileManager f = FileManager.getFileManager();
 	public static GangManager getGangManager(){
 		return instance;
@@ -738,11 +739,11 @@ public class GangManager {
 	  * @param g - Gang to get the kills 
 	  * @return The specified gangs total kills
 	  */
-	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
 	public int getGangKills(Gang g){
 		int totalKills = 0;
-		for(String s:g.getAllPlayers()){
-			Player p = Bukkit.getPlayerExact(s);
+		for(String s:g.getAllPlayersUUID()){
+			UUID uuid = UUID.fromString(s);
+			Player p = Bukkit.getPlayer(uuid);
 			totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
 		}
 		return totalKills;
@@ -754,13 +755,50 @@ public class GangManager {
 	  * @param g - Gang to get the deaths
 	  * @return The specified gangs total deaths
 	  */
-	@SuppressWarnings("deprecation") //getPlayerExact deprecated due to UUID's
 	public int getGangDeaths(Gang g){
 		int totalDeaths = 0;
-		for(String s:g.getAllPlayers()){
-			Player p = Bukkit.getPlayerExact(s);
+		for(String s:g.getAllPlayersUUID()){
+			UUID uuid = UUID.fromString(s);
+			Player p = Bukkit.getPlayer(uuid);
 			totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
 		}
 		return totalDeaths;
+	}
+	
+	/**
+	 * Checks if a player is in ally or gang chat
+	 * 
+	 * @param p - The player to check
+	 * @return TRUE if the player is in a gang chat, otherwise FALSE
+	 */
+	public boolean isInGangChat(Player p){ //Ally chat is not yet
+		if(gangChat.containsKey(p.getName())){
+			return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Adds a player to the gang chat hashmap
+	 * 
+	 * @param p - The player to be added
+	 * @param g - The players gang
+	 */
+	public void addToGangChat(Player p, Gang g){
+		if(!gangChat.containsKey(p.getName())){
+			gangChat.put(p.getName(), g);
+		}
+	}
+	
+	/**
+	 * Removes a player from the gang chat hashmap
+	 * 
+	 * @param p - The player to be removed
+	 * @param g - The players gang
+	 */
+	public void removeFromGangChat(Player p, Gang g){
+		if(gangChat.containsKey(p.getName())){
+			gangChat.remove(p.getName());
+		}
 	}
 }

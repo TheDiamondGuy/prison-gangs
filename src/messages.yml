@@ -41,6 +41,12 @@ in-gang: "&cYou are already in a gang! You must leave your current gang with /ga
 # This is the message a player gets when he tries to create a gang that already exists
 gang-exists: "&cThat gang already exists!"
 
+# This is the message a player gets when he switches to gang chat
+switch-to-gang-chat: "&aYou successfully switched to gang chat!"
+
+# This is the message a player gets when he switches to public chat from gang chat
+switch-to-public-chat: "&aYou successfully switched to public chat!"
+
 # This is the message a player gets he tries to perform a command on a player that needs
 # to be in a gang but isn't
 target-not-in-gang: "&c%t% is not in a gang!"

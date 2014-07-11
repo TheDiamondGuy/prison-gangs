@@ -368,6 +368,25 @@ public class CommandHandler implements CommandExecutor, Listener{
 			}else if(args[0].equalsIgnoreCase("disband") && args.length != 1){
 				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
 				return true;
+			}else if(args[0].equalsIgnoreCase("c") && args.length == 1){
+				if(p.hasPermission("gangs.chat") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
+					if(gm.getGangWithPlayer(p) == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
+						return true;
+					}
+					Gang g = gm.getGangWithPlayer(p);
+					if(gm.isInGangChat(p)){
+						gm.removeFromGangChat(p, g);
+						p.sendMessage(Lang.PREFIX.toString() + Lang.SWITCH_TO_PUBLIC_CHAT.toString(p, g));
+						return true;
+					}
+					gm.addToGangChat(p, g);
+					p.sendMessage(Lang.PREFIX.toString() + Lang.SWITCH_TO_GANG_CHAT.toString(p, g));
+					return true;
+				}else{
+					p.sendMessage(Lang.NO_PERMS.toString(p));
+					return true;
+				}
 			}else if(args[0].equalsIgnoreCase("help") && args.length == 1){
 				p.sendMessage(ChatColor.DARK_RED + "--=" + Lang.PREFIX.toString() + ChatColor.BLUE + "Help" + ChatColor.DARK_RED + "=--");
 				p.sendMessage(ChatColor.RED + "g is in alias for gang!");

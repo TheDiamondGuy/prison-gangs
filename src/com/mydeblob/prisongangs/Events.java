@@ -35,6 +35,25 @@ public class Events implements Listener{
 			e.setFormat(f);
 		}
 	}
+	
+	/**
+	 * Gang chat
+	 */
+	@EventHandler
+	public void  onGangChat(AsyncPlayerChatEvent e){
+		Player p = e.getPlayer();
+		if(gm.getGangWithPlayer(p) == null){
+			return;
+		}
+		Gang g = gm.getGangWithPlayer(p);
+		if(!gm.isInGangChat(p)){
+			return;
+		}
+		String format = ChatColor.DARK_GRAY + p.getName() + ":" + ChatColor.BLUE + e.getMessage();
+		e.setCancelled(true);
+		gm.messageGang(g, format);
+	}
+	
 
 	/**
 	 * Setting base information for the kdr.yml and adding the join message
