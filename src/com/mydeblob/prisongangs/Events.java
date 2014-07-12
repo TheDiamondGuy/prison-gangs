@@ -27,8 +27,8 @@ public class Events implements Listener{
 		Player p = e.getPlayer();
 		if(gm.getGangWithPlayer(p) != null){
 			Gang g = gm.getGangWithPlayer(p);
-			String pClan = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("format")).replaceAll("%g%", g.getName());
-			String f = e.getFormat().replaceAll("\\{gang\\}", pClan).replaceAll("\\{GANG\\}", pClan);
+			String pGang = ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("format")).replaceAll("%g%", g.getName());
+			String f = e.getFormat().replaceAll("\\{gang\\}", pGang).replaceAll("\\{GANG\\}", pGang);
 			e.setFormat(f);
 		}else{
 			String f = e.getFormat().replaceAll("\\{gang\\}", "").replaceAll("\\{GANG\\}", "");
@@ -52,6 +52,16 @@ public class Events implements Listener{
 		String format = ChatColor.DARK_GRAY + p.getName() + ":" + ChatColor.BLUE + e.getMessage();
 		e.setCancelled(true);
 		gm.messageGang(g, format);
+	}
+	
+	/**
+	 * Adding the scoreboard when a player joins
+	 */
+	@EventHandler
+	public void onJoinScoreboard(PlayerJoinEvent e){
+		if(plugin.getConfig().getBoolean("scoreboard")){
+			
+		}
 	}
 	
 
