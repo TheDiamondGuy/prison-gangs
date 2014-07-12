@@ -22,8 +22,7 @@ blocked-names:
   - loser
   - dumb
   - $
-  - {
-  - }
+  - ?
 
 # If this is set to true the plugin will auto update
 auto-updater: true

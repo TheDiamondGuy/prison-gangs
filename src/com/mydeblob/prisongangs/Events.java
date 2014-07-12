@@ -49,32 +49,25 @@ public class Events implements Listener{
 		if(!gm.isInGangChat(p)){
 			return;
 		}
-		String format = ChatColor.DARK_GRAY + p.getName() + ":" + ChatColor.BLUE + e.getMessage();
+		String format = ChatColor.DARK_GRAY + gm.getPlayerRank(p.getName(), g).toText() + " " + plugin.getConfig().getString("seperator") + " " +  p.getName() + ": " + ChatColor.BLUE + e.getMessage();
 		e.setCancelled(true);
 		gm.messageGang(g, format);
 	}
 	
-	/**
-	 * Adding the scoreboard when a player joins
-	 */
-	@EventHandler
-	public void onJoinScoreboard(PlayerJoinEvent e){
-		if(plugin.getConfig().getBoolean("scoreboard")){
-			
-		}
-	}
-	
 
 	/**
-	 * Setting base information for the kdr.yml and adding the join message
+	 * Setting base information for the kdr.yml, adding scoreboard, and adding the join message
 	 */
 	@EventHandler
-	public void onJoin(PlayerJoinEvent event){
-		Player p = (Player) event.getPlayer();
+	public void onJoin(PlayerJoinEvent e){
+		Player p = e.getPlayer();
 		if(!p.hasPlayedBefore() || !f.getKdrConfig().contains("players." + p.getUniqueId().toString())){
 			f.getKdrConfig().set("players." + p.getUniqueId().toString() + ".kills", 0);
 			f.getKdrConfig().set("players." + p.getUniqueId().toString() + ".deaths", 0);
 			f.getKdrConfig().set("players." + p.getUniqueId().toString() + ".kdr", 0);
+		}
+		if(plugin.getConfig().getBoolean("scoreboard")){
+			ScoreboardManager.updateScoreboard(p);
 		}
 		p.sendMessage(ChatColor.BLUE + "This server is running PrisonGangs by mydeblob!");
 	} 
