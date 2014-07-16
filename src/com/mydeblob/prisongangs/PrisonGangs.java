@@ -48,7 +48,10 @@ public class PrisonGangs extends JavaPlugin{
 			type = updater.getLatestType(); // Get the latest file's type
 			link = updater.getLatestFileLink(); // Get the latest link
 		}
-		getLogger().info("PrisonGangs enabled, made by mydeblob");
+		if(getServer().getPluginManager().getPlugin("CrackShot") != null){
+			getServer().getPluginManager().registerEvents(new CrackShotDepend(), this);
+		}
+		getLogger().info("[PrisonGangs] PrisonGangs enabled, made by mydeblob");
 	}
 	public void onDisable(){
 		FileManager f = FileManager.getFileManager();

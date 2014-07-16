@@ -30,6 +30,7 @@ public class ScoreboardManager {
 			o.getScore(String.valueOf(FileManager.getFileManager().getKdrConfig().getDouble("players." + p.getUniqueId().toString() + ".kdr"))).setScore(1);
 		}else if(p.getScoreboard() != null){
 			Scoreboard board = p.getScoreboard();  
+			if(board.getObjective(DisplaySlot.SIDEBAR) == null) return;
 			Objective o = board.getObjective(DisplaySlot.SIDEBAR);
 			if(gm.getGangWithPlayer(p) == null){
 				o.setDisplayName(ChatColor.RED + "You have no gang!");
