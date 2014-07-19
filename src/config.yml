@@ -9,6 +9,9 @@ char-limit: 15
 # If this is set to true there will be a scoreboard. Set to false to disable
 scoreboard: true
 
+# If this is set to true players in the same gang will be able to damage each other
+friendly-fire: false
+
 # This is the format that the players gang name will appear in chat
 # *********************For this to work you must add {GANG}*********************
 # *********************in the chat format of your primary***********************

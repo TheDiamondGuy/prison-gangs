@@ -1,6 +1,7 @@
 package com.mydeblob.prisongangs;
 
 import java.io.File;
+import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -49,7 +50,8 @@ public class PrisonGangs extends JavaPlugin{
 			link = updater.getLatestFileLink(); // Get the latest link
 		}
 		if(getServer().getPluginManager().getPlugin("CrackShot") != null){
-			getServer().getPluginManager().registerEvents(new CrackShotDepend(), this);
+			getServer().getPluginManager().registerEvents(new CrackShotDepend(this), this);
+			Logger.log(Level.INFO, "[PrisonGangs] CrackShot detected! Enabling support!");
 		}
 		getLogger().info("[PrisonGangs] PrisonGangs enabled, made by mydeblob");
 	}

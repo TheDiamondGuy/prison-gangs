@@ -109,6 +109,7 @@ public class Events implements Listener{
 	 */
 	@EventHandler
 	public void onDamage(EntityDamageByEntityEvent event){
+		if(plugin.getConfig().getBoolean("friendly-fire")) return;
 		if(event.getEntity() instanceof Player){
 			Player target = (Player) event.getEntity();
 			Player damager = null;

@@ -428,7 +428,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 				if(plugin.getConfig().getBoolean("auto-updater")){
 					@SuppressWarnings("unused")
 					Updater updater = new Updater(plugin, 66577, plugin.getPluginFile(), Updater.UpdateType.NO_VERSION_CHECK, true); // Go straight to downloading, and announce progress to console.
-					sender.sendMessage(Lang.PREFIX.toString() + ChatColor.GREEN + "Starting the download of the latest version of PrisonGangs. Check console for progress on the download. Reload after is has downloaded!");
+					sender.sendMessage(Lang.PREFIX.toString() + ChatColor.GREEN + "Starting the download of the latest version of PrisonGangs. Check the console for progress on the download. Check the \"update\" folder in your \"plugins\" folder to find the downloaded Jar!");
 					return true;
 				}else{
 					sender.sendMessage(ChatColor.RED + "Please enable auto updating in the PrisonGangs config.yml to use this feature");
