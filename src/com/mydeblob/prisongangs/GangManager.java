@@ -690,14 +690,14 @@ public class GangManager {
 		if(g.getOwner() == p.getName()){
 			String gname = g.getName();
 			Ranks r = getPlayerRank(p.getName(), g);
+			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DISBAND.toString(p, r, gname));
+			messageGang(g, Lang.SUCCESS_DISBAND.toString(p, r, gname));
 			f.getGangConfig().set("gangs." + g.getName(), null);
 			List<String> gangs = f.getGangConfig().getStringList("gang-names");
 			gangs.remove(g.getName());
 			f.getGangConfig().set("gang-names", gangs);
 			f.saveGangConfig();
 			Gang.removeGang(g);
-			messageGang(g, Lang.SUCCESS_DISBAND.toString(p, r, gname));
-			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_DISBAND.toString(p, r, gname));
 			return;
 		}else{
 			p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_DISBAND.toString(p, getPlayerRank(p.getName(), getGangByName(name)), getGangByName(name)));
