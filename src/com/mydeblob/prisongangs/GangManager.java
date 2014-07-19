@@ -226,10 +226,10 @@ public class GangManager {
 	 * @param g - The gang to message
 	 * @param message - The message to send
 	 */
-	@SuppressWarnings("deprecation") //getPlayerExact is deprecated due to UUID's
 	public void messageGang(Gang g, String message){
-		for(String s:g.getAllPlayers()){
-			Player p = Bukkit.getPlayerExact(s);
+		for(String s:g.getAllPlayersUUID()){
+			Player p = Bukkit.getPlayer(UUID.fromString(s));
+			if(!p.isOnline()) continue;
 			p.sendMessage(message);
 		}
 	}
