@@ -344,6 +344,10 @@ public class CommandHandler implements CommandExecutor, Listener{
 						return true;
 					}
 					Player target = (Player) Bukkit.getServer().getPlayer(args[1]);
+                    if(target == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
+						return true;
+					}
 					gm.uninvitePlayer(p, target, gm.getGangWithPlayer(p));
 					return true;
 				}else{
