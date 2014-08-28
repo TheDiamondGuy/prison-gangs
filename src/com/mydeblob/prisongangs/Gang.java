@@ -27,28 +27,28 @@ public class Gang {
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".members")){
 	    	if(s != null){
 		    	membersUuid.add(s);
-		    	members.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+		    	members.add(Bukkit.getOfflinePlayer(UUID.fromString(s)).getName());
 	    	}
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".trusted")){
 	    	if(s != null){
 		    	trustedUuid.add(s);
-		    	trusted.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+		    	trusted.add(Bukkit.getOfflinePlayer(UUID.fromString(s)).getName());
 	    	}	
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".officers")){
 	    	if(s != null){
 		    	officersUuid.add(s);
-		    	officers.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+		    	officers.add(Bukkit.getOfflinePlayer(UUID.fromString(s)).getName());
 	    	}
 	    }
 	    for(String s:f.getGangConfig().getStringList("gangs." + name + ".leaders")){
 	    	if(s != null){
 		    	leadersUuid.add(s);
-		    	leaders.add(Bukkit.getPlayer(UUID.fromString(s)).getName());
+		    	leaders.add(Bukkit.getOfflinePlayer(UUID.fromString(s)).getName());
 	    	}
 	    }
-	    owner = Bukkit.getPlayer(UUID.fromString(f.getGangConfig().getString("gangs." + name + ".owner"))).getName();
+	    owner = Bukkit.getOfflinePlayer(UUID.fromString(f.getGangConfig().getString("gangs." + name + ".owner"))).getName();
 	    ownersUuid = f.getGangConfig().getString("gangs." + name + ".owner");
 	    gangs.add(this);
 	  }
