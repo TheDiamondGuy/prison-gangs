@@ -717,11 +717,9 @@ public class GangManager {
 		int totalDeaths = 0;
 		double KDR = 0;
 		for(String s:g.getAllPlayersUUID()){
-			UUID uuid = UUID.fromString(s);
-			Player p = Bukkit.getPlayer(uuid);
-			if(f.getKdrConfig().contains("players." + p.getUniqueId().toString())){
-				totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
-				totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+			if(f.getKdrConfig().contains("players." + s)){
+				totalKills += f.getKdrConfig().getInt("players." + s + ".kills");
+				totalDeaths += f.getKdrConfig().getInt("players." + s + ".deaths");
 			}
 		}
 		if(totalDeaths == 0){
@@ -742,9 +740,7 @@ public class GangManager {
 	public int getGangKills(Gang g){
 		int totalKills = 0;
 		for(String s:g.getAllPlayersUUID()){
-			UUID uuid = UUID.fromString(s);
-			Player p = Bukkit.getPlayer(uuid);
-			totalKills += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".kills");
+			totalKills += f.getKdrConfig().getInt("players." + s + ".kills");
 		}
 		return totalKills;
 	}
@@ -758,9 +754,7 @@ public class GangManager {
 	public int getGangDeaths(Gang g){
 		int totalDeaths = 0;
 		for(String s:g.getAllPlayersUUID()){
-			UUID uuid = UUID.fromString(s);
-			Player p = Bukkit.getPlayer(uuid);
-			totalDeaths += f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths");
+			totalDeaths += f.getKdrConfig().getInt("players." + s + ".deaths");
 		}
 		return totalDeaths;
 	}
