@@ -292,6 +292,10 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}
+					if (target == p) {
+						p.sendMessage(Lang.PREFIX.toString() + Lang.CANT_INVITE_YOURSELF);
+						return true;
+					}
 					gm.invitePlayer(p, target, gm.getGangWithPlayer(p));
 					return true;
 				}else{
@@ -309,8 +313,8 @@ public class CommandHandler implements CommandExecutor, Listener{
 					}
 					ArrayList<String> names = new ArrayList<String>();
 					for(int i=0; i < f.getGangConfig().getStringList("gang-names").size(); i++) {
-						  names.add(f.getGangConfig().getStringList("gang-names").get(i).toLowerCase());
-						}
+						names.add(f.getGangConfig().getStringList("gang-names").get(i).toLowerCase());
+					}
 					if(gm.getGangByName(args[1]) == null && !(names.contains(args[1].toLowerCase()))){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
 						return true;
@@ -344,7 +348,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						return true;
 					}
 					Player target = (Player) Bukkit.getServer().getPlayer(args[1]);
-                    if(target == null){
+					if(target == null){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}
