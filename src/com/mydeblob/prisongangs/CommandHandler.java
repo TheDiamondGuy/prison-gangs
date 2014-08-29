@@ -34,7 +34,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 					p.sendMessage(ChatColor.GREEN + "Your deaths: " + ChatColor.BLUE + f.getKdrConfig().getInt("players." + p.getUniqueId().toString() + ".deaths"));
 					return true;
 				}else if(args.length == 1){
-					Player t = Bukkit.getPlayerExact(args[0]);
+					Player t = Bukkit.getServer().getPlayer(args[0]);
 					if(!f.getGangConfig().contains("players." + t.getUniqueId().toString())){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_FOUND.toString(p, t));
 						return true;
@@ -142,9 +142,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
-					Player target = Bukkit.getPlayerExact(args[1]);
+					Player target = Bukkit.getServer().getPlayer(args[1]);
 					if(target == null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p)); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}
 					if(gm.getGangWithPlayer(target) == null){
@@ -169,9 +169,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
-					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					Player target = (Player) Bukkit.getServer().getPlayer(args[1]);
 					if(target == null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}if(gm.getGangWithPlayer(target) == null){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG.toString(p, target, gm.getGangWithPlayer(p))); 
@@ -195,9 +195,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
-					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					Player target = Bukkit.getServer().getPlayer(args[1]);
 					if(target == null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}if(gm.getGangWithPlayer(target) == null){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG.toString(p, target, gm.getGangWithPlayer(p))); 
@@ -218,7 +218,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 						Ranks rr = gm.getPlayerRank(target.getName(), g);
 						String oldOwner = g.getOwner();
 						g.setOwner(target);
-						g.addLeader(Bukkit.getPlayerExact(oldOwner));
+						g.addLeader(Bukkit.getServer().getPlayer(oldOwner));
 						if(rr == Ranks.MEMBER){
 							g.removeMember(target);
 						}else if(rr == Ranks.TRUSTED){
@@ -246,9 +246,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
-					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					Player target = Bukkit.getServer().getPlayer(args[1]);
 					if(target == null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}if(gm.getGangWithPlayer(target) == null){
 						p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG.toString(p, target, gm.getGangWithPlayer(p))); 
@@ -287,9 +287,9 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
-					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					Player target = Bukkit.getServer().getPlayer(args[1]);
 					if(target == null){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString(p, target)); 
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
 						return true;
 					}
 					gm.invitePlayer(p, target, gm.getGangWithPlayer(p));
@@ -343,7 +343,11 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
 						return true;
 					}
-					Player target = (Player) Bukkit.getPlayerExact(args[1]);
+					Player target = (Player) Bukkit.getServer().getPlayer(args[1]);
+                    if(target == null){
+						p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
+						return true;
+					}
 					gm.uninvitePlayer(p, target, gm.getGangWithPlayer(p));
 					return true;
 				}else{
@@ -451,7 +455,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 	public ArrayList<String> getGangPlayerStats(Gang g){
 		ArrayList<String> memberData = new ArrayList<String>();
 		for(String s : g.getMembers()){
-			Player p = Bukkit.getServer().getPlayerExact(s);
+			Player p = Bukkit.getServer().getPlayer(s);
 			String status = null;
 			if(!(p == null)){
 				status = "Online";
@@ -462,7 +466,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			memberData.add(name);
 		}
 		for(String s : g.getTrusted()){
-			Player p = Bukkit.getServer().getPlayerExact(s);
+			Player p = Bukkit.getServer().getPlayer(s);
 			String status = null;
 			if(!(p == null)){
 				status = "Online";
@@ -473,7 +477,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			memberData.add(name);
 		}
 		for(String s : g.getOfficers()){
-			Player p = Bukkit.getServer().getPlayerExact(s);
+			Player p = Bukkit.getServer().getPlayer(s);
 			String status = null;
 			if(!(p == null)){
 				status = "Online";
@@ -484,7 +488,7 @@ public class CommandHandler implements CommandExecutor, Listener{
 			memberData.add(name);
 		}
 		for(String s : g.getLeaders()){
-			Player p = Bukkit.getServer().getPlayerExact(s);
+			Player p = Bukkit.getServer().getPlayer(s);
 			String status = null;
 			if(!(p == null)){
 				status = "Online";
@@ -494,14 +498,15 @@ public class CommandHandler implements CommandExecutor, Listener{
 			String name = "Leader " + plugin.getConfig().getString("seperator") + " " +  s + " - " + status;
 			memberData.add(name);
 		}
-		Player p = Bukkit.getServer().getPlayerExact(g.getOwner());
+		String owner = g.getOwner();
+		Player p = Bukkit.getServer().getPlayer(owner);
 		String status = null;
 		if(!(p == null)){
 			status = "Online";
 		}else if(p == null){
 			status = "Offline";
 		}
-		String name = "Owner " + plugin.getConfig().getString("seperator") + " " +  p.getName() + " - " + status;
+		String name = "Owner " + plugin.getConfig().getString("seperator") + " " + owner  + " - " + status;
 		memberData.add(name);
 		return memberData;
 	}
