@@ -1,7 +1,7 @@
 package com.mydeblob.prisongangs;
 
 
-public enum Ranks {
+public enum Rank {
 	MEMBER,
 	TRUSTED,
 	OFFICER,

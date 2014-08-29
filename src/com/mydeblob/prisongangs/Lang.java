@@ -102,14 +102,14 @@ public enum Lang {
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName());
 		}
 	}
-	public String toString(Player sender, Ranks r, Gang g) {
+	public String toString(Player sender, Rank r, Gang g) {
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%g%", g.getName()).replaceAll("%r%", r.toText());
 		}
 	}
-	public String toString(Player sender, Ranks r, String gName) {
+	public String toString(Player sender, Rank r, String gName) {
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{
@@ -130,7 +130,7 @@ public enum Lang {
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)).replaceAll("%s%", sender.getName()).replaceAll("%t%", target.getName()).replaceAll("%g%", g.getName());
 		}
 	}
-	public String toString(Player sender, Player target, Gang g, Ranks r){
+	public String toString(Player sender, Player target, Gang g, Rank r){
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";
 		}else{

@@ -215,17 +215,17 @@ public class CommandHandler implements CommandExecutor, Listener{
 						p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(target.getName(), g)));
 						return true;
 					}else{
-						Ranks rr = gm.getPlayerRank(target.getName(), g);
+						Rank rr = gm.getPlayerRank(target.getName(), g);
 						String oldOwner = g.getOwner();
 						g.setOwner(target);
 						g.addLeader(Bukkit.getServer().getPlayer(oldOwner));
-						if(rr == Ranks.MEMBER){
+						if(rr == Rank.MEMBER){
 							g.removeMember(target);
-						}else if(rr == Ranks.TRUSTED){
+						}else if(rr == Rank.TRUSTED){
 							g.removeTrusted(target);
-						}else if(rr == Ranks.OFFICER){
+						}else if(rr == Rank.OFFICER){
 							g.removeOfficer(target);
-						}else if(rr == Ranks.LEADER){
+						}else if(rr == Rank.LEADER){
 							g.removeLeader(target);
 						}
 						p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_SET_OWNERSHIP.toString(p, target, g, gm.getPlayerRank(p.getName(), g)));
