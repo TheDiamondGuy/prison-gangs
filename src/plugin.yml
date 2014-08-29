@@ -1,6 +1,6 @@
 name: PrisonGangs
 main: com.mydeblob.prisongangs.PrisonGangs
-version: 2.2
+version: 2.3
 author: mydeblob
 commands:
    kdr:

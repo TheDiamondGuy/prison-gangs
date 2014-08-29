@@ -623,7 +623,7 @@ public class GangManager {
 	}
 	
 	//Not functional
-	public void allyGang(Player sender, Gang toAlly, Gang requestingToAlly){
+	public void allyGang(Player sender, Gang toAlly, Gang requestingToAlly){ //<requestionToAlyy, toAlly>
 		if(requestingToAlly.getMembers().contains(sender.getName()) || requestingToAlly.getTrusted().contains(sender.getName())){
 			
 		}
