@@ -120,6 +120,7 @@ public enum Lang {
 			return s;
 		}
 	}
+	
 	public String toString(Player sender) {
 		if (this == PREFIX){
 			return ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def)) + " ";

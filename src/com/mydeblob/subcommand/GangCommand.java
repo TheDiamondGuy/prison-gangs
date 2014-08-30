@@ -26,6 +26,8 @@ public class GangCommand extends SubCommand implements CommandExecutor{
 		super(name, permission);
 		// TODO Auto-generated constructor stub
 	}
+	
+	//TODO Make interface for subcommand
 
 	/**
 	 * Adds a subcommand to the main command
@@ -67,7 +69,7 @@ public class GangCommand extends SubCommand implements CommandExecutor{
 			CommandHandler.showHelpMenu();
 			return;
 		}
-		if(sub.multiplePermissions()){
+		if(sub.hasMultiplePermissions()){
 			for(String s:sub.getAllPermissions()){
 				if(!sender.hasPermission(s)){
 					sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());

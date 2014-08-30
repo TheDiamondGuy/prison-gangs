@@ -12,6 +12,7 @@ public class SubCommand {
     private boolean mininumRank = false;
     private int minArgs = 1; //Index starting at 1
     private boolean multiplePerms = false;
+    private Execute executor = null;
     private ArrayList<String> allPermissions =  new ArrayList<String>();
     
     /**
@@ -107,6 +108,21 @@ public class SubCommand {
     }
     
     /**
+     * Sets the commands executor
+     * @param executor
+     */
+    public void setExecutor(Execute executor){
+    	this.executor = executor;
+    }
+    
+    /**
+     * Gets the commands executor
+     * @return - Executor if it has been set, NULL otherwise
+     */
+    public Execute getExecutor(){
+    	return this.executor;
+    }
+    /**
      * Sets multiple permissions for the command
      * @param permissions - The permissions to be added (Don't include the default permission when you created the handler)
      * @return subcommand - Used for chaining methods
@@ -122,7 +138,7 @@ public class SubCommand {
      * Gets wether or not there are multiple permissions
      * @return boolean - TRUE if there is multiple permissions, FALSE otherwise
      */
-    public boolean multiplePermissions(){
+    public boolean hasMultiplePermissions(){
     	return this.multiplePerms;
     }
     

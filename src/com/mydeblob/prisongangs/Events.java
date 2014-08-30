@@ -66,9 +66,6 @@ public class Events implements Listener{
 			f.getKdrConfig().set("players." + p.getUniqueId().toString() + ".deaths", 0);
 			f.getKdrConfig().set("players." + p.getUniqueId().toString() + ".kdr", 0);
 		}
-//		if(plugin.getConfig().getBoolean("scoreboard")){
-//			ScoreboardManager.updateScoreboard(p);
-//		}
 		p.sendMessage(ChatColor.BLUE + "This server is running PrisonGangs by mydeblob!");
 	} 
 	
