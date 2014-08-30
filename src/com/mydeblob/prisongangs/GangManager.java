@@ -513,12 +513,12 @@ public class GangManager {
 		}else if(g.getOfficers().contains(p.getName())){
 			messageGang(g, Lang.SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
-			g.removeTrusted(p);
+			g.removeOfficer(p);
 			return;
 		}else if(g.getLeaders().contains(p.getName())){
 			messageGang(g, Lang.SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
 			p.sendMessage(Lang.PREFIX.toString() + Lang.SENDER_SUCCESS_LEFT.toString(p, getPlayerRank(p.getName(), g), g));
-			g.removeTrusted(p);
+			g.removeLeader(p);
 			return;
 		}else if(g.getOwner().equals(p.getName())){
 			messageGang(g, Lang.DISBAND_ABSENCE.toString(p, getPlayerRank(p.getName(), g), g));
