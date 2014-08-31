@@ -19,15 +19,9 @@ import com.mydeblob.prisongangs.GangManager;
 import com.mydeblob.prisongangs.Lang;
 import com.mydeblob.prisongangs.Rank;
 
-public class GangCommand extends SubCommand implements CommandExecutor{
+public class GangCommand implements CommandExecutor{
 
 	private HashMap<String, SubCommand> subs = new HashMap<String, SubCommand>();
-	public GangCommand(String name, String permission) {
-		super(name, permission);
-		// TODO Auto-generated constructor stub
-	}
-	
-	//TODO Make interface for subcommand
 
 	/**
 	 * Adds a subcommand to the main command
@@ -101,13 +95,14 @@ public class GangCommand extends SubCommand implements CommandExecutor{
 			}
 		}
 		List<String> callArgs = new ArrayList<String>(args.subList(1, args.size())); //Remove sub command from arg list
-		
+		Information info = new Information(p, sender, callArgs, sub.getName());
+		sub.getExecutor().execute(info);
 
 	}
 
 	public boolean validRank(Player p, SubCommand sub){
 		Gang g = GangManager.getGangManager().getGangWithPlayer(p);
-		Rank r = GangManager.getGangManager().getPlayerRank(p.getName(), g);
+		Rank r = GangManager.getGangManager().getPlayerRank(p, g);
 		Rank minR = sub.getMininumRank();
 		switch(minR){
 		case MEMBER:

@@ -2,5 +2,9 @@ package com.mydeblob.subcommand;
 
 public interface Execute {
 
-	public void execute();
+	/**
+	 * Base method where you will put the executing code
+	 * @param info
+	 */
+	public void execute(Information info);
 }

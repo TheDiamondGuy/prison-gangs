@@ -80,10 +80,43 @@ public class GangManager {
 	 * Gets the players rank
 	 * 
 	 * @throws NPE if player isn't in a gang
-	 * @param playerName - Player you want to get the rank
+	 * @param player - Player you want to get the rank
 	 * @param g - Players gang
 	 * @return enum Ranks (Players rank)
 	 */
+	public Rank getPlayerRank(Player p, Gang g){
+		String playerName = p.getName();
+		  if(!g.getMembers().isEmpty()){
+			  if(g.getMembers().contains(playerName)){
+				  return Rank.MEMBER;
+			  }
+		  }if(!g.getTrusted().isEmpty()){
+			  if(g.getTrusted().contains(playerName)){
+				  return Rank.TRUSTED;
+			  }
+		  }if(!g.getOfficers().isEmpty()){
+			  if(g.getOfficers().contains(playerName)){
+				  return Rank.OFFICER;
+			  }
+		  }if(!g.getLeaders().isEmpty()){
+			 if(g.getLeaders().contains(playerName)){
+				 return Rank.LEADER;
+			 }
+		  }if(g.getOwner().equals(playerName)){
+			  return Rank.OWNER;
+		  }
+		  return null;
+	  }
+	
+	/**
+	 * DEPRECATED, PLEASE USE getPlayerRank(Player p, Gang g)
+	 * 
+	 * @throws NPE if player isn't in a gang
+	 * @param player - Player you want to get the rank
+	 * @param g - Players gang
+	 * @return enum Ranks (Players rank)
+	 */
+	@Deprecated
 	public Rank getPlayerRank(String playerName, Gang g){
 		  if(!g.getMembers().isEmpty()){
 			  if(g.getMembers().contains(playerName)){
