@@ -102,7 +102,7 @@ public class GangCommand implements CommandExecutor{
 
 	public boolean validRank(Player p, SubCommand sub){
 		Gang g = GangManager.getGangManager().getGangWithPlayer(p);
-		Rank r = GangManager.getGangManager().getPlayerRank(p, g);
+		Rank r = GangManager.getGangManager().getPlayerRank(p);
 		Rank minR = sub.getMininumRank();
 		switch(minR){
 		case MEMBER:

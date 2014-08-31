@@ -84,8 +84,12 @@ public class GangManager {
 	 * @param g - Players gang
 	 * @return enum Ranks (Players rank)
 	 */
-	public Rank getPlayerRank(Player p, Gang g){
+	public Rank getPlayerRank(Player p){
 		String playerName = p.getName();
+		Gang g = getGangWithPlayer(p);
+		if(g == null){
+			return null;
+		}
 		  if(!g.getMembers().isEmpty()){
 			  if(g.getMembers().contains(playerName)){
 				  return Rank.MEMBER;

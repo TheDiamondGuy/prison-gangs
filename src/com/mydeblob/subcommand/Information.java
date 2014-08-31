@@ -105,7 +105,7 @@ public class Information {
 		if(this.g == null){
 			return null;
 		}else{
-			return gm.getPlayerRank(this.player, this.g);
+			return gm.getPlayerRank(this.player);
 		}
 	}
 	
