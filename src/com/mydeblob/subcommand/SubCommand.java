@@ -1,6 +1,7 @@
 package com.mydeblob.subcommand;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.mydeblob.prisongangs.Rank;
 
@@ -124,13 +125,13 @@ public class SubCommand {
     }
     /**
      * Sets multiple permissions for the command
-     * @param permissions - The permissions to be added (Don't include the default permission when you created the handler)
+     * @param list - The permissions to be added (Don't include the default permission when you created the handler)
      * @return subcommand - Used for chaining methods
      */
-    public SubCommand setMultiplePermissions(ArrayList<String> permissions){
+    public SubCommand setMultiplePermissions(List<String> list){
     	this.multiplePerms = true;
     	this.allPermissions.add(this.permission); //We want to add the default permission in here
-    	this.allPermissions.addAll(permissions);
+    	this.allPermissions.addAll(list);
     	return this;
     }
     

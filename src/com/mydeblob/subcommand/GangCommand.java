@@ -13,11 +13,10 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.mydeblob.prisongangs.CommandHandler;
-import com.mydeblob.prisongangs.Gang;
 import com.mydeblob.prisongangs.GangManager;
 import com.mydeblob.prisongangs.Lang;
 import com.mydeblob.prisongangs.Rank;
+import com.mydeblob.prisongangs.Util;
 
 public class GangCommand implements CommandExecutor{
 
@@ -54,26 +53,29 @@ public class GangCommand implements CommandExecutor{
 			commandLabel = "/" + commandLabel; //Keep in mind that players have to add a slash in front of commands; consoles don't
 		}
 		if(args.size() == 0){ //Show them the help menu
-			CommandHandler.showHelpMenu();
+			Util.getUtil().showHelpMenu();
 			return;
 		}
 		String name = args.get(0).toLowerCase(); //The sub command name
 		SubCommand sub = subs.get(name);
 		if(sub == null){
-			CommandHandler.showHelpMenu();
+			Util.getUtil().showHelpMenu();
 			return;
 		}
 		if(sub.hasMultiplePermissions()){
 			for(String s:sub.getAllPermissions()){
 				if(!sender.hasPermission(s)){
+					if(sender.isOp()) continue;
 					sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
 					return;
 				}
 			}
 		}else{
 			if(!sender.hasPermission(sub.getPerm())){
-				sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
-				return;
+				if(!sender.isOp()){
+					sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
+					return;
+				}
 			}
 		}
 		if(!sub.isConsoleAllowed() && p != null){ //P will always be null if it is sent from the console
@@ -90,7 +92,8 @@ public class GangCommand implements CommandExecutor{
 				return;
 			}
 			if(!validRank(p, sub)){
-				p.sendMessage(Lang.PREFIX.toString() + LANG_NO_PERMS_RANK_GENERAL);
+				//TODO Update the NO_PERMS_RANK lang so you only need one message for all
+				p.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS);
 				return;
 			}
 		}
@@ -101,7 +104,6 @@ public class GangCommand implements CommandExecutor{
 	}
 
 	public boolean validRank(Player p, SubCommand sub){
-		Gang g = GangManager.getGangManager().getGangWithPlayer(p);
 		Rank r = GangManager.getGangManager().getPlayerRank(p);
 		Rank minR = sub.getMininumRank();
 		switch(minR){
