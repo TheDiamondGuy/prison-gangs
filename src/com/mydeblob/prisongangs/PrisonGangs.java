@@ -3,7 +3,6 @@ package com.mydeblob.prisongangs;
 import java.io.File;
 import java.util.logging.Level;
 
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +16,7 @@ public class PrisonGangs extends JavaPlugin{
 	public static String link = "";
 	public void onEnable(){
 		FileManager f = FileManager.getFileManager();
+		Util.getUtil().init(this);
 		f.init(this);
 		File config = new File(getDataFolder(), "config.yml");
 		if(!config.exists()){
@@ -34,8 +34,8 @@ public class PrisonGangs extends JavaPlugin{
 		f.reloadGangConfig();
 		f.saveGangConfig();
 		Lang.setFile(YamlConfiguration.loadConfiguration(FileManager.langFile));
-		Bukkit.getServer().getPluginManager().registerEvents(new CommandHandler(this), this);
-		getCommand("gang").setExecutor(new CommandHandler(this));
+		CommandHandler ch = new CommandHandler(this);
+		ch.setupCommands();
 		getCommand("kdr").setExecutor(new CommandHandler(this));
 		getCommand("pgupdate").setExecutor(new CommandHandler(this));
 		getServer().getPluginManager().registerEvents(new Events(this),  this);

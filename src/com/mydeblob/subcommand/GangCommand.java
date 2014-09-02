@@ -32,7 +32,7 @@ public class GangCommand implements CommandExecutor{
 	public SubCommand addSubCommand(String name, ArrayList<String> aliases, String permission){
 		SubCommand command = new SubCommand(name, permission);
 		subs.put(name, command);
-		if(!aliases.isEmpty() || aliases != null){
+		if(aliases != null){
 			for(String s:aliases){
 				subs.put(s, command);
 			}
@@ -47,6 +47,7 @@ public class GangCommand implements CommandExecutor{
 	}
 
 	public void handleCommand(CommandSender sender, String commandLabel, List<String> args){
+		Bukkit.broadcastMessage("handleCommand");
 		Player p = null;
 		if(sender instanceof Player){
 			p = (Player) sender;
@@ -54,21 +55,23 @@ public class GangCommand implements CommandExecutor{
 		}
 		if(args.size() == 0){ //Show them the help menu
 			Util.getUtil().showHelpMenu();
+			Bukkit.broadcastMessage("args size");
 			return;
 		}
+		Bukkit.broadcastMessage("1");
 		String name = args.get(0).toLowerCase(); //The sub command name
 		SubCommand sub = subs.get(name);
 		if(sub == null){
 			Util.getUtil().showHelpMenu();
 			return;
 		}
+		Bukkit.broadcastMessage("2");
 		if(sub.hasMultiplePermissions()){
 			for(String s:sub.getAllPermissions()){
-				if(!sender.hasPermission(s)){
-					if(sender.isOp()) continue;
-					sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
-					return;
-				}
+				if(sender.hasPermission(s)) break;
+				if(sender.isOp()) break;
+				sender.sendMessage(Lang.PREFIX.toString() + Lang.NO_PERMS.toString());
+				return;
 			}
 		}else{
 			if(!sender.hasPermission(sub.getPerm())){
@@ -78,14 +81,17 @@ public class GangCommand implements CommandExecutor{
 				}
 			}
 		}
-		if(!sub.isConsoleAllowed() && p != null){ //P will always be null if it is sent from the console
+		Bukkit.broadcastMessage("3");
+		if(!sub.isConsoleAllowed() && p == null){ //P will always be null if it is sent from the console
 			sender.sendMessage(Lang.PREFIX.toString() + ChatColor.RED + "This command can only be performed by a player in-game!"); //I don't like hardcoded messages but... We don't want the user to change this
 			return;
 		}
+		Bukkit.broadcastMessage("4");
 		if(args.size() < sub.getMininumArgs()){ 
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString());
 			return;
 		}
+		Bukkit.broadcastMessage("5");
 		if(sub.requiresRank()){ //This will only happen if the player is a sender
 			if(GangManager.getGangManager().getGangWithPlayer(p) == null){
 				p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString());
@@ -97,6 +103,7 @@ public class GangCommand implements CommandExecutor{
 				return;
 			}
 		}
+		Bukkit.broadcastMessage("6");
 		List<String> callArgs = new ArrayList<String>(args.subList(1, args.size())); //Remove sub command from arg list
 		Information info = new Information(p, sender, callArgs, sub.getName());
 		sub.getExecutor().execute(info);
