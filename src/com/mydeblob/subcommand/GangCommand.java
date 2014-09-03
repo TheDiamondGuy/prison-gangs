@@ -21,6 +21,7 @@ import com.mydeblob.prisongangs.Util;
 public class GangCommand implements CommandExecutor{
 
 	private HashMap<String, SubCommand> subs = new HashMap<String, SubCommand>();
+	private boolean checkArgs = true;
 
 	/**
 	 * Adds a subcommand to the main command
@@ -29,6 +30,18 @@ public class GangCommand implements CommandExecutor{
 	 * @param permission - Main permission of the sub command (Can add more later)
 	 * @return subcommand - Used for chaining
 	 */
+	public SubCommand addSubCommand(String name, ArrayList<String> aliases, String permission, boolean checkArgs){
+		SubCommand command = new SubCommand(name, permission);
+		subs.put(name, command);
+		if(aliases != null){
+			for(String s:aliases){
+				subs.put(s, command);
+			}
+		}
+		this.checkArgs = checkArgs;
+		return command;
+	}
+	
 	public SubCommand addSubCommand(String name, ArrayList<String> aliases, String permission){
 		SubCommand command = new SubCommand(name, permission);
 		subs.put(name, command);
@@ -53,19 +66,19 @@ public class GangCommand implements CommandExecutor{
 			p = (Player) sender;
 			commandLabel = "/" + commandLabel; //Keep in mind that players have to add a slash in front of commands; consoles don't
 		}
-		if(args.size() == 0){ //Show them the help menu
-			Util.getUtil().showHelpMenu();
-			Bukkit.broadcastMessage("args size");
-			return;
+		if(checkArgs){
+			if(args.size() == 0){ //Show them the help menu
+				Util.getUtil().showHelpMenu();
+				return;
+			}
 		}
-		Bukkit.broadcastMessage("1");
 		String name = args.get(0).toLowerCase(); //The sub command name
 		SubCommand sub = subs.get(name);
+		Bukkit.broadcastMessage(name + " " + sub + " " + subs.toString());
 		if(sub == null){
 			Util.getUtil().showHelpMenu();
 			return;
 		}
-		Bukkit.broadcastMessage("2");
 		if(sub.hasMultiplePermissions()){
 			for(String s:sub.getAllPermissions()){
 				if(sender.hasPermission(s)) break;
@@ -81,17 +94,14 @@ public class GangCommand implements CommandExecutor{
 				}
 			}
 		}
-		Bukkit.broadcastMessage("3");
 		if(!sub.isConsoleAllowed() && p == null){ //P will always be null if it is sent from the console
 			sender.sendMessage(Lang.PREFIX.toString() + ChatColor.RED + "This command can only be performed by a player in-game!"); //I don't like hardcoded messages but... We don't want the user to change this
 			return;
 		}
-		Bukkit.broadcastMessage("4");
 		if(args.size() < sub.getMininumArgs()){ 
 			sender.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString());
 			return;
 		}
-		Bukkit.broadcastMessage("5");
 		if(sub.requiresRank()){ //This will only happen if the player is a sender
 			if(GangManager.getGangManager().getGangWithPlayer(p) == null){
 				p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString());
@@ -103,7 +113,6 @@ public class GangCommand implements CommandExecutor{
 				return;
 			}
 		}
-		Bukkit.broadcastMessage("6");
 		List<String> callArgs = new ArrayList<String>(args.subList(1, args.size())); //Remove sub command from arg list
 		Information info = new Information(p, sender, callArgs, sub.getName());
 		sub.getExecutor().execute(info);

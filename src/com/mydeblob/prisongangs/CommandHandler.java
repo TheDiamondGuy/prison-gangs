@@ -78,17 +78,15 @@ public class CommandHandler implements CommandExecutor{
 	
 	public void setupCommands(){
 		GangCommand gCmd = new GangCommand(); //GangCommand will automatically take care of permission checking
-		GangCommand kdrCmd = new GangCommand();
 		plugin.getCommand("gang").setExecutor(gCmd); //Register /gang as the base command; g is defined in the plugin.yml as an alias
 
 		/**
 		 * Gang Info Command
 		 */
-		kdrCmd.addSubCommand("info", null, "gangs.user")
+		gCmd.addSubCommand("info", null, "gangs.user", false)
 		.setMultiplePermissions(Arrays.asList("gangs.info", "gangs.admin"))
 		.setExecutor(new Execute(){
 			public void execute(Information info){
-				Bukkit.broadcastMessage("EXECUTE CALLED");
 				Player p = info.getPlayer();
 				if(info.hasArgs()){
 					if(info.getArgs().size() > 0){ //If they typed more than /gang info GANG_NAME
@@ -96,7 +94,7 @@ public class CommandHandler implements CommandExecutor{
 						return;
 					}else{
 						if(gm.getGangByName(info.getArgs().get(0)) == null && !(f.getGangConfig().getStringList("gang-names").contains(info.getArgs().get(0)))){
-							p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(p));
+							p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_NOT_FOUND.toString(Arrays.asList("%s%"), Arrays.asList(p.getName())));
 							return;
 						}
 						Gang g = gm.getGangByName(info.getArgs().get(0));
@@ -109,10 +107,10 @@ public class CommandHandler implements CommandExecutor{
 					}
 				}else{ //They just typed /gang info
 					if(!gm.isInGang(p)){
-						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));
+						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(Arrays.asList("%s%"), Arrays.asList(p.getName())));
 						return;
 					}
-					Gang g = gm.getGangWithPlayer(p);
+					Gang g = info.getGang();
 					p.sendMessage(ChatColor.DARK_RED + "***" + ChatColor.DARK_GREEN + g.getName()  + "'s" + ChatColor.BLUE + " Info" + ChatColor.DARK_RED + "***");
 					p.sendMessage(ChatColor.GREEN + g.getName() + "'s KDR: " + ChatColor.BLUE + gm.getGangKDR(g));
 					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Kills: " + ChatColor.BLUE + gm.getGangKills(g));
@@ -120,6 +118,47 @@ public class CommandHandler implements CommandExecutor{
 					p.sendMessage(ChatColor.GREEN + g.getName() + "'s Members: " + ChatColor.BLUE + u.getGangPlayerStats(g));
 					return;
 				}
+			}
+		});
+		
+		/**
+		 * Gang Create Command
+		 */
+		gCmd.addSubCommand("create", null, "gangs.info")
+		.setMultiplePermissions(Arrays.asList("gangs.create", "gangs.admin"))
+		.setExecutor(new Execute(){
+			public void execute(Information info){
+				Player p = info.getPlayer();
+				if(info.getGang() != null){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(Arrays.asList("%s%", "%r%", "%g%"), Arrays.asList(p.getName(), info.getRank().toString(), info.getGangName())));
+					return;
+				}
+				if(gm.getGangByName(info.getArgs().get(0)) != null){
+					for(String s:f.getGangConfig().getStringList("gang-names")){
+						if(s.equalsIgnoreCase(info.getArgs().get(0))){
+							p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_EXISTS.toString(Arrays.asList("%s%", "%g%"), Arrays.asList(p.getName(), info.getGangName())));
+							return;
+						}
+					}
+				}
+				if((info.getArgs().get(0).length() + 1) > plugin.getConfig().getInt("char-limit")){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.CHAR_LIMIT.toString(Arrays.asList("%s%"), Arrays.asList(p.getName())));
+					return;
+				}
+				if(!plugin.getConfig().getStringList("blocked-names").isEmpty()){
+					for(String s:plugin.getConfig().getStringList("blocked-names")){
+						if(info.getArgs().get(0).equalsIgnoreCase(s)){
+							p.sendMessage(Lang.PREFIX.toString() + Lang.BLOCKED_NAME.toString(Arrays.asList("%s%"), Arrays.asList(p.getName())));
+							return;
+						}
+					}
+					if (info.getArgs().get(0).contains(".") || info.getArgs().get(0).contains("/") || info.getArgs().get(0).contains("\\") || !info.getArgs().get(0).matches("\\w.*")) {
+						p.sendMessage(Lang.PREFIX.toString() + Lang.BLOCKED_NAME.toString(Arrays.asList("%s%"), Arrays.asList(p.getName())));
+						return;
+					}
+				}
+				gm.createGang(p, info.getArgs().get(0));
+				return;
 			}
 		});
 	}

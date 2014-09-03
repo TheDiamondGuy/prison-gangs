@@ -49,7 +49,7 @@ public class Events implements Listener{
 		if(!gm.isInGangChat(p)){
 			return;
 		}
-		String format = ChatColor.DARK_GRAY + gm.getPlayerRank(p.getName(), g).toText() + " " + plugin.getConfig().getString("seperator") + " " +  p.getName() + ": " + ChatColor.BLUE + e.getMessage();
+		String format = ChatColor.DARK_GRAY + gm.getPlayerRank(p).toText() + " " + plugin.getConfig().getString("seperator") + " " +  p.getName() + ": " + ChatColor.BLUE + e.getMessage();
 		e.setCancelled(true);
 		gm.messageGang(g, format);
 	}

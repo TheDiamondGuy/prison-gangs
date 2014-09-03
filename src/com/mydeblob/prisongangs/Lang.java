@@ -113,7 +113,7 @@ public enum Lang {
 		}else{
 			String s = ChatColor.translateAlternateColorCodes('&', lang.getString(this.path, def));
 			for(String key:keyword){
-				if(s.contains(key)){
+				if(s.toLowerCase().contains(key.toLowerCase())){
 					s.replaceAll(key, replacedWith.get(keyword.indexOf(s)));
 				}
 			}
