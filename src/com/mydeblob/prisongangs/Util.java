@@ -18,46 +18,7 @@ public class Util {
 //	@SuppressWarnings("deprecation")
 //	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args){
 //		if(cmd.getName().equalsIgnoreCase("gang")){
-//			}else if(args[0].equalsIgnoreCase("create") && args.length == 2){
-//				if(p.hasPermission("gangs.create") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
-//					if(gm.getGangWithPlayer(p) != null){
-//						p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, gm.getPlayerRank(p.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
-//						return true;
-//					}
-//					if(gm.getGangByName(args[1]) != null){
-//						for(String s:f.getGangConfig().getStringList("gang-names")){
-//							if(s.equalsIgnoreCase(args[1])){
-//								p.sendMessage(Lang.PREFIX.toString() + Lang.GANG_EXISTS.toString(p, gm.getGangByName(args[1])));
-//								return true;
-//							}
-//						}
-//					}
-//					if((args[1].length() + 1) > plugin.getConfig().getInt("char-limit")){
-//						p.sendMessage(Lang.PREFIX.toString() + Lang.CHAR_LIMIT.toString(p));
-//						return true;
-//					}
-//					if(!plugin.getConfig().getStringList("blocked-names").isEmpty()){
-//						for(String s:plugin.getConfig().getStringList("blocked-names")){
-//							if(args[1].contains(s)){
-//								p.sendMessage(Lang.PREFIX.toString() + Lang.BLOCKED_NAME.toString(p));
-//								return true;
-//							}
-//						}
-//						if(args[1].contains(".")){
-//							p.sendMessage(Lang.PREFIX.toString() + Lang.BLOCKED_NAME.toString(p));
-//							return true;
-//						}
-//					}
-//					gm.createGang(p, args[1]);
-//					return true;
-//				}else{
-//					p.sendMessage(Lang.NO_PERMS.toString());
-//					return true;
-//				}
-//			}else if(args[0].equalsIgnoreCase("create") && args.length != 2){
-//				p.sendMessage(Lang.PREFIX.toString() + Lang.WRONG_COMMAND.toString(p));
-//				return true;
-//			}if(args[0].equalsIgnoreCase("promote") && args.length == 2){
+	//if(args[0].equalsIgnoreCase("promote") && args.length == 2){
 //				if(p.hasPermission("gangs.promote") || p.hasPermission("gangs.admin") || p.hasPermission("gangs.user")){
 //					if(gm.getGangWithPlayer(p) == null){
 //						p.sendMessage(Lang.PREFIX.toString() + Lang.NOT_IN_GANG.toString(p));

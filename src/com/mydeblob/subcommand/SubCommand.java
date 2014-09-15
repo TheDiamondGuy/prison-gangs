@@ -100,11 +100,11 @@ public class SubCommand {
     
     /**
      * Sets the mininum amount of args required for this command, starting at 1
-     * @param args - The amount of args needed (Starting at 1, i.e if I had the base command /g and the sub command /invite name I would need a mininum args of 2)
+     * @param args - The amount of args needed (Starting at 1, i.e if I had the base command /g and the sub command /g invite name I would need a mininum args of 1)
      * @return subcommand - Used for chaining methods
      */
     public SubCommand setMininumArgs(int args){
-    	this.minArgs = args;
+    	this.minArgs = args + 1;
     	return this;
     }
     

@@ -124,7 +124,7 @@ public class CommandHandler implements CommandExecutor{
 		/**
 		 * Gang Create Command
 		 */
-		gCmd.addSubCommand("create", null, "gangs.info")
+		gCmd.addSubCommand("create", null, "gangs.user")
 		.setMultiplePermissions(Arrays.asList("gangs.create", "gangs.admin"))
 		.setExecutor(new Execute(){
 			public void execute(Information info){
@@ -159,6 +159,33 @@ public class CommandHandler implements CommandExecutor{
 				}
 				gm.createGang(p, info.getArgs().get(0));
 				return;
+			}
+		});
+		
+		/**
+		 * Gang Promote Command
+		 */
+		gCmd.addSubCommand("promote", null, "gangs.user")
+		.setMultiplePermissions(Arrays.asList("gangs.promote", "gangs.admin"))
+		.setMinRank(Rank.TRUSTED)
+		.setMininumArgs(2)
+		.setExecutor(new Execute(){
+			public void execute(Information info){
+				Player p = info.getPlayer();
+				@SuppressWarnings("deprecation")
+				Player target = Bukkit.getServer().getPlayer(info.getArgs().get(0));
+				if(target == null){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.PLAYER_NOT_ONLINE.toString()); 
+					return;
+				}
+				if(gm.getGangWithPlayer(target) == null){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_GANG.toString(Arrays.asList("%s%", "%t%"), Arrays.asList(p.getName(), target.getName()))); 
+					return;
+				}if(gm.getGangWithPlayer(target) != gm.getGangWithPlayer(p)){
+					p.sendMessage(Lang.PREFIX.toString() + Lang.TARGET_NOT_IN_YOUR_GANG.toString(Arrays.asList("%s%", "%t%", "%g%"), Arrays.asList(p.getName(), target.getName(), info.getGangName())));
+					return;
+				}
+				gm.promotePlayer(p, target);
 			}
 		});
 	}
