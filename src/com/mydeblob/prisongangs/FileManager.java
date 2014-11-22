@@ -1,4 +1,4 @@
-package com.mydeblob.prisongangs;
+package com.cullan.prisongangs;
 
 import java.io.File;
 import java.io.IOException;
