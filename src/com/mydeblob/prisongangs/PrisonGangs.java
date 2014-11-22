@@ -40,7 +40,7 @@ public class PrisonGangs
     getServer().getPluginManager().registerEvents(pl, this);
     Gang.loadGangs();
     GangManager.getGangManager().loadInvites();
-    getLogger().info("[PrisonGangs] PrisonGangs enabled, edited by CullanP");
+    getLogger().info("[PrisonGangs] PrisonGangs enabled, edited by CullanP (Original maker, mydeblob)");
   }
   
   public void onDisable()
@@ -48,7 +48,7 @@ public class PrisonGangs
     FileManager f = FileManager.getFileManager();
     f.saveKdrConfig();
     f.saveGangConfig();
-    getLogger().info("[PrisonGangs] PrisonGangs disabled, edited by CullanP");
+    getLogger().info("[PrisonGangs] PrisonGangs disabled, edited by CullanP (Original maker, mydeblob)");
   }
   
   public File getPluginFile()
