@@ -1,6 +1,5 @@
 package com.cullan.prisongangs;
 
-import java.util.ArrayList;
 import java.util.logging.Level;
 
 import org.bukkit.Bukkit;
@@ -450,7 +449,7 @@ public class CommandHandler
             p.sendMessage(Lang.PREFIX.toString() + Lang.IN_GANG.toString(p, gm.getPlayerRank(sender.getName(), gm.getGangWithPlayer(p)), gm.getGangWithPlayer(p)));
             return true;
           }
-          ArrayList<String> names = new ArrayList<String>();
+          Set<String> names = new HashSet<String>();
           for (int i = 0; i < f.getGangConfig().getStringList("gang-names").size(); i++) {
             names.add(((String)f.getGangConfig().getStringList("gang-names").get(i)).toLowerCase());
           }
@@ -606,9 +605,9 @@ public class CommandHandler
 	return false;
   }
   
-  public ArrayList<String> getGangPlayerStats(Gang g)
+  public Set<String> getGangPlayerStats(Gang g)
   {
-    ArrayList<String> memberData = new ArrayList<String>();
+    Set<String> memberData = new HashSet<String>();
     for (String s : g.getMembers())
     {
       OfflinePlayer p = Bukkit.getOfflinePlayer(s);
