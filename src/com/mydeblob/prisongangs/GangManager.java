@@ -1,7 +1,7 @@
 package com.cullan.prisongangs;
 
 import java.text.DecimalFormat;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -643,10 +643,10 @@ public class GangManager
   
   public void createGang(Player owner, String name)
   {
-    this.f.getGangConfig().set("gangs." + name + ".members", new ArrayList<Object>());
-    this.f.getGangConfig().set("gangs." + name + ".trusted", new ArrayList<Object>());
-    this.f.getGangConfig().set("gangs." + name + ".officers", new ArrayList<Object>());
-    this.f.getGangConfig().set("gangs." + name + ".leaders", new ArrayList<Object>());
+    this.f.getGangConfig().set("gangs." + name + ".members", new HashSet<Object>());
+    this.f.getGangConfig().set("gangs." + name + ".trusted", new HashSet<Object>());
+    this.f.getGangConfig().set("gangs." + name + ".officers", new HashSet<Object>());
+    this.f.getGangConfig().set("gangs." + name + ".leaders", new HashSet<Object>());
     this.f.getGangConfig().set("gangs." + name + ".owner", owner.getUniqueId().toString());
     List<String> gangs = this.f.getGangConfig().getStringList("gang-names");
     gangs.add(name);
