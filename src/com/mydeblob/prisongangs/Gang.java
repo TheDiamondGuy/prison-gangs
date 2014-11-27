@@ -1,6 +1,7 @@
 package com.cullan.prisongangs;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -10,16 +11,16 @@ import org.bukkit.entity.Player;
 public class Gang
 {
   private static FileManager f = FileManager.getFileManager();
-  private ArrayList<String> members = new ArrayList<String>();
-  private ArrayList<String> trusted = new ArrayList<String>();
-  private ArrayList<String> officers = new ArrayList<String>();
-  private ArrayList<String> leaders = new ArrayList<String>();
-  private ArrayList<String> membersUuid = new ArrayList<String>();
-  private ArrayList<String> trustedUuid = new ArrayList<String>();
-  private ArrayList<String> officersUuid = new ArrayList<String>();
-  private ArrayList<String> leadersUuid = new ArrayList<String>();
+  private Set<String> members = new HashSet<String>();
+  private Set<String> trusted = new HashSet<String>();
+  private Set<String> officers = new HashSet<String>();
+  private Set<String> leaders = new HashSet<String>();
+  private Set<String> membersUuid = new HashSet<String>();
+  private Set<String> trustedUuid = new HashSet<String>();
+  private Set<String> officersUuid = new HashSet<String>();
+  private Set<String> leadersUuid = new HashSet<String>();
   private String ownersUuid;
-  private static ArrayList<Gang> gangs = new ArrayList<Gang>();
+  private static Set<Gang> gangs = new HashSet<Gang>();
   private String owner;
   private String name;
   
@@ -64,7 +65,7 @@ public class Gang
     return this.name;
   }
   
-  public ArrayList<String> getMembers()
+  public Set<String> getMembers()
   {
     return this.members;
   }
@@ -85,7 +86,7 @@ public class Gang
     f.saveGangConfig();
   }
   
-  public ArrayList<String> getTrusted()
+  public Set<String> getTrusted()
   {
     return this.trusted;
   }
@@ -106,7 +107,7 @@ public class Gang
     f.saveGangConfig();
   }
   
-  public ArrayList<String> getOfficers()
+  public Set<String> getOfficers()
   {
     return this.officers;
   }
@@ -127,7 +128,7 @@ public class Gang
     f.saveGangConfig();
   }
   
-  public ArrayList<String> getLeaders()
+  public Set<String> getLeaders()
   {
     return this.leaders;
   }
@@ -165,9 +166,9 @@ public class Gang
     f.saveGangConfig();
   }
   
-  public ArrayList<String> getAllPlayers()
+  public Set<String> getAllPlayers()
   {
-    ArrayList<String> allPlayers = new ArrayList<String>();
+    Set<String> allPlayers = new HashSet<String>();
     for (String s : getMembers()) {
       allPlayers.add(s);
     }
@@ -184,9 +185,9 @@ public class Gang
     return allPlayers;
   }
   
-  public ArrayList<String> getAllPlayersUUID()
+  public Set<String> getAllPlayersUUID()
   {
-    ArrayList<String> allPlayers = new ArrayList<String>();
+    Set<String> allPlayers = new HashSet<String>();
     for (String s : this.membersUuid) {
       allPlayers.add(s);
     }
@@ -223,7 +224,7 @@ public class Gang
     }
   }
   
-  public static ArrayList<Gang> getGangs()
+  public static Set<Gang> getGangs()
   {
     return gangs;
   }
