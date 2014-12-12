@@ -6,25 +6,20 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class PrisonGangs
-  extends JavaPlugin
-{
+public class PrisonGangs extends JavaPlugin {
 
   public final Events pl = new Events(this);
   
-  public void onEnable()
-  {
+  public void onEnable() {
     FileManager f = FileManager.getFileManager();
     f.init(this);
     File config = new File(getDataFolder(), "config.yml");
-    if (!config.exists())
-    {
+    if (!config.exists()) {
       getLogger().info("[PrisonGangs] No config.yml found! Generating a new one!");
       saveDefaultConfig();
     }
     File messages = new File(getDataFolder(), "messages.yml");
-    if (!messages.exists())
-    {
+    if (!messages.exists() {
       getLogger().info("[PrisonGangs] No messages.yml found! Generating a new one!");
       f.saveDefaultLangConfig();
     }
@@ -43,16 +38,14 @@ public class PrisonGangs
     getLogger().info("[PrisonGangs] PrisonGangs enabled, edited by CullanP (Original maker, mydeblob)");
   }
   
-  public void onDisable()
-  {
+  public void onDisable() {
     FileManager f = FileManager.getFileManager();
     f.saveKdrConfig();
     f.saveGangConfig();
     getLogger().info("[PrisonGangs] PrisonGangs disabled, edited by CullanP (Original maker, mydeblob)");
   }
   
-  public File getPluginFile()
-  {
+  public File getPluginFile() {
     return getFile();
   }
 }
